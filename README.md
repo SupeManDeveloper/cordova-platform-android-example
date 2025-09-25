@@ -4,3 +4,9 @@
 - Gradle 8.13
 - Java 17
 - Panda game example
+# COMMANDS
+
+`cordova platform add android`
+`cordova clean android`
+`cordova build android`
+`cordova run android`
