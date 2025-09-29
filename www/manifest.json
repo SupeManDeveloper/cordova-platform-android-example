@@ -1,0 +1,139 @@
+{
+    "id": "/",
+    "name": "Nông trại cổ tích",
+    "short_name": "Nông trại cổ tích",
+    "description": "Khám phá thế giới nông trại cổ tích tuyệt đẹp – nơi bạn trở thành nông dân tí hon, trồng trọt, chăn nuôi và xây dựng vương quốc mộng mơ!",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "categories": [
+        "game",
+        "casual",
+        "entertainment"
+    ],
+    "dir": "auto",
+    "start_url": "/",
+    "scope": "/",
+    "display_override": [
+        "window-controls-overlay",
+        "standalone"
+    ],
+    "theme_color": "#32CD32",
+    "lang": "vi",
+    "iarc_rating_id": "nongtraicotich266",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "prefer_related_applications": false,
+    "related_applications": [
+        {
+            "platform": "play",
+            "id": "truyencotich.click"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Thăm nông trại",
+            "short_name": "Thăm nông trại",
+            "description": "Ghé thăm nông trại của bạn",
+            "url": "/",
+            "icons": [
+                {
+                    "src": "/favicon-96x96.png",
+                    "sizes": "96x96"
+                }
+            ]
+        }
+    ],
+    "share_target": {
+        "action": "/share-target",
+        "method": "POST",
+        "enctype": "multipart/form-data",
+        "params": {
+            "title": "title",
+            "text": "text",
+            "url": "url",
+            "files": [
+                {
+                    "name": "files",
+                    "accept": [
+                        "image/*",
+                        "video/*"
+                    ]
+                }
+            ]
+        }
+    },
+    "protocol_handlers": [
+        {
+            "protocol": "web+farm",
+            "url": "/protocol-handler?url=%s"
+        }
+    ],
+    "handle_links": {
+        "prefer_app": true,
+        "allowed_origins": [
+            "https://truyencotich.click"
+        ]
+    },
+    "file_handlers": [
+        {
+            "action": "/open-file",
+            "accept": {
+                "application/pdf": [
+                    ".pdf"
+                ],
+                "text/plain": [
+                    ".txt",
+                    ".log"
+                ],
+                "text/markdown": [
+                    ".md"
+                ],
+                "image/png": [
+                    ".png"
+                ],
+                "image/jpeg": [
+                    ".jpg",
+                    ".jpeg"
+                ]
+            }
+        }
+    ],
+    "orientation": "any",
+    "launch_handler": {
+        "client_mode": "focus-existing"
+    },
+    "screenshots": [
+        {
+            "src": "/screenshots/desktop.png",
+            "sizes": "1919x898",
+            "type": "image/png",
+            "label": "Màn hình Desktop"
+        },
+        {
+            "src": "/screenshots/mobile.png",
+            "sizes": "385x810",
+            "type": "image/png",
+            "label": "Màn hình Mobile"
+        },
+        {
+            "src": "/screenshots/screenshot-desktop.png",
+            "sizes": "1200x800",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Desktop view of the PWA"
+        }
+    ],
+    "edge_side_panel": {
+        "preferred_width": 400
+    }
+}
