@@ -20,11 +20,16 @@
       "admob-plus-cordova": {
         "APP_ID_ANDROID": "ca-app-pub-3940256099942544~3347511713",
         "PLAY_SERVICES_VERSION": "23.2.0"
+      },
+      "cordova-plugin-local-notification": {
+        "ANDROIDX_CORE_VERSION": "1.12.0"
       }
     }
   },
   "devDependencies": {
-    "cordova-android": "^14.0.0"
+    "cordova-android": "^14.0.0",
+    "cordova-plugin-device": "^3.0.0",
+    "cordova-plugin-local-notification": "^1.2.1"
   },
   "dependencies": {
     "admob-plus-cordova": "2.0.0-alpha.19"

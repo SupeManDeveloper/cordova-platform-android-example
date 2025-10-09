@@ -57,6 +57,59 @@
     }
   </script> -->
   <script>
+    document.addEventListener('deviceready', () => {
+      console.log('✅ Device ready');
+
+      // Kiểm tra plugin
+      if (!cordova?.plugins?.notification?.local) {
+        console.error('❌ Plugin Local Notification chưa được load');
+        return;
+      }
+
+      const localNotif = cordova.plugins.notification.local;
+
+      // --- Bước 1: Xin quyền (đặc biệt cần cho Android 13+) ---
+      localNotif.hasPermission((has) => {
+        if (!has) {
+          localNotif.requestPermission((granted) => {
+            console.log('🔔 Quyền thông báo:', granted);
+            if (!granted) {
+              alert('App cần quyền gửi thông báo để hoạt động.');
+              return;
+            }
+            scheduleNotification();
+          });
+        } else {
+          scheduleNotification();
+        }
+      });
+
+      // --- Bước 2: Hàm schedule 1 notification ---
+      function scheduleNotification() {
+        console.log('📅 Scheduling notification...');
+        localNotif.schedule({
+          id: 1,
+          title: '🌾 Nhắc nhiệm vụ',
+          text: 'Vào farm thu hoạch nào!',
+          trigger: { in: 1, unit: 'minute' }, // 1 phút sau
+          sound: true,
+          smallIcon: 'res://ic_stat_notify', // phải tồn tại trong res/drawable
+          foreground: true, // hiển thị cả khi app đang mở
+          vibrate: true
+        });
+      }
+
+      // --- Bước 3: Lắng nghe sự kiện ---
+      localNotif.on('trigger', (notification) => {
+        console.log('⏰ Notification triggered:', notification);
+      });
+
+      localNotif.on('click', (notification) => {
+        console.log('👆 User clicked:', notification);
+        alert('Bạn vừa nhấn vào thông báo: ' + notification.title);
+      });
+    });
+
     // document.addEventListener('deviceready', async () => {
     //   await admob.start()
 
