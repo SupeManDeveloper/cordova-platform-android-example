@@ -10,3 +10,11 @@
 `cordova clean android`
 `cordova build android`
 `cordova run android`
+
+Lỗi ads ko hiển thị và lỗi ko tìm thấy plugin admob trên cordova:
+
+thì thêm vào config.xml :
+<platform name="android">
+    <preference name="PLAY_SERVICES_VERSION" default="23.2.0" />
+    <preference name="AndroidXEnabled" value="true" />
+    <preference name="GradlePluginKotlinEnabled" value="true" />

@@ -49,12 +49,70 @@
       src="https://images.dmca.com/Badges/dmca_protected_sml_120g.png?ID=36914ceb-ba3d-4c93-a0ff-a11ede1bd0b4"
       alt="DMCA.com Protection Status" /></a>
   <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"> </script>
+  <script src="cordova.js"></script>
 
   <!-- <script>
     if (window.top !== window.self) {
       window.location.href = 'https://truyencotich.click/';
     }
   </script> -->
+  <script>
+    // document.addEventListener('deviceready', async () => {
+    //   await admob.start()
+
+    //   // admob.configure({
+    //   //   testDeviceIds: ['7a249b39-efe7-4dd4-a903-291448390a67'],
+    //   // })
+
+    //   const ad = new admob.AppOpenAd({
+    //     adUnitId: 'ca-app-pub-3940256099942544/9257395921',
+    //   })
+
+    //   document.addEventListener(
+    //     'resume',
+    //     async () => {
+    //       if (!await ad.show()) {
+    //         await ad.load()
+    //       }
+    //     },
+    //     false,
+    //   )
+    // }, false)
+
+    // document.addEventListener('admob.ad.show', async (evt) => {
+    //   if (evt.ad instanceof admob.AppOpenAd) {
+    //     console.log("Show ads");
+    //   }
+    // })
+
+    let interstitial
+
+    document.addEventListener('deviceready', async () => {
+      await admob.start()
+
+      admob.configure({
+        testDeviceIds: ['7a249b39-efe7-4dd4-a903-291448390a67'],
+      })
+
+      interstitial = new admob.InterstitialAd({
+        adUnitId: 'ca-app-pub-3940256099942544/1033173712',
+      })
+
+      interstitial.on('load', (evt) => {
+        // evt.ad
+      })
+
+      await interstitial.load()
+      await interstitial.show()
+    }, false)
+
+    document.addEventListener('admob.ad.dismiss', async () => {
+      // Once a interstitial ad is shown, it cannot be shown again.
+      // Starts loading the next interstitial ad as soon as it is dismissed.
+      await interstitial.load()
+    })
+
+  </script>
 </body>
 
 </html>
