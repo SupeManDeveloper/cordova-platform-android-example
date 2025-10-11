@@ -1,6 +1,6 @@
 {
   "name": "com.example.hello",
-  "displayName": "HelloWorld",
+  "displayName": "Nông trại cổ tích",
   "version": "1.0.0",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
@@ -27,7 +27,7 @@
     }
   },
   "devDependencies": {
-    "cordova-android": "^14.0.0",
+    "cordova-android": "^14.0.1",
     "cordova-plugin-device": "^3.0.0",
     "cordova-plugin-local-notification": "^1.2.1"
   },
