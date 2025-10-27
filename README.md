@@ -18,3 +18,11 @@ thì thêm vào config.xml :
     <preference name="PLAY_SERVICES_VERSION" default="23.2.0" />
     <preference name="AndroidXEnabled" value="true" />
     <preference name="GradlePluginKotlinEnabled" value="true" />
+
+Cài Icon cho app
+
+`npm i -D cordova-res`
+`npx cordova-res android --force`
+`cordova platform rm android`
+`cordova platform add android`
+`cordova build android`

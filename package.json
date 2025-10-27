@@ -1,5 +1,5 @@
 {
-  "name": "com.example.hello",
+  "name": "com.gamecotich.flappy_sontinh_thuytinh",
   "displayName": "Flappy Sơn Tinh Thủy Tinh",
   "version": "1.0.0",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
@@ -29,7 +29,8 @@
   "devDependencies": {
     "cordova-android": "^14.0.1",
     "cordova-plugin-device": "^3.0.0",
-    "cordova-plugin-local-notification": "^1.2.1"
+    "cordova-plugin-local-notification": "^1.2.1",
+    "cordova-res": "^0.15.4"
   },
   "dependencies": {
     "admob-plus-cordova": "2.0.0-alpha.19"

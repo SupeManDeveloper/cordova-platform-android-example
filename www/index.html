@@ -3,24 +3,19 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
   <meta name="theme-color" content="#fc3c3c" />
-  <title>Game Title</title>
-  <meta name="description" content="Game Description">
-  <script type="module" crossorigin src="/assets/index-Dw6yv67g.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index.CoTzN3BG.css">
-  <link rel="manifest" href="/manifest.webmanifest">
-  <script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script>
+  <title>Flappy Sơn Tinh Thủy Tinh</title>
+  <meta name="description"
+    content="Chơi Flappy Sơn Tinh vs Thủy Tinh – phiên bản Flappy Bird lấy cảm hứng từ truyện cổ tích Việt Nam. Bay qua giông bão, né cột nước và sống lại truyền thuyết núi – biển đầy kỳ tích.">
+  <script type="module" crossorigin src="/assets/index-HnY_EYnP.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index.ClmMQzAh.css">
 </head>
 
 <body>
   <div id="root"></div>
   <script src="cordova.js"></script>
-  <script>
-    document.addEventListener('deviceready', () => {
-      console.log('✅ Device ready');
-
-      // Kiểm tra plugin
+  <script>document.addEventListener('deviceready', () => {
       if (!cordova?.plugins?.notification?.local) {
         console.error('❌ Plugin Local Notification chưa được load');
         return;
@@ -28,11 +23,10 @@
 
       const localNotif = cordova.plugins.notification.local;
 
-      // --- Bước 1: Xin quyền (đặc biệt cần cho Android 13+) ---
       localNotif.hasPermission((has) => {
         if (!has) {
           localNotif.requestPermission((granted) => {
-            console.log('🔔 Quyền thông báo:', granted);
+            console.error('🔔 Quyền thông báo:', granted);
             if (!granted) {
               alert('App cần quyền gửi thông báo để hoạt động.');
               return;
@@ -44,31 +38,53 @@
         }
       });
 
-      // --- Bước 2: Hàm schedule 1 notification ---
       function scheduleNotification() {
         console.log('📅 Scheduling notification...');
         localNotif.schedule({
           id: 1,
-          title: '🌾 Nhắc nhiệm vụ',
-          text: 'Vào farm thu hoạch nào!',
-          trigger: { in: 1, unit: 'minute' }, // 1 phút sau
+          title: 'Nhắc nhiệm vụ',
+          text: 'Thủy Tinh đã quay trở lại! Chuẩn bị chiến đấu ngay.',
+          trigger: { in: 1, unit: 'minute' },
           sound: true,
-          smallIcon: 'res://ic_stat_notify', // phải tồn tại trong res/drawable
-          foreground: true, // hiển thị cả khi app đang mở
+          smallIcon: 'res://ic_stat_notify',
+          foreground: true,
           vibrate: true
         });
       }
 
-      // --- Bước 3: Lắng nghe sự kiện ---
       localNotif.on('trigger', (notification) => {
         console.log('⏰ Notification triggered:', notification);
       });
 
       localNotif.on('click', (notification) => {
         console.log('👆 User clicked:', notification);
-        alert('Bạn vừa nhấn vào thông báo: ' + notification.title);
       });
     });
+
+    let interstitial
+
+    document.addEventListener('deviceready', async () => {
+      await admob.start()
+
+      admob.configure({
+        testDeviceIds: ['7a249b39-efe7-4dd4-a903-291448390a67'],
+      })
+
+      interstitial = new admob.InterstitialAd({
+        adUnitId: 'ca-app-pub-3940256099942544/1033173712',
+      })
+
+      interstitial.on('load', (evt) => {
+
+      })
+
+      await interstitial.load()
+      await interstitial.show()
+    }, false)
+
+    document.addEventListener('admob.ad.dismiss', async () => {
+      await interstitial.load()
+    })
 
     // document.addEventListener('deviceready', async () => {
     //   await admob.start()
@@ -96,36 +112,7 @@
     //   if (evt.ad instanceof admob.AppOpenAd) {
     //     console.log("Show ads");
     //   }
-    // })
-
-    let interstitial
-
-    document.addEventListener('deviceready', async () => {
-      await admob.start()
-
-      admob.configure({
-        testDeviceIds: ['7a249b39-efe7-4dd4-a903-291448390a67'],
-      })
-
-      interstitial = new admob.InterstitialAd({
-        adUnitId: 'ca-app-pub-3940256099942544/1033173712',
-      })
-
-      interstitial.on('load', (evt) => {
-        // evt.ad
-      })
-
-      await interstitial.load()
-      await interstitial.show()
-    }, false)
-
-    document.addEventListener('admob.ad.dismiss', async () => {
-      // Once a interstitial ad is shown, it cannot be shown again.
-      // Starts loading the next interstitial ad as soon as it is dismissed.
-      await interstitial.load()
-    })
-
-  </script>
+    // })</script>
 </body>
 
 </html>
