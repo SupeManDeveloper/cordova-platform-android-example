@@ -1,118 +1,98 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-  <meta name="theme-color" content="#fc3c3c" />
-  <title>Flappy Sơn Tinh Thủy Tinh</title>
-  <meta name="description"
-    content="Chơi Flappy Sơn Tinh vs Thủy Tinh – phiên bản Flappy Bird lấy cảm hứng từ truyện cổ tích Việt Nam. Bay qua giông bão, né cột nước và sống lại truyền thuyết núi – biển đầy kỳ tích.">
-  <script type="module" crossorigin src="/assets/index-HnY_EYnP.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index.ClmMQzAh.css">
-</head>
-
-<body>
-  <div id="root"></div>
-  <script src="cordova.js"></script>
-  <script>document.addEventListener('deviceready', () => {
-      if (!cordova?.plugins?.notification?.local) {
-        console.error('❌ Plugin Local Notification chưa được load');
-        return;
-      }
-
-      const localNotif = cordova.plugins.notification.local;
-
-      localNotif.hasPermission((has) => {
-        if (!has) {
-          localNotif.requestPermission((granted) => {
-            console.error('🔔 Quyền thông báo:', granted);
-            if (!granted) {
-              alert('App cần quyền gửi thông báo để hoạt động.');
-              return;
-            }
-            scheduleNotification();
-          });
-        } else {
-          scheduleNotification();
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><meta name="theme-color" content="#fc3c3c"/><title>Flappy Sơn Tinh Thủy Tinh</title><meta name="description" content="Chơi Flappy Sơn Tinh vs Thủy Tinh – phiên bản Flappy Bird lấy cảm hứng từ truyện cổ tích Việt Nam. Bay qua giông bão, né cột nước và sống lại truyền thuyết núi – biển đầy kỳ tích."><script type="module" crossorigin src="/assets/index-pl4iNFDq.js"></script><link rel="stylesheet" crossorigin href="/assets/index.ClmMQzAh.css"></head><body><div id="root"></div><script src="cordova.js"></script><script>document.addEventListener('deviceready', () => {
+        if (!cordova?.plugins?.notification?.local) {
+          console.error('❌ Plugin Local Notification chưa được load');
+          return;
         }
-      });
 
-      function scheduleNotification() {
-        console.log('📅 Scheduling notification...');
-        localNotif.schedule({
-          id: 1,
-          title: 'Nhắc nhiệm vụ',
-          text: 'Thủy Tinh đã quay trở lại! Chuẩn bị chiến đấu ngay.',
-          trigger: { in: 1, unit: 'minute' },
-          sound: true,
-          smallIcon: 'res://ic_stat_notify',
-          foreground: true,
-          vibrate: true
+        const localNotif = cordova.plugins.notification.local;
+
+        localNotif.hasPermission((has) => {
+          if (!has) {
+            localNotif.requestPermission((granted) => {
+              console.error('🔔 Quyền thông báo:', granted);
+              if (!granted) {
+                alert('App cần quyền gửi thông báo để hoạt động.');
+                return;
+              }
+              scheduleNotification();
+            });
+          } else {
+            scheduleNotification();
+          }
         });
-      }
 
-      localNotif.on('trigger', (notification) => {
-        console.log('⏰ Notification triggered:', notification);
+        function scheduleNotification() {
+          console.log('📅 Scheduling notification...');
+          localNotif.schedule({
+            id: 1,
+            title: 'Nhắc nhiệm vụ',
+            text: 'Thủy Tinh đã quay trở lại! Chuẩn bị chiến đấu ngay.',
+            trigger: { in: 1, unit: 'minute' },
+            sound: true,
+            smallIcon: 'res://ic_stat_notify',
+            foreground: true,
+            vibrate: true
+          });
+        }
+
+        localNotif.on('trigger', (notification) => {
+          console.log('⏰ Notification triggered:', notification);
+        });
+
+        localNotif.on('click', (notification) => {
+          console.log('👆 User clicked:', notification);
+        });
       });
 
-      localNotif.on('click', (notification) => {
-        console.log('👆 User clicked:', notification);
-      });
-    });
+      let interstitial
 
-    let interstitial
+      document.addEventListener('deviceready', async () => {
+        await admob.start()
 
-    document.addEventListener('deviceready', async () => {
-      await admob.start()
+        admob.configure({
+          testDeviceIds: ['7a249b39-efe7-4dd4-a903-291448390a67'],
+        })
 
-      admob.configure({
-        testDeviceIds: ['7a249b39-efe7-4dd4-a903-291448390a67'],
+        interstitial = new admob.InterstitialAd({
+          adUnitId: 'ca-app-pub-3940256099942544/1033173712',
+        })
+
+        interstitial.on('load', (evt) => {
+
+        })
+
+        await interstitial.load()
+        await interstitial.show()
+      }, false)
+
+      document.addEventListener('admob.ad.dismiss', async () => {
+        await interstitial.load()
       })
 
-      interstitial = new admob.InterstitialAd({
-        adUnitId: 'ca-app-pub-3940256099942544/1033173712',
-      })
+      // document.addEventListener('deviceready', async () => {
+      //   await admob.start()
 
-      interstitial.on('load', (evt) => {
+      //   // admob.configure({
+      //   //   testDeviceIds: ['7a249b39-efe7-4dd4-a903-291448390a67'],
+      //   // })
 
-      })
+      //   const ad = new admob.AppOpenAd({
+      //     adUnitId: 'ca-app-pub-3940256099942544/9257395921',
+      //   })
 
-      await interstitial.load()
-      await interstitial.show()
-    }, false)
+      //   document.addEventListener(
+      //     'resume',
+      //     async () => {
+      //       if (!await ad.show()) {
+      //         await ad.load()
+      //       }
+      //     },
+      //     false,
+      //   )
+      // }, false)
 
-    document.addEventListener('admob.ad.dismiss', async () => {
-      await interstitial.load()
-    })
-
-    // document.addEventListener('deviceready', async () => {
-    //   await admob.start()
-
-    //   // admob.configure({
-    //   //   testDeviceIds: ['7a249b39-efe7-4dd4-a903-291448390a67'],
-    //   // })
-
-    //   const ad = new admob.AppOpenAd({
-    //     adUnitId: 'ca-app-pub-3940256099942544/9257395921',
-    //   })
-
-    //   document.addEventListener(
-    //     'resume',
-    //     async () => {
-    //       if (!await ad.show()) {
-    //         await ad.load()
-    //       }
-    //     },
-    //     false,
-    //   )
-    // }, false)
-
-    // document.addEventListener('admob.ad.show', async (evt) => {
-    //   if (evt.ad instanceof admob.AppOpenAd) {
-    //     console.log("Show ads");
-    //   }
-    // })</script>
-</body>
-
-</html>
+      // document.addEventListener('admob.ad.show', async (evt) => {
+      //   if (evt.ad instanceof admob.AppOpenAd) {
+      //     console.log("Show ads");
+      //   }
+      // })</script></body></html>
