@@ -1,1 +1,0 @@
-self.importScripts('/custom-sw.js');
