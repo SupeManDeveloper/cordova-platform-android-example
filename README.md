@@ -26,3 +26,8 @@ Cài Icon cho app
 `cordova platform rm android`
 `cordova platform add android`
 `cordova build android`
+
+
+APP_ID_ANDROID=ca-app-pub-5952026628404823~3087134275
+REWARDAD=ca-app-pub-5952026628404823/4815148913
+VITE_APP_INTERSTITIAL_AD_UNIT_ID="ca-app-pub-5952026628404823/9458646091"
