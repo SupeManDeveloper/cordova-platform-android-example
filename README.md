@@ -31,3 +31,29 @@ Cài Icon cho app
 APP_ID_ANDROID=ca-app-pub-5952026628404823~3087134275
 REWARDAD=ca-app-pub-5952026628404823/4815148913
 VITE_APP_INTERSTITIAL_AD_UNIT_ID="ca-app-pub-5952026628404823/9458646091"
+
+Kí ứng dụng 
+
+Tạo keystore:
+
+`keytool -genkey -v -keystore release-key.keystore -keyalg RSA -keysize 2048 -validity 10000 -alias release
+`
+
+`cordova build android --release
+jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+-keystore release-key.keystore platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk release
+zipalign -v 4 app-release-unsigned.apk app-release.apk
+`
+
+`apksigner verify --verbose --print-certs app-release.apk`
+
+`jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+-keystore release-key.keystore \
+platforms/android/app/build/outputs/bundle/release/app-release.aab release`
+
+`cordova build android --release`
+
+`jarsigner -verify -verbose -certs platforms/android/app/build/outputs/bundle/release/app-release.aab
+`
+
+`passphare:`: Superman
