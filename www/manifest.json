@@ -114,19 +114,19 @@
     },
     "screenshots": [
         {
-            "src": "/screenshots/desktop.png",
+            "src": "screenshots/desktop.png",
             "sizes": "1919x898",
             "type": "image/png",
             "label": "Màn hình Desktop"
         },
         {
-            "src": "/screenshots/mobile.png",
+            "src": "screenshots/mobile.png",
             "sizes": "385x810",
             "type": "image/png",
             "label": "Màn hình Mobile"
         },
         {
-            "src": "/screenshots/screenshot-desktop.png",
+            "src": "screenshots/screenshot-desktop.png",
             "sizes": "1200x800",
             "type": "image/png",
             "form_factor": "wide",
