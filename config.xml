@@ -13,8 +13,20 @@
     <access origin="https://*" />
     <allow-navigation href="https://*/*" />
     <platform name="android">
-        <preference name="PLAY_SERVICES_VERSION" default="23.2.0" />
+        <preference default="23.2.0" name="PLAY_SERVICES_VERSION" />
         <preference name="AndroidXEnabled" value="true" />
         <preference name="GradlePluginKotlinEnabled" value="true" />
+        <preference name="CrosswalkWebView" value="true" />
+        <preference name="AndroidLaunchMode" value="singleTask" />
+        <preference name="SplashScreenDelay" value="500" />
+        <preference name="SplashMaintainAspectRatio" value="true" />
+        <preference name="FadeSplashScreen" value="true" />
+        <preference name="FadeSplashScreenDuration" value="300" />
+        <preference name="ShowSplashScreenSpinner" value="false" />
+        <preference name="DisallowOverscroll" value="true" />
+        <preference name="Fullscreen" value="true" />
+        <preference name="StatusBarOverlaysWebView" value="false" />
+        <preference name="Scheme" value="https" />
+        <preference name="Hostname" value="app.local" />
     </platform>
 </widget>
