@@ -24,3 +24,15 @@ thì thêm vào config.xml :
 Add `cordova-res` package.
 
 `npx cordova-res android --force`
+
+# SIGN APP
+
+`keytool -genkey -v \
+  -keystore release-key.keystore \
+  -keyalg RSA -keysize 2048 -validity 10000 \
+  -alias release` - superman
+
+`jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+  -keystore release-key.keystore \
+  platforms/android/app/build/outputs/bundle/release/app-release.aab \
+  release`
