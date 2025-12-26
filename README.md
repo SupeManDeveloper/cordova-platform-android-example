@@ -18,3 +18,9 @@ thì thêm vào config.xml :
     <preference name="PLAY_SERVICES_VERSION" default="23.2.0" />
     <preference name="AndroidXEnabled" value="true" />
     <preference name="GradlePluginKotlinEnabled" value="true" />
+
+# ICON & SPLASH
+
+Add `cordova-res` package.
+
+`npx cordova-res android --force`
