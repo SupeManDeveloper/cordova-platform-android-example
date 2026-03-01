@@ -1,7 +1,7 @@
 {
-  "name": "com.example.hello",
-  "displayName": "Nông trại cổ tích",
-  "version": "1.0.0",
+  "name": "one.eternalgalaxy.fairy_tale_coloring",
+  "displayName": "Tô màu cổ tích",
+  "version": "1.1.1",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
   "scripts": {
@@ -18,17 +18,21 @@
     ],
     "plugins": {
       "admob-plus-cordova": {
-        "APP_ID_ANDROID": "ca-app-pub-3940256099942544~3347511713",
+        "APP_ID_ANDROID": "ca-app-pub-5952026628404823~7312901193",
         "PLAY_SERVICES_VERSION": "23.2.0"
       },
       "cordova-plugin-local-notification": {
         "ANDROIDX_CORE_VERSION": "1.12.0"
+      },
+      "cordova-plugin-file": {
+        "ANDROIDX_WEBKIT_VERSION": "1.4.0"
       }
     }
   },
   "devDependencies": {
     "cordova-android": "^14.0.1",
     "cordova-plugin-device": "^3.0.0",
+    "cordova-plugin-file": "^8.1.3",
     "cordova-plugin-local-notification": "^1.2.1",
     "cordova-res": "^0.15.4"
   },
