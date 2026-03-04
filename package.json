@@ -1,7 +1,7 @@
 {
-  "name": "com.example.hello",
-  "displayName": "Nông trại cổ tích",
-  "version": "1.0.0",
+  "name": "one.eternalgalaxy.chibi_wallet",
+  "displayName": "Chibi Wallet",
+  "version": "1.1.1",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,7 @@
     ],
     "plugins": {
       "admob-plus-cordova": {
-        "APP_ID_ANDROID": "ca-app-pub-3940256099942544~3347511713",
+        "APP_ID_ANDROID": "ca-app-pub-5952026628404823~3636993021",
         "PLAY_SERVICES_VERSION": "23.2.0"
       },
       "cordova-plugin-local-notification": {
