@@ -1,17 +1,17 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.example.hello" version="1.0.0"
+<widget id="memory_quest.example.hello" version="1.0.0"
     xmlns="http://www.w3.org/ns/widgets"
     xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Nông trại cổ tích</name>
-    <description>Game Nông trại cổ tích</description>
+    <name>Memory Quest</name>
+    <description>Game Memory Quest</description>
     <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
         EG Team
     </author>
     <content src="index.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
-    <access origin="https://farm.smavi.men" />
-    <allow-navigation href="https://farm.smavi.men/*" />
+    <access origin="https://*" />
+    <allow-navigation href="https://*/*" />
     <platform name="android">
         <preference name="PLAY_SERVICES_VERSION" default="23.2.0" />
         <preference name="AndroidXEnabled" value="true" />
