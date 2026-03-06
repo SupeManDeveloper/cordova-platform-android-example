@@ -14,11 +14,13 @@
   "license": "Apache-2.0",
   "cordova": {
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ],
     "plugins": {
       "admob-plus-cordova": {
         "APP_ID_ANDROID": "ca-app-pub-3940256099942544~3347511713",
+        "APP_ID_IOS": "ca-app-pub-3940256099942544~1458002511",
         "PLAY_SERVICES_VERSION": "23.2.0"
       },
       "cordova-plugin-local-notification": {
@@ -28,6 +30,7 @@
   },
   "devDependencies": {
     "cordova-android": "^14.0.1",
+    "cordova-ios": "^8.0.0",
     "cordova-plugin-device": "^3.0.0",
     "cordova-plugin-local-notification": "^1.2.1"
   },
