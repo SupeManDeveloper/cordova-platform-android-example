@@ -1,6 +1,6 @@
 {
-  "name": "memory_quest.example.hello",
-  "displayName": "Memory Quest",
+  "name": "flipdominion.example.hello",
+  "displayName": "Flip Dominion",
   "version": "1.0.0",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
@@ -14,8 +14,8 @@
   "license": "Apache-2.0",
   "cordova": {
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ],
     "plugins": {
       "admob-plus-cordova": {
@@ -29,7 +29,7 @@
     }
   },
   "devDependencies": {
-    "cordova-android": "^14.0.1",
+    "cordova-android": "^15.0.0",
     "cordova-ios": "^8.0.0",
     "cordova-plugin-device": "^3.0.0",
     "cordova-plugin-local-notification": "^1.2.1"

@@ -343,10 +343,10 @@
     .piggyCancelBtn {
       width: 100%;
       padding: 9px;
-      border: 1px solid rgba(255, 255, 255, .1);
+      border: 1px solid rgba(219, 13, 13, 0.1);
       border-radius: 13px;
-      background: rgba(255, 255, 255, .05);
-      color: var(--dim);
+      background: rgba(194, 17, 17, 0.05);
+      color: var(--text);
       font-family: 'Quicksand', sans-serif;
       font-weight: 700;
       font-size: .75rem;
@@ -3600,7 +3600,7 @@
         } else {
           $('piggyMoji').textContent = '🐷';
           const left = (PIGGY_MAX - this.piggy).toLocaleString();
-          $('piggyModalSub').innerHTML = `Đang tích lũy <strong style="color:#ff85a1">${pct}%</strong>...<br>Còn <strong style="color:#ff85a1">${left}🪙</strong> nữa là đầy!<br><span style="color:var(--dim);font-size:.58rem">Cần đầy heo mới phá được 🐷</span>`;
+          $('piggyModalSub').innerHTML = `Saving <strong style="color:#ff85a1">${pct}%</strong>...<br>Need <strong style="color:#ff85a1">${left}🪙</strong> to fill!<br><span style="color:var(--dim);font-size:.58rem">Piggy bank must be full to unlock 🐷</span>`;
           $('piggyBuyBtn').style.display = 'none';
         }
         $('piggyModal').classList.remove('hid');
@@ -4539,7 +4539,9 @@
         if (this.cur + 1 > this.unlk) this.unlk = this.cur + 1;
         this.save(); this.uCn(); vib(80);
 
-        setTimeout(() => {
+        setTimeout(async () => {
+          await this.tryShowInterstitial();
+
           // STEP 1: Show stars + title only
           $('ws1').classList.remove('hid'); $('ws2').classList.add('hid'); $('ws2').classList.remove('fadeIn');
           $('wSt').innerHTML = '⭐'.repeat(stars) + '<span class="star-e">' + '☆'.repeat(3 - stars) + '</span>';
@@ -4625,7 +4627,10 @@
         coinBtn.classList.remove('claimed', 'cant'); coinBtn.disabled = false;
         if (this.coin < this._contCoinPrice) coinBtn.classList.add('cant');
         vib([50, 30, 50]);
-        setTimeout(() => $('scrLose').classList.add('active'), 400);
+        setTimeout(async () => {
+          await this.tryShowInterstitial();
+          $('scrLose').classList.add('active');
+        }, 400);
       },
 
       // ═══ NAVIGATION ═══
@@ -4682,6 +4687,7 @@
 
           try {
             await rewarded.show();
+            localStorage.setItem('lastRewardAdTime', Date.now().toString());
           } catch (err) {
             console.log('Ad not ready', err);
             await rewarded.load();
@@ -4705,6 +4711,41 @@
           this.animCoin($('wCoinUp'), bonus * 2);
           vib(50);
         }
+      },
+      async tryShowInterstitial() {
+        if (this.adsRemoved) return false;
+
+        const level = this.cur + 1;
+        if (level < 5) return false;
+
+        const now = Date.now();
+        const lastReward = parseInt(localStorage.getItem('lastRewardAdTime') || '0', 10);
+        const lastInterstitial = parseInt(localStorage.getItem('lastInterstitialTime') || '0', 10);
+
+        const rewardCooldown = now - lastReward > 120000;
+        const interstitialCooldown = now - lastInterstitial > 90000;
+
+        if (level === 5) {
+          if (!rewardCooldown) return false;
+        } else if (level > 5) {
+          if (!rewardCooldown || !interstitialCooldown) return false;
+        }
+
+        if (typeof interstitial !== 'undefined' && interstitial) {
+          return new Promise((resolve) => {
+            onInterstitialDismiss = () => resolve(true);
+
+            interstitial.show().then(() => {
+              localStorage.setItem('lastInterstitialTime', Date.now().toString());
+            }).catch((err) => {
+              console.log('Interstitial show failed', err);
+              onInterstitialDismiss = null;
+              interstitial.load().catch(() => { });
+              resolve(false);
+            });
+          });
+        }
+        return false;
       },
       lvPageIdx: 0,
       showLvls() {
@@ -5423,6 +5464,8 @@
     G.init();
 
     let rewarded;
+    let interstitial;
+    let onInterstitialDismiss = null;
 
     document.addEventListener('deviceready', async () => {
       const admobRef = (window).admob;
@@ -5432,6 +5475,10 @@
       });
       rewarded = new admobRef.RewardedInterstitialAd({
         adUnitId: 'ca-app-pub-3940256099942544/5354046379',
+      });
+
+      interstitial = new admobRef.InterstitialAd({
+        adUnitId: 'ca-app-pub-3940256099942544/1033173712',
       });
 
       rewarded.on('load', () => {
@@ -5447,7 +5494,16 @@
         await rewarded.load();
       });
 
+      interstitial.on('dismiss', async () => {
+        if (onInterstitialDismiss) {
+          onInterstitialDismiss();
+          onInterstitialDismiss = null;
+        }
+        await interstitial.load();
+      });
+
       await rewarded.load();
+      await interstitial.load();
 
     }, false);
   </script>
