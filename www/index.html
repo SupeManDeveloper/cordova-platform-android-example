@@ -4514,76 +4514,85 @@
 
       // ═══ WIN ═══
       onWin() {
-        // Tower mode: different win handling
         if (this.tw.active) { this.twOnWin(); return; }
         this.stopGame();
-        const L = this.getLv(this.cur); let stars = 1;
-        if (this.mode === 'time') {
-          const tp = this.tL / this.tM;
-          if (tp > .3) stars = 3; else if (tp > .1) stars = 2;
-        } else {
-          const lp = this.mvLeft / this.mvMax;
-          if (lp > .3) stars = 3; else if (lp > .1) stars = 2;
+        let stars = 1, rw = { total: 0, rawTotal: 0, repMul: 1, base: 0, timeB: 0, leftoverB: 0, comboB: 0, starB: 0, perfB: 0, firstB: 0, premB: 0, autoX2: false };
+        let L = { l: '' };
+        try {
+          L = this.getLv(this.cur) || { l: '' };
+          if (this.mode === 'time') {
+            const tp = this.tM > 0 ? this.tL / this.tM : 1;
+            if (tp > .3) stars = 3; else if (tp > .1) stars = 2;
+          } else {
+            const lp = this.mvMax > 0 ? this.mvLeft / this.mvMax : 1;
+            if (lp > .3) stars = 3; else if (lp > .1) stars = 2;
+          }
+          rw = this.calcRw(stars) || rw;
+          this._pendingRw = rw.total || 0;
+          if (this.adsRemoved) {
+            rw.total = (rw.total || 0) * 2; rw.autoX2 = true; this._pendingRw = 0;
+          }
+          this.coin += (rw.total || 0);
+          this.addPiggy();
+          const prev = this.sMap[this.cur] || 0; if (stars > prev) this.sMap[this.cur] = stars;
+          if (this.cur + 1 > this.unlk) this.unlk = this.cur + 1;
+          this.save(); this.uCn(); vib(80);
+        } catch (e) {
+          console.error("Error in onWin calculations:", e);
         }
-        const rw = this.calcRw(stars);
-        this._pendingRw = rw.total;
-        // Premium auto x2
-        if (this.adsRemoved) {
-          rw.total *= 2; rw.autoX2 = true; this._pendingRw = 0;
-        }
-        // Full coin reward to user (piggy is independent, level-based)
-        this.coin += rw.total;
-        // Piggy bank: accumulate per level played
-        this.addPiggy();
-        const prev = this.sMap[this.cur] || 0; if (stars > prev) this.sMap[this.cur] = stars;
-        if (this.cur + 1 > this.unlk) this.unlk = this.cur + 1;
-        this.save(); this.uCn(); vib(80);
 
         setTimeout(() => {
-          // STEP 1: Show stars + title only
-          $('ws1').classList.remove('hid'); $('ws2').classList.add('hid'); $('ws2').classList.remove('fadeIn');
-          $('wSt').innerHTML = '⭐'.repeat(stars) + '<span class="star-e">' + '☆'.repeat(3 - stars) + '</span>';
-          $('wTi').textContent = ['Complete!', 'Great!', 'Outstanding!'][stars - 1];
-          const infTag = L.inf ? ' ∞' : '';
-          $('wSu').textContent = `Level ${this.cur + 1}${infTag}: ${L.l}`;
-          $('scrWin').classList.add('active');
+          try {
+            $('ws1').classList.remove('hid'); $('ws2').classList.add('hid'); $('ws2').classList.remove('fadeIn');
+            $('wSt').innerHTML = '⭐'.repeat(stars) + '<span class="star-e">' + '☆'.repeat(3 - stars) + '</span>';
+            $('wTi').textContent = ['Complete!', 'Great!', 'Outstanding!'][stars - 1];
+            const infTag = L.inf ? ' ∞' : '';
+            $('wSu').textContent = `Level ${this.cur + 1}${infTag}: ${L.l}`;
+            $('scrWin').classList.add('active');
 
-          // STEP 2: After delay, reveal score breakdown
-          setTimeout(() => {
-            const timeUsed = this.tM - Math.ceil(this.tL);
-            $('wStats').innerHTML = `
-          <div class="winSt"><div class="wsV">${this.mv}</div><div class="wsL">Moves Used</div></div>
-          <div class="winSt"><div class="wsV">${this.mxC}x</div><div class="wsL">Max Combo</div></div>
-          <div class="winSt"><div class="wsV">${this.mode === 'time' ? timeUsed + 's' : (this.mvMax - this.mvLeft) + '/' + this.mvMax}</div><div class="wsL">${this.mode === 'time' ? 'Thời gian' : 'Moves'}</div></div>
-          <div class="winSt"><div class="wsV">M${L.n}×${L.ts || L.n}</div><div class="wsL">${L.g[0]}×${L.g[1]}</div></div>
-        `;
-            let h = `<div class="rr"><span class="rl">🎯 Base (${this.totG} matches×2)</span><span class="rv">+${rw.base}</span></div>`;
-            if (this.mode === 'time') { const tDur = Math.ceil(this.tL); h += `<div class="rr"><span class="rl">⏱ Time Left (${tDur}s)</span><span class="rv">+${rw.timeB}</span></div>`; }
-            else { const cr = { 2: 5, 3: 10, 4: 15 }[L.n] || 5; h += `<div class="rr"><span class="rl">👆 Moves Left (${rw.leftover} × ${cr}🪙)</span><span class="rv" style="color:var(--cyan)">+${rw.leftoverB}</span></div>`; }
-            h += `<div class="rr"><span class="rl">🔥 Max Combo (×${this.mxC})</span><span class="rv">+${rw.comboB}</span></div>`;
-            h += `<div class="rr"><span class="rl">⭐ Stars (×${stars})</span><span class="rv">+${rw.starB}</span></div>`;
-            if (rw.perf) h += `<div class="rr"><span class="rl">💎 Perfect!</span><span class="rv" style="color:var(--cyan)">+${rw.perfB}</span></div>`;
-            if (rw.first) h += `<div class="rr"><span class="rl">🆕 First Clear</span><span class="rv" style="color:var(--green)">+${rw.firstB}</span></div>`;
-            if (rw.premB) h += `<div class="rr"><span class="rl">⭐ Premium +25%</span><span class="rv" style="color:var(--purple)">+${rw.premB}</span></div>`;
-            if (rw.autoX2) h += `<div class="rr"><span class="rl">👑 Premium ×2</span><span class="rv" style="color:var(--gold)">×2</span></div>`;
-            if (rw.repMul < 1) {
-              h += `<div class="rr rsub"><span class="rl">Base Total</span><span class="rv" style="text-decoration:line-through;color:var(--dim)">+${rw.rawTotal}</span></div>`;
-              const pctLabel = rw.improved ? '⬆ Star Improved' : '🔁 Replay';
-              const pctColor = rw.improved ? 'var(--cyan)' : 'var(--red)';
-              h += `<div class="rr rpen"><span class="rl" style="color:${pctColor};font-weight:800">${pctLabel}</span><span class="rv" style="color:${pctColor};font-weight:900">×${Math.round(rw.repMul * 100)}%</span></div>`;
-            }
-            const perLv = Math.floor(this.PIGGY_MAX / this.PIGGY_TARGET_LEVELS);
-            h += `<div class="rr rt"><span class="rl">🪙 Earned</span><span class="rv">+${rw.total}</span></div>`;
-            h += `<div class="rr" style="color:#ff85a1"><span class="rl">🐷 Piggy +${perLv}</span><span class="rv">${this.piggy.toLocaleString()}/${this.PIGGY_MAX.toLocaleString()}</span></div>`;
-            $('rwB').innerHTML = h; $('wNx').style.display = '';
-            this.animCoin($('wCoinUp'), rw.total);
-            const ab = $('wAdBtn');
-            if (this.adsRemoved) { ab.textContent = '👑 Auto ×2 (Premium)'; ab.classList.add('claimed'); }
-            else { ab.textContent = '🎬 Xem Ads ×2 Coin'; ab.classList.remove('claimed'); }
-            $('ws2').classList.remove('hid'); $('ws2').classList.add('fadeIn');
-            // Hide wPiggyBar (no longer needed)
-            $('wPiggyBar').style.display = 'none';
-          }, 1500);
+            setTimeout(() => {
+              try {
+                const timeUsed = Math.max(0, this.tM - Math.ceil(this.tL));
+                $('wStats').innerHTML = `
+              <div class="winSt"><div class="wsV">${this.mv}</div><div class="wsL">Moves Used</div></div>
+              <div class="winSt"><div class="wsV">${this.mxC}x</div><div class="wsL">Max Combo</div></div>
+              <div class="winSt"><div class="wsV">${this.mode === 'time' ? timeUsed + 's' : (this.mvMax - this.mvLeft) + '/' + this.mvMax}</div><div class="wsL">${this.mode === 'time' ? 'Thời gian' : 'Moves'}</div></div>
+              <div class="winSt"><div class="wsV">M${L.n || 2}×${L.ts || L.n || 2}</div><div class="wsL">${L.g ? L.g[0] + '×' + L.g[1] : ''}</div></div>
+            `;
+                let h = `<div class="rr"><span class="rl">🎯 Base (${this.totG} matches×2)</span><span class="rv">+${rw.base || 0}</span></div>`;
+                if (this.mode === 'time') { const tDur = Math.ceil(this.tL); h += `<div class="rr"><span class="rl">⏱ Time Left (${tDur}s)</span><span class="rv">+${rw.timeB || 0}</span></div>`; }
+                else { const cr = { 2: 5, 3: 10, 4: 15 }[L.n || 2] || 5; h += `<div class="rr"><span class="rl">👆 Moves Left (${rw.leftover || 0} × ${cr}🪙)</span><span class="rv" style="color:var(--cyan)">+${rw.leftoverB || 0}</span></div>`; }
+                h += `<div class="rr"><span class="rl">🔥 Max Combo (×${this.mxC})</span><span class="rv">+${rw.comboB || 0}</span></div>`;
+                h += `<div class="rr"><span class="rl">⭐ Stars (×${stars})</span><span class="rv">+${rw.starB || 0}</span></div>`;
+                if (rw.perf) h += `<div class="rr"><span class="rl">💎 Perfect!</span><span class="rv" style="color:var(--cyan)">+${rw.perfB || 0}</span></div>`;
+                if (rw.first) h += `<div class="rr"><span class="rl">🆕 First Clear</span><span class="rv" style="color:var(--green)">+${rw.firstB || 0}</span></div>`;
+                if (rw.premB) h += `<div class="rr"><span class="rl">⭐ Premium +25%</span><span class="rv" style="color:var(--purple)">+${rw.premB || 0}</span></div>`;
+                if (rw.autoX2) h += `<div class="rr"><span class="rl">👑 Premium ×2</span><span class="rv" style="color:var(--gold)">×2</span></div>`;
+                if (rw.repMul < 1) {
+                  h += `<div class="rr rsub"><span class="rl">Base Total</span><span class="rv" style="text-decoration:line-through;color:var(--dim)">+${rw.rawTotal || 0}</span></div>`;
+                  const pctLabel = rw.improved ? '⬆ Star Improved' : '🔁 Replay';
+                  const pctColor = rw.improved ? 'var(--cyan)' : 'var(--red)';
+                  h += `<div class="rr rpen"><span class="rl" style="color:${pctColor};font-weight:800">${pctLabel}</span><span class="rv" style="color:${pctColor};font-weight:900">×${Math.round((rw.repMul || 1) * 100)}%</span></div>`;
+                }
+                const perLv = Math.floor(this.PIGGY_MAX / this.PIGGY_TARGET_LEVELS);
+                h += `<div class="rr rt"><span class="rl">🪙 Earned</span><span class="rv">+${rw.total || 0}</span></div>`;
+                h += `<div class="rr" style="color:#ff85a1"><span class="rl">🐷 Piggy +${perLv}</span><span class="rv">${(this.piggy || 0).toLocaleString()}/${this.PIGGY_MAX.toLocaleString()}</span></div>`;
+                $('rwB').innerHTML = h; $('wNx').style.display = '';
+                this.animCoin($('wCoinUp'), rw.total || 0);
+                const ab = $('wAdBtn');
+                if (this.adsRemoved) { ab.textContent = '👑 Auto ×2 (Premium)'; ab.classList.add('claimed'); }
+                else { ab.textContent = '🎬 Xem Ads ×2 Coin'; ab.classList.remove('claimed'); }
+                $('ws2').classList.remove('hid'); $('ws2').classList.add('fadeIn');
+                $('wPiggyBar').style.display = 'none';
+              } catch (e) {
+                console.error("Error in ws2 rendering:", e);
+                $('ws2').classList.remove('hid'); $('wNx').style.display = '';
+              }
+            }, 1500);
+          } catch (e) {
+            console.error("Error showing win screen:", e);
+            $('scrWin').classList.add('active'); $('ws2').classList.remove('hid'); $('wNx').style.display = '';
+          }
         }, 500);
       },
 
