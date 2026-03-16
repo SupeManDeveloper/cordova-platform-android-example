@@ -7,7 +7,7 @@
     <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
         EG Team
     </author>
-    <content src="index.html" />
+    <content src="index_v1.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <access origin="https://*" />
