@@ -1,5 +1,5 @@
 {
-  "name": "flipdominion.example.hello",
+  "name": "com.gamecotich.flipdominion",
   "displayName": "Flip Dominion",
   "version": "1.0.0",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",

@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="flipdominion.example.hello" version="1.0.0"
+<widget id="com.gamecotich.flipdominion" version="1.0.0"
     xmlns="http://www.w3.org/ns/widgets"
     xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>FLIP DOMINION</name>
     <description>Game Flip Dominion</description>
-    <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
+    <author email="gamecotich.com@gmail.com" href="https://gamecotich.com">
         EG Team
     </author>
     <content src="index_v1.html" />
