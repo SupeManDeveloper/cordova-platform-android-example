@@ -5296,6 +5296,12 @@
         $('piggyModal').classList.remove('hid');
       },
       buyPiggy() {
+        // TODO: Re-enable after Google Play Billing integration
+        const el = $('cPop');
+        el.textContent = '🛒 Coming soon — available next version';
+        el.className = 'cPop show'; setTimeout(() => el.className = 'cPop', 2000);
+        vib(30);
+        /* ORIGINAL FLOW — restore after IAP wired up
         const piggyCoins = this.piggy;
         this.coin += piggyCoins;
         this.piggy = 0;
@@ -5309,6 +5315,7 @@
           el.textContent = `🐷 +${piggyCoins.toLocaleString()}🪙 Piggy Bank collected!`;
           el.className = 'cPop show'; setTimeout(() => el.className = 'cPop', 2000);
         }, 400);
+        */
       },
       closePiggyModal() { $('piggyModal').classList.add('hid'); },
       selM(m) {
@@ -5415,10 +5422,17 @@
       },
       infoTab(i) { document.querySelectorAll('.infoTab').forEach((t, j) => t.classList.toggle('act', j === i)); document.querySelectorAll('.infoPane').forEach((p, j) => p.classList.toggle('act', j === i)); },
       buyPremiumMain() {
+        // TODO: Re-enable after Google Play Billing integration
         if (this.adsRemoved) return; // already owned
+        const el = $('cPop');
+        el.textContent = '🛒 Coming soon — available next version';
+        el.className = 'cPop show'; setTimeout(() => el.className = 'cPop', 2000);
+        vib(30);
+        /* ORIGINAL FLOW — restore after IAP wired up
         // Open shop at boosters tab where premium card is
         this.showShop();
         setTimeout(() => this.shopTab(1), 150);
+        */
       },
       showHint() {
         this.hideScr();
@@ -5540,10 +5554,17 @@
           d.innerHTML = `<div class="iapCoinIcn">${p.icn}</div><div class="iapCoinInfo"><div class="iapCoinName">🪙 ${p.amt.toLocaleString()}</div><div class="iapCoinDesc">${p.desc}</div><button class="iapCoinBtn">${p.price}</button></div>`;
           d.onmouseenter = () => this.showTip(d); d.onmouseleave = () => this.hideTip(); d.ontouchstart = () => this.showTip(d); d.ontouchend = () => setTimeout(() => this.hideTip(), 1500);
           d.onclick = () => {
+            // TODO: Re-enable after Google Play Billing integration
+            const el = $('cPop');
+            el.textContent = '🛒 Coming soon — available next version';
+            el.className = 'cPop show'; setTimeout(() => el.className = 'cPop', 2000);
+            vib(30);
+            /* ORIGINAL FLOW — restore after IAP wired up
             this.showPackOpen(
               { coins: p.amt },
               () => { this.coin += p.amt; this.save(); this.uCn(); vib(80); this.showShop(true); }
             );
+            */
           };
           ig.appendChild(d);
         });
@@ -5563,10 +5584,17 @@
           d.innerHTML = `<div class="iapIcn">${p.icn}</div><div class="iapName">${p.name}</div><div class="iapPrice">${p.price}</div>`;
           d.onmouseenter = () => this.showTip(d); d.onmouseleave = () => this.hideTip(); d.ontouchstart = () => this.showTip(d); d.ontouchend = () => setTimeout(() => this.hideTip(), 1500);
           d.onclick = () => {
+            // TODO: Re-enable after Google Play Billing integration
+            const el = $('cPop');
+            el.textContent = '🛒 Coming soon — available next version';
+            el.className = 'cPop show'; setTimeout(() => el.className = 'cPop', 2000);
+            vib(30);
+            /* ORIGINAL FLOW — restore after IAP wired up
             this.showPackOpen(
               { boosters: p.items },
               () => { Object.entries(p.items).forEach(([k, v]) => { this.bst[k] += v; }); this.iapStats[p.id] = (this.iapStats[p.id] || 0) + 1; this.save(); this.uBUI(); vib(80); this.showShop(true); }
             );
+            */
           };
           bpc.appendChild(d);
         });
@@ -5577,7 +5605,17 @@
         pd.dataset.tip = `<div class="ttL">⭐ Premium — Lifetime</div><div class="ttR"><span class="k">🚫 Remove ads</span><span class="v">✓</span></div><div class="ttR"><span class="k">🪙 Coin bonus</span><span class="v">+25% every level</span></div><div class="ttR"><span class="k">♟️ Daily login</span><span class="v">500🪙/day</span></div><div class="ttR" style="margin-top:3px;border-top:1px solid rgba(255,255,255,.1);padding-top:3px"><span class="k">💰 Monthly value</span><span class="v">~19,200🪙</span></div>`;
         pd.innerHTML = `<div class="iapPremLeft"><div class="iapPremIcn">⭐</div><div class="iapPremLbl">Premium</div></div><div class="iapPremRight"><div class="iapPremBenefits"><div>🚫 Remove ads</div><div>🪙 +25% coins every level</div><div>♟️ 500🪙/day (login)</div><div>💰 ~19,200🪙/month</div></div><button class="iapPremBtn ${owned ? 'owned' : ''}">${owned ? '✓ Bought' : '⭐ Buy · $4.99'}</button></div>`;
         pd.onmouseenter = () => this.showTip(pd); pd.onmouseleave = () => this.hideTip(); pd.ontouchstart = () => this.showTip(pd); pd.ontouchend = () => setTimeout(() => this.hideTip(), 1500);
-        pd.onclick = () => { if (!owned) { this.adsRemoved = true; this.save(); vib(80); this.showShop(true); } };
+        pd.onclick = () => {
+          if (owned) return;
+          // TODO: Re-enable after Google Play Billing integration
+          const el = $('cPop');
+          el.textContent = '🛒 Coming soon — available next version';
+          el.className = 'cPop show'; setTimeout(() => el.className = 'cPop', 2000);
+          vib(30);
+          /* ORIGINAL FLOW — restore after IAP wired up
+          this.adsRemoved = true; this.save(); vib(80); this.showShop(true);
+          */
+        };
         pm.appendChild(pd);
         // Tab 1: Single booster packs
         const bps = $('bpSingle'); bps.innerHTML = '';
@@ -5597,10 +5635,17 @@
           d.innerHTML = `<div class="iapIcn">${p.icn}</div><div class="iapName">${p.name}</div><div class="iapDesc">${p.desc}</div><div class="iapPrice">${p.price}</div><div class="iapBought">${this.iapStats[p.id] || 0}× purchased</div>`;
           d.onmouseenter = () => this.showTip(d); d.onmouseleave = () => this.hideTip(); d.ontouchstart = () => this.showTip(d); d.ontouchend = () => setTimeout(() => this.hideTip(), 1500);
           d.onclick = () => {
+            // TODO: Re-enable after Google Play Billing integration
+            const el = $('cPop');
+            el.textContent = '🛒 Coming soon — available next version';
+            el.className = 'cPop show'; setTimeout(() => el.className = 'cPop', 2000);
+            vib(30);
+            /* ORIGINAL FLOW — restore after IAP wired up
             this.showPackOpen(
               { boosters: p.items },
               () => { Object.entries(p.items).forEach(([k, v]) => { this.bst[k] += v; }); this.iapStats[p.id] = (this.iapStats[p.id] || 0) + 1; this.save(); this.uBUI(); vib(80); this.showShop(true); }
             );
+            */
           };
           bps.appendChild(d);
         });
@@ -7401,11 +7446,11 @@
         testDeviceIds: ['33BE2250B43518CCDA7DE426D04EE231'],
       });
       rewarded = new admobRef.RewardedInterstitialAd({
-        adUnitId: 'ca-app-pub-3940256099942544/5354046379',
+        adUnitId: 'ca-app-pub-5952026628404823/3525542576',
       });
 
       interstitial = new admobRef.InterstitialAd({
-        adUnitId: 'ca-app-pub-3940256099942544/1033173712',
+        adUnitId: 'ca-app-pub-5952026628404823/7430340019',
       });
 
       rewarded.on('load', () => {
