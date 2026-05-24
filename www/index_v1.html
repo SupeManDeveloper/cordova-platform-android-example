@@ -6012,12 +6012,19 @@
     }
 
     /* ════════════════════════════════════════════════════════════
-       GAMEPLAY BACKGROUND — decorate without re-introducing the
-       cross-screen transition flash. We add static radials to <body>;
-       active screens are still fully opaque so they cover decoration.
+       GAMEPLAY BACKGROUND
+       Layer order (top→bottom):
+         1. Custom image at `assets/bg-game.png` — drop your AI-generated
+            background here; it will cover the whole body. If the file
+            doesn't exist (404), this layer disappears and the layers
+            below take over so the app still looks good.
+         2-4. Subtle radial highlights (decorative glow).
+         5. Solid purple linear gradient (final fallback).
+       Active .scr screens are fully opaque and cover this for menus.
        ════════════════════════════════════════════════════════════ */
     body {
       background:
+        url('assets/bg-game.png') center / cover no-repeat,
         radial-gradient(circle at 18% 12%, rgba(255, 255, 255, .07), transparent 35%),
         radial-gradient(circle at 82% 88%, rgba(255, 100, 200, .14), transparent 45%),
         radial-gradient(circle at 50% 60%, rgba(80, 200, 255, .08), transparent 50%),
@@ -7642,8 +7649,19 @@
         const grid = $('grid'); grid.innerHTML = ''; const ga = document.querySelector('.gA');
         const aW = ga.clientWidth - 10, aH = ga.clientHeight - 10;
         const mW = Math.floor((aW - (cols - 1) * 4) / cols), mH = Math.floor((aH - (rows - 1) * 4) / rows);
-        const sz = Math.min(mW, mH, 68); this.eSz = Math.max(sz * .44, 13); this.bSz = Math.max(sz * .26, 9);
-        grid.style.gridTemplateColumns = `repeat(${cols},${sz}px)`; grid.style.gridTemplateRows = `repeat(${rows},${sz}px)`;
+        // Default tile is square (smaller of the two, capped at 68 for sanity).
+        const sq = Math.min(mW, mH, 68);
+        const tileW = Math.min(mW, 68);
+        // If vertical space-per-tile is significantly larger than horizontal
+        // (>15% taller), let height grow — but cap at 1.4× width so tiles don't
+        // become absurd tall rectangles. Keeps emoji icon readable, looks
+        // intentional on tall screens (e.g. 18:9, 20:9 phones with few rows).
+        let tileH = sq;
+        if (mH > tileW * 1.15) tileH = Math.min(mH, Math.round(tileW * 1.4));
+        const minDim = Math.min(tileW, tileH);
+        this.eSz = Math.max(minDim * .44, 13); this.bSz = Math.max(minDim * .26, 9);
+        grid.style.gridTemplateColumns = `repeat(${cols},${tileW}px)`;
+        grid.style.gridTemplateRows = `repeat(${rows},${tileH}px)`;
         this.renderTiles(); this.stgPrev();
         // Show ts notification for ts > 2
         const tsVal = L.ts || L.n;
