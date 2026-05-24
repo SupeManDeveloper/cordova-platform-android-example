@@ -360,6 +360,19 @@
       margin: 0 auto
     }
 
+    /* ═══ PERF: pause animations on hidden screens / when app backgrounded ═══ */
+    .scr:not(.active) *,
+    .scr:not(.active) *::before,
+    .scr:not(.active) *::after {
+      animation-play-state: paused !important
+    }
+
+    body.app-hidden *,
+    body.app-hidden *::before,
+    body.app-hidden *::after {
+      animation-play-state: paused !important
+    }
+
     /* ═══ AMBIENT ═══ */
     .amb {
       position: fixed;
@@ -545,32 +558,33 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: 9px;
+      gap: 10px;
       padding: 9px 13px;
-      background: rgba(255, 133, 161, .08);
-      border: 1.5px solid rgba(255, 133, 161, .35);
-      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(255, 133, 161, .14), rgba(255, 85, 153, .06));
+      border: 1.5px solid rgba(255, 133, 161, .42);
+      border-radius: 12px;
       cursor: pointer;
       font-family: 'Quicksand', sans-serif;
       transition: all .2s;
-      animation: pigMainPulse 1.8s ease infinite
+      animation: pigMainPulse 1.8s ease infinite;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06)
     }
 
     @keyframes pigMainPulse {
 
       0%,
       100% {
-        box-shadow: 0 0 0 0 rgba(255, 133, 161, .2)
+        opacity: .82
       }
 
       50% {
-        box-shadow: 0 0 0 6px rgba(255, 133, 161, .08)
+        opacity: 1
       }
     }
 
     .startPiggyBtn.pig-full {
-      border-color: rgba(255, 204, 51, .5);
-      background: rgba(255, 204, 51, .08);
+      border-color: rgba(255, 204, 51, .6);
+      background: linear-gradient(135deg, rgba(255, 204, 51, .18), rgba(255, 153, 51, .06));
       animation: pigMainPulseFull 1.8s ease infinite
     }
 
@@ -578,11 +592,11 @@
 
       0%,
       100% {
-        box-shadow: 0 0 0 0 rgba(255, 204, 51, .25)
+        opacity: .8
       }
 
       50% {
-        box-shadow: 0 0 0 6px rgba(255, 204, 51, .1)
+        opacity: 1
       }
     }
 
@@ -644,26 +658,27 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: 9px;
+      gap: 10px;
       padding: 7px 13px;
-      background: rgba(153, 102, 255, .08);
-      border: 1.5px solid rgba(153, 102, 255, .35);
-      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(153, 102, 255, .14), rgba(102, 51, 204, .06));
+      border: 1.5px solid rgba(153, 102, 255, .42);
+      border-radius: 12px;
       cursor: pointer;
       font-family: 'Quicksand', sans-serif;
       transition: all .2s;
-      animation: adsMainPulse 2.2s ease infinite
+      animation: adsMainPulse 2.2s ease infinite;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06)
     }
 
     @keyframes adsMainPulse {
 
       0%,
       100% {
-        box-shadow: 0 0 0 0 rgba(153, 102, 255, .2)
+        opacity: .82
       }
 
       50% {
-        box-shadow: 0 0 0 6px rgba(153, 102, 255, .08)
+        opacity: 1
       }
     }
 
@@ -723,21 +738,23 @@
     }
 
     .startCoinBtn {
-      background: rgba(255, 204, 51, .1);
-      border: 1px solid rgba(255, 204, 51, .28);
-      border-radius: 10px;
-      padding: 7px 13px;
+      background: linear-gradient(135deg, rgba(255, 204, 51, .18), rgba(241, 196, 15, .06));
+      border: 1.5px solid rgba(255, 204, 51, .42);
+      border-radius: 12px;
+      padding: 7px 14px;
       height: 42px;
       display: flex;
       align-items: center;
       gap: 7px;
       cursor: pointer;
-      font-size: .82rem;
+      font-size: .88rem;
       font-weight: 900;
       color: var(--gold);
       transition: all .15s;
       box-sizing: border-box;
-      min-width: 90px
+      min-width: 90px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 1px 6px rgba(255, 204, 51, .12);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .3)
     }
 
     .startCoinBtn:active {
@@ -792,13 +809,26 @@
       justify-content: center;
       gap: 8px;
       width: auto !important;
-      padding: 12px 52px !important;
-      font-size: .95rem !important;
+      padding: 13px 58px !important;
+      font-size: 1rem !important;
       font-weight: 900 !important;
-      border-radius: 13px !important;
-      margin-top: 10px;
-      letter-spacing: .03em;
-      box-shadow: 0 4px 20px rgba(46, 204, 113, .35)
+      border-radius: 14px !important;
+      margin-top: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      box-shadow:
+        0 6px 24px rgba(46, 204, 113, .42),
+        inset 0 1px 0 rgba(255, 255, 255, .25),
+        inset 0 -2px 0 rgba(0, 0, 0, .15);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+      border: 1.5px solid rgba(255, 255, 255, .12) !important
+    }
+
+    .startMainBtn:active {
+      transform: translateY(1px) scale(.98);
+      box-shadow:
+        0 3px 14px rgba(46, 204, 113, .42),
+        inset 0 1px 0 rgba(255, 255, 255, .15)
     }
 
     /* Center the start button */
@@ -824,27 +854,29 @@
 
     .startBotBtn {
       flex: 1;
-      padding: 10px 8px;
-      border: 1px solid rgba(255, 255, 255, .12);
-      border-radius: 11px;
-      background: rgba(255, 255, 255, .05);
-      color: var(--dim);
+      padding: 11px 8px;
+      border: 1.5px solid rgba(255, 255, 255, .14);
+      border-radius: 12px;
+      background: linear-gradient(160deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .02));
+      color: var(--text);
       font-family: 'Quicksand', sans-serif;
-      font-weight: 700;
+      font-weight: 800;
       font-size: .78rem;
+      letter-spacing: .02em;
       cursor: pointer;
       transition: all .2s;
-      text-align: center
+      text-align: center;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06)
     }
 
     .startBotBtn:active {
-      transform: scale(.96)
+      transform: scale(.96);
+      background: linear-gradient(160deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .04))
     }
 
     .startBotBtn:hover {
-      background: rgba(255, 255, 255, .09);
-      color: var(--text);
-      border-color: rgba(255, 255, 255, .22)
+      background: linear-gradient(160deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .04));
+      border-color: rgba(255, 255, 255, .26)
     }
 
     /* Foot links row (legacy, unused) */
@@ -895,11 +927,11 @@
 
       0%,
       100% {
-        box-shadow: 0 0 0 0 rgba(255, 204, 51, .2)
+        opacity: .82
       }
 
       50% {
-        box-shadow: 0 0 0 5px rgba(255, 204, 51, .12)
+        opacity: 1
       }
     }
 
@@ -948,12 +980,11 @@
     .piggyModal {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, .75);
+      background: rgba(0, 0, 0, .88);
       z-index: 300;
       display: flex;
       align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(6px)
+      justify-content: center
     }
 
     .piggyModal.hid {
@@ -1184,9 +1215,8 @@
       flex-shrink: 0;
       z-index: 2;
       position: relative;
-      background: var(--s1);
-      border-bottom: 1px solid var(--hud-border);
-      backdrop-filter: blur(4px)
+      background: var(--s3);
+      border-bottom: 1px solid var(--hud-border)
     }
 
     .gbMatch {
@@ -1316,8 +1346,9 @@
       position: relative;
       cursor: pointer;
       transform-style: preserve-3d;
-      transition: transform .4s cubic-bezier(.4, 0, .2, 1);
-      border-radius: 8px
+      transition: transform .32s cubic-bezier(.32, 1.18, .42, 1);
+      border-radius: 8px;
+      will-change: transform
     }
 
     .tile.flipped {
@@ -1335,7 +1366,18 @@
 
     .tile.picked .tF {
       box-shadow: 0 0 16px rgba(51, 221, 255, .7), inset 0 0 12px rgba(51, 221, 255, .15);
-      border-color: var(--cyan);
+      border-color: var(--cyan)
+    }
+
+    /* Pulse via opacity on pseudo-overlay — composite-only, no repaint per frame */
+    .tile.picked .tF::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      box-shadow: 0 0 24px rgba(51, 221, 255, .9), inset 0 0 16px rgba(51, 221, 255, .25);
+      opacity: 0;
       animation: pickPulse .8s ease infinite
     }
 
@@ -1343,11 +1385,11 @@
 
       0%,
       100% {
-        box-shadow: 0 0 16px rgba(51, 221, 255, .7), inset 0 0 12px rgba(51, 221, 255, .15)
+        opacity: 0
       }
 
       50% {
-        box-shadow: 0 0 24px rgba(51, 221, 255, .9), inset 0 0 16px rgba(51, 221, 255, .25)
+        opacity: 1
       }
     }
 
@@ -1513,11 +1555,13 @@
       position: absolute;
       inset: 0;
       backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2px solid rgba(153, 102, 255, .22)
+      border: 2px solid rgba(153, 102, 255, .22);
+      will-change: transform
     }
 
     .tBk {
@@ -1545,8 +1589,9 @@
 
     .tF {
       background: var(--card);
-      transform: rotateY(180deg);
-      transition: box-shadow .3s, border-color .3s
+      transform: rotateY(180deg)
+      /* Note: removed box-shadow/border-color transitions — they triggered repaint
+         on every state change (flipped/picked/matched). Snapping keeps flip smooth. */
     }
 
     /* ═══ BOOSTER BADGES ON TILES ═══ */
@@ -1781,7 +1826,38 @@
     }
 
     .cPop {
-      display: none
+      display: none;
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 500;
+      background: linear-gradient(180deg, rgba(0, 0, 0, .92), rgba(0, 0, 0, .78));
+      color: #fff;
+      padding: 12px 22px;
+      border-radius: 24px;
+      border: 2px solid #ffd84a;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 800;
+      font-size: .82rem;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .55);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .12);
+      max-width: 84%;
+      text-align: center;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0
+    }
+
+    .cPop.show {
+      display: block;
+      animation: cPopShow 2s ease-in-out
+    }
+
+    @keyframes cPopShow {
+      0% { opacity: 0; transform: translateX(-50%) translateY(20px) }
+      12%, 82% { opacity: 1; transform: translateX(-50%) translateY(0) }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-12px) }
     }
 
     /* ═══ CENTER POPUP QUEUE ═══ */
@@ -2060,16 +2136,23 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--scr-bg, rgba(8, 12, 24, .95));
-      backdrop-filter: blur(8px);
+      background: var(--scr-bg, rgba(8, 12, 24, .98));
       opacity: 0;
-      pointer-events: none;
-      transition: opacity .35s
+      visibility: hidden;
+      pointer-events: none
+      /* Removed `contain: layout style paint` — it created a stacking context
+         that prevented hit-testing on shop buttons / back button on some WebViews. */
     }
 
     .scr.active {
       opacity: 1;
-      pointer-events: all
+      visibility: visible;
+      pointer-events: all;
+      z-index: 101
+      /* No animation — instant snap.
+         Any opacity/transform animation forces paint of the newly visible
+         heavy gradient content mid-frame, which is the source of the
+         "screen jump" feeling when coming from gameplay. */
     }
 
     .scrIn {
@@ -2252,11 +2335,11 @@
 
       0%,
       100% {
-        box-shadow: 0 0 6px rgba(68, 238, 136, .2)
+        opacity: .8
       }
 
       50% {
-        box-shadow: 0 0 14px rgba(68, 238, 136, .4)
+        opacity: 1
       }
     }
 
@@ -2834,18 +2917,20 @@
     .modeSelect {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-      margin: 10px 0
+      gap: 8px;
+      margin: 12px 0
     }
 
     .modeCard {
-      padding: 8px 4px;
-      background: var(--card);
-      border: 2px solid rgba(153, 102, 255, .2);
-      border-radius: 12px;
+      padding: 12px 6px 10px;
+      background: linear-gradient(160deg, rgba(153, 102, 255, .06), rgba(20, 25, 50, .4));
+      border: 1.5px solid rgba(153, 102, 255, .22);
+      border-radius: 14px;
       cursor: pointer;
       transition: all .25s;
-      text-align: center
+      text-align: center;
+      position: relative;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04), 0 2px 8px rgba(0, 0, 0, .15)
     }
 
     /* ═══ TOWER RESET BAR ═══ */
@@ -3038,8 +3123,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--scr-bg);
-      backdrop-filter: blur(6px)
+      background: var(--scr-bg)
     }
 
     .twGateIn {
@@ -3076,12 +3160,11 @@
     .coinModal {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, .7);
+      background: rgba(0, 0, 0, .85);
       z-index: 200;
       display: flex;
       align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(4px)
+      justify-content: center
     }
 
     .coinModal.hid {
@@ -3183,18 +3266,18 @@
 
       0%,
       100% {
-        box-shadow: 0 0 0 0 rgba(51, 221, 255, .2)
+        opacity: .8
       }
 
       50% {
-        box-shadow: 0 0 0 4px rgba(51, 221, 255, .1)
+        opacity: 1
       }
     }
 
     .modeCard.sel-tower {
       border-color: #ff6b35;
-      box-shadow: 0 0 22px rgba(255, 107, 53, .35);
-      background: rgba(255, 107, 53, .11);
+      box-shadow: 0 0 22px rgba(255, 107, 53, .38), inset 0 1px 0 rgba(255, 255, 255, .08);
+      background: linear-gradient(160deg, rgba(255, 107, 53, .22), rgba(255, 107, 53, .04));
       transform: scale(1.04)
     }
 
@@ -3237,33 +3320,54 @@
 
     .modeCard.sel-time {
       border-color: var(--green);
-      box-shadow: 0 0 22px rgba(46, 204, 113, .35);
-      background: rgba(46, 204, 113, .11);
+      box-shadow: 0 0 22px rgba(46, 204, 113, .38), inset 0 1px 0 rgba(255, 255, 255, .08);
+      background: linear-gradient(160deg, rgba(46, 204, 113, .22), rgba(46, 204, 113, .04));
       transform: scale(1.04)
     }
 
     .modeCard.sel-moves {
       border-color: #2196F3;
-      box-shadow: 0 0 22px rgba(33, 150, 243, .35);
-      background: rgba(33, 150, 243, .11);
+      box-shadow: 0 0 22px rgba(33, 150, 243, .38), inset 0 1px 0 rgba(255, 255, 255, .08);
+      background: linear-gradient(160deg, rgba(33, 150, 243, .22), rgba(33, 150, 243, .04));
       transform: scale(1.04)
     }
 
     .modeCard .mcI {
-      font-size: 1.5rem;
-      margin-bottom: 2px
+      font-size: 1.7rem;
+      margin-bottom: 4px;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .35))
     }
 
     .modeCard .mcN {
-      font-size: .72rem;
-      font-weight: 800;
-      margin-bottom: 2px
+      font-size: .78rem;
+      font-weight: 900;
+      margin-bottom: 3px;
+      letter-spacing: .02em
     }
 
     .modeCard .mcD {
       font-size: .48rem;
       color: var(--dim);
       line-height: 1.35
+    }
+
+    .modeCard .mcSub {
+      font-size: .54rem;
+      color: var(--dim);
+      font-weight: 700;
+      letter-spacing: .03em
+    }
+
+    .modeCard.sel-time .mcSub {
+      color: rgba(68, 238, 136, .85)
+    }
+
+    .modeCard.sel-moves .mcSub {
+      color: rgba(33, 150, 243, .9)
+    }
+
+    .modeCard.sel-tower .mcSub {
+      color: rgba(255, 107, 53, .9)
     }
 
     /* ═══ START SCREEN HERO ═══ */
@@ -3273,11 +3377,11 @@
     }
 
     .heroEmoji {
-      font-size: 3rem;
+      font-size: 3.2rem;
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
       animation: heroFloat 3s ease-in-out infinite;
-      filter: drop-shadow(0 0 18px rgba(153, 102, 255, .5))
+      filter: drop-shadow(0 0 22px rgba(153, 102, 255, .55)) drop-shadow(0 0 8px rgba(51, 221, 255, .25))
     }
 
     @keyframes heroFloat {
@@ -3294,23 +3398,36 @@
 
     .heroTitle {
       font-family: 'Cinzel Decorative', serif;
-      font-size: 1.6rem;
+      font-size: 1.75rem;
       font-weight: 900;
-      letter-spacing: .04em;
-      background: linear-gradient(135deg, var(--gold), var(--pink), var(--cyan));
+      letter-spacing: .05em;
+      background: linear-gradient(135deg, #ffd966 0%, var(--gold) 35%, var(--pink) 70%, var(--cyan) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
       text-shadow: none;
       display: block;
-      margin-bottom: 2px
+      margin-bottom: 4px;
+      filter: drop-shadow(0 2px 8px rgba(255, 204, 51, .15))
     }
 
     .heroSub {
-      font-size: .72rem;
+      font-size: .68rem;
       color: var(--dim);
-      letter-spacing: .06em;
+      letter-spacing: .14em;
       text-transform: uppercase;
-      font-weight: 700
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .heroSub::before,
+    .heroSub::after {
+      content: '';
+      width: 18px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 204, 51, .5), transparent)
     }
 
     /* ═══ LOSE ICON ANIMATION ═══ */
@@ -3464,7 +3581,6 @@
       inset: 0;
       z-index: 90;
       background: var(--scr-bg);
-      backdrop-filter: blur(6px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -3800,6 +3916,7 @@
       text-align: left;
       width: 240px;
       z-index: 200;
+      pointer-events: none;
       box-shadow: 0 4px 16px rgba(0, 0, 0, .6);
       pointer-events: none
     }
@@ -4057,7 +4174,6 @@
       transform: translate(-50%, -50%);
       z-index: 600;
       background: none;
-      backdrop-filter: none;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -4270,6 +4386,1672 @@
     .coin-bump {
       animation: coinBump .35s ease forwards
     }
+
+    /* ═══════════════════════════════════════════════════════════════
+       CANDY MOBILE-GAME OVERRIDE — ALL SCREENS
+       Bright Ludo-Master style, wins over every theme
+       =══════════════════════════════════════════════════════════════ */
+
+    /* Purple game background — every screen.
+       Single-stop linear is dramatically cheaper to paint than multi-layer radial+linear,
+       which matters when a screen becomes visible mid-transition. */
+    .scr {
+      background: linear-gradient(180deg, #6648d8 0%, #3a1f8e 100%) !important
+    }
+
+    /* Screens with a HUD header stack from top; content-only screens stay centered */
+    #scrTheme,
+    #scrHint,
+    #scrShop,
+    #scrTower,
+    #scrLvls,
+    #scrSettings {
+      flex-direction: column !important;
+      justify-content: flex-start !important
+    }
+
+    /* ─── HUD HEADER (Theme / Hint / Shop / Tower / Levels) ─── */
+    .scrHud {
+      background: linear-gradient(180deg, rgba(0, 0, 0, .22), rgba(0, 0, 0, .12)) !important;
+      border-bottom: 2px solid rgba(255, 255, 255, .14) !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, .25);
+      padding: 12px 14px 10px !important
+    }
+
+    .scrHudName {
+      color: #fff !important;
+      text-shadow: 0 2px 3px rgba(0, 0, 0, .35);
+      letter-spacing: .06em !important
+    }
+
+    .scrHudIcn {
+      filter: drop-shadow(0 2px 0 rgba(0, 0, 0, .3))
+    }
+
+    .scrHudBack.backBtn,
+    .scrHud .backBtn {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .18), rgba(255, 255, 255, .06)) !important;
+      border: 2px solid rgba(255, 255, 255, .25) !important;
+      color: #fff !important;
+      border-radius: 12px !important;
+      padding: 7px 14px !important;
+      font-weight: 800 !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .2),
+        inset 0 -2px 0 rgba(0, 0, 0, .2) !important
+    }
+
+    .scrHudBack.backBtn:active {
+      transform: translateY(1px) scale(.97) !important
+    }
+
+    .scrHudCoin {
+      background: linear-gradient(180deg, #ffd84a, #ff9a18) !important;
+      border: 2px solid rgba(255, 255, 255, .55) !important;
+      color: #fff !important;
+      border-radius: 12px !important;
+      padding: 6px 13px !important;
+      font-weight: 900 !important;
+      text-shadow: 0 1px 2px rgba(180, 80, 0, .4);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .35),
+        inset 0 -2px 0 rgba(160, 60, 0, .25),
+        0 2px 6px rgba(0, 0, 0, .25) !important
+    }
+
+    /* ─── SCREEN TITLES & SUBTITLES ─── */
+    .scrTi {
+      font-size: 1.85rem !important;
+      background: linear-gradient(180deg, #fff5b8 0%, #ffce4a 45%, #ff9a18 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+      filter: drop-shadow(0 3px 0 rgba(0, 0, 0, .35)) drop-shadow(0 0 14px rgba(255, 180, 50, .3))
+    }
+
+    .scrSu {
+      color: rgba(255, 255, 255, .9) !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35)
+    }
+
+    /* ─── BUTTONS ─── */
+    .btn.b1 {
+      background: linear-gradient(180deg, #ffd35e 0%, #ff9818 60%, #f47a08 100%) !important;
+      color: #fff !important;
+      border: 2.5px solid #fff !important;
+      border-radius: 16px !important;
+      text-shadow: 0 2px 3px rgba(180, 60, 0, .45) !important;
+      box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, .4),
+        inset 0 -4px 0 rgba(160, 60, 0, .3),
+        0 5px 0 #b35200,
+        0 9px 18px rgba(0, 0, 0, .35) !important;
+      padding: 10px 24px !important;
+      transition: transform .08s ease, box-shadow .08s ease
+    }
+
+    .btn.b1:active {
+      transform: translateY(3px) !important;
+      box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, .4),
+        inset 0 -4px 0 rgba(160, 60, 0, .3),
+        0 2px 0 #b35200,
+        0 5px 10px rgba(0, 0, 0, .35) !important
+    }
+
+    .btn.b2 {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, .04)) !important;
+      color: #fff !important;
+      border: 2px solid rgba(255, 255, 255, .35) !important;
+      border-radius: 14px !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .25),
+        inset 0 -2px 0 rgba(0, 0, 0, .25),
+        0 3px 8px rgba(0, 0, 0, .2) !important
+    }
+
+    .btn.b2:active {
+      transform: translateY(1px) scale(.97) !important
+    }
+
+    .btn.b3 {
+      background: linear-gradient(180deg, #43dec5, #169c8d) !important;
+      color: #fff !important;
+      border: 2.5px solid #fff !important;
+      border-radius: 16px !important;
+      text-shadow: 0 2px 3px rgba(0, 80, 70, .45);
+      box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, .35),
+        inset 0 -4px 0 rgba(0, 80, 70, .3),
+        0 5px 0 #0d6b60,
+        0 9px 18px rgba(0, 0, 0, .35) !important;
+      padding: 10px 24px !important;
+      transition: transform .08s ease, box-shadow .08s ease
+    }
+
+    .btn.b3:active {
+      transform: translateY(3px) !important;
+      box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, .35),
+        inset 0 -4px 0 rgba(0, 80, 70, .3),
+        0 2px 0 #0d6b60,
+        0 5px 10px rgba(0, 0, 0, .35) !important
+    }
+
+    .btn.bAd {
+      background: linear-gradient(180deg, #5ee084, #2ea84a) !important;
+      color: #fff !important;
+      border: 2.5px solid #fff !important;
+      border-radius: 14px !important;
+      text-shadow: 0 1px 2px rgba(0, 80, 30, .45);
+      box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, .35),
+        inset 0 -3px 0 rgba(0, 70, 30, .3),
+        0 4px 0 #1c7233,
+        0 7px 14px rgba(0, 0, 0, .3) !important
+    }
+
+    .btn.bAd:active {
+      transform: translateY(2px) !important;
+      box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, .35),
+        inset 0 -3px 0 rgba(0, 70, 30, .3),
+        0 2px 0 #1c7233,
+        0 4px 8px rgba(0, 0, 0, .3) !important
+    }
+
+    .btn.bCoin {
+      background: linear-gradient(180deg, #ffd84a, #ff9a18) !important;
+      color: #fff !important;
+      border: 2.5px solid #fff !important;
+      border-radius: 14px !important;
+      text-shadow: 0 1px 2px rgba(180, 70, 0, .45);
+      box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, .4),
+        inset 0 -3px 0 rgba(160, 70, 0, .3),
+        0 4px 0 #b35e00,
+        0 7px 14px rgba(0, 0, 0, .3) !important
+    }
+
+    .btn.bCoin:active {
+      transform: translateY(2px) !important;
+      box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, .4),
+        inset 0 -3px 0 rgba(160, 70, 0, .3),
+        0 2px 0 #b35e00,
+        0 4px 8px rgba(0, 0, 0, .3) !important
+    }
+
+    /* ─── TABS (shop, hint, levels) ─── */
+    .shopTab,
+    .infoTab,
+    .lvModeTab {
+      background: linear-gradient(180deg, rgba(0, 0, 0, .25), rgba(0, 0, 0, .15)) !important;
+      color: rgba(255, 255, 255, .65) !important;
+      border: 2px solid rgba(255, 255, 255, .12) !important;
+      border-radius: 12px !important;
+      font-weight: 800 !important;
+      padding: 8px 12px !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35)
+    }
+
+    .shopTab.act,
+    .infoTab.act,
+    .lvModeTab.act {
+      background: linear-gradient(180deg, #ffd35e, #ff9818) !important;
+      color: #fff !important;
+      border-color: #fff !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .4),
+        inset 0 -2px 0 rgba(180, 80, 0, .3),
+        0 3px 8px rgba(0, 0, 0, .25) !important
+    }
+
+    /* ─── INFO/HINT BOX ─── */
+    .infoBox {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .03)) !important;
+      border: 2px solid rgba(255, 255, 255, .18) !important;
+      border-radius: 16px !important;
+      padding: 12px !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 4px 14px rgba(0, 0, 0, .25)
+    }
+
+    .infoRow {
+      background: rgba(0, 0, 0, .2) !important;
+      border: 1.5px solid rgba(255, 255, 255, .1) !important;
+      border-radius: 10px !important;
+      color: #fff !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .3)
+    }
+
+    .infoTitle {
+      color: #ffd84a !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35)
+    }
+
+    .infoDesc {
+      color: rgba(255, 255, 255, .85) !important
+    }
+
+    .infoCost {
+      background: linear-gradient(180deg, #a585ff, #6e44d8) !important;
+      color: #fff !important;
+      border: 1.5px solid rgba(255, 255, 255, .35) !important;
+      border-radius: 8px !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25)
+    }
+
+    /* ─── THEME CARDS ─── */
+    .themeCard {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .03)) !important;
+      border: 2.5px solid rgba(255, 255, 255, .18) !important;
+      border-radius: 16px !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .15),
+        inset 0 -3px 0 rgba(0, 0, 0, .2),
+        0 4px 12px rgba(0, 0, 0, .25) !important;
+      padding: 10px !important
+    }
+
+    .themeCard.active {
+      border-color: #ffd84a !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .3),
+        inset 0 -3px 0 rgba(0, 0, 0, .2),
+        0 0 0 3px rgba(255, 216, 74, .35),
+        0 6px 16px rgba(0, 0, 0, .3) !important
+    }
+
+    .themeName {
+      color: #fff !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35)
+    }
+
+    .themeSub {
+      color: rgba(255, 255, 255, .75) !important
+    }
+
+    .themeResetBtn {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .04)) !important;
+      border: 2px solid rgba(255, 255, 255, .25) !important;
+      color: #fff !important;
+      border-radius: 12px !important;
+      font-weight: 800 !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2) !important
+    }
+
+    /* ─── SHOP ITEMS ─── */
+    .shopItem {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .03)) !important;
+      border: 2.5px solid rgba(255, 255, 255, .2) !important;
+      border-radius: 14px !important;
+      color: #fff !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .18),
+        inset 0 -3px 0 rgba(0, 0, 0, .2),
+        0 4px 10px rgba(0, 0, 0, .25) !important
+    }
+
+    .shopItem.cant {
+      opacity: .55 !important
+    }
+
+    .shopName,
+    .shopOwn {
+      color: #fff !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35)
+    }
+
+    .shopPrice {
+      color: #ffd84a !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+      font-weight: 900 !important
+    }
+
+    .shopBought {
+      color: rgba(255, 255, 255, .7) !important
+    }
+
+    /* ─── IAP ITEMS ─── */
+    .iapItem,
+    .iapCoinCard {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .03)) !important;
+      border: 2.5px solid rgba(255, 255, 255, .22) !important;
+      border-radius: 16px !important;
+      color: #fff !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .2),
+        inset 0 -3px 0 rgba(0, 0, 0, .2),
+        0 4px 12px rgba(0, 0, 0, .28) !important
+    }
+
+    .iapName,
+    .iapCoinName {
+      color: #fff !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35)
+    }
+
+    .iapDesc,
+    .iapCoinDesc,
+    .iapBought {
+      color: rgba(255, 255, 255, .75) !important
+    }
+
+    .iapPrice,
+    .iapCoinBtn {
+      background: linear-gradient(180deg, #ffd84a, #ff9a18) !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      border-radius: 10px !important;
+      text-shadow: 0 1px 2px rgba(180, 70, 0, .4) !important;
+      font-weight: 900 !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .35),
+        inset 0 -2px 0 rgba(160, 70, 0, .3) !important
+    }
+
+    .iapPremCard {
+      background: linear-gradient(180deg, #ffd35e, #ff7a18) !important;
+      border-color: #fff !important
+    }
+
+    .iapPremCard.owned {
+      background: linear-gradient(180deg, #5ee084, #2ea84a) !important
+    }
+
+    .iapPremLbl,
+    .iapPremBenefits {
+      color: #fff !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35)
+    }
+
+    .iapPremBtn {
+      background: linear-gradient(180deg, #fff, rgba(255, 255, 255, .85)) !important;
+      color: #f47a08 !important;
+      border: none !important;
+      border-radius: 12px !important;
+      font-weight: 900 !important;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, .25) !important
+    }
+
+    .iapPremBtn.owned {
+      background: linear-gradient(180deg, #fff, rgba(255, 255, 255, .85)) !important;
+      color: #2ea84a !important
+    }
+
+    /* ─── LEVELS GRID ─── */
+    .lvCard,
+    .lvG5 .lvCard {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .04)) !important;
+      border: 2.5px solid rgba(255, 255, 255, .22) !important;
+      color: #fff !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .2),
+        inset 0 -3px 0 rgba(0, 0, 0, .2),
+        0 3px 8px rgba(0, 0, 0, .25) !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .3)
+    }
+
+    .lvCard.lk {
+      opacity: .5 !important
+    }
+
+    .lvCard.cur {
+      background: linear-gradient(180deg, #ffd35e, #ff9818) !important;
+      border-color: #fff !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .4),
+        inset 0 -3px 0 rgba(180, 80, 0, .3),
+        0 0 0 3px rgba(255, 216, 74, .35),
+        0 5px 12px rgba(0, 0, 0, .3) !important
+    }
+
+    .lvPgBtn {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .18), rgba(255, 255, 255, .06)) !important;
+      border: 2px solid rgba(255, 255, 255, .3) !important;
+      color: #fff !important;
+      border-radius: 10px !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), inset 0 -2px 0 rgba(0, 0, 0, .2) !important
+    }
+
+    .lvPgName {
+      color: #fff !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+      font-weight: 900 !important
+    }
+
+    .lvDots .lvDot {
+      background: rgba(255, 255, 255, .25) !important
+    }
+
+    .lvDots .lvDot.act {
+      background: #ffd84a !important;
+      box-shadow: 0 0 8px rgba(255, 216, 74, .6)
+    }
+
+    /* ─── TOWER ─── */
+    .twResetBar {
+      background: linear-gradient(180deg, rgba(0, 0, 0, .25), rgba(0, 0, 0, .12)) !important;
+      border: 2px solid rgba(255, 255, 255, .15) !important;
+      border-radius: 14px !important;
+      padding: 10px 14px !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1) !important
+    }
+
+    .twResetBarLabel,
+    .twResetBarTime {
+      color: #fff !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .3)
+    }
+
+    .twResetBarTrack {
+      background: rgba(0, 0, 0, .3) !important;
+      border: 1px solid rgba(255, 255, 255, .1) !important
+    }
+
+    .twResetBarFill {
+      background: linear-gradient(90deg, #ffd84a, #ff9a18) !important
+    }
+
+    .twStat,
+    .twSt {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .04)) !important;
+      border: 2px solid rgba(255, 255, 255, .2) !important;
+      border-radius: 14px !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .18),
+        inset 0 -3px 0 rgba(0, 0, 0, .2) !important
+    }
+
+    .twV {
+      color: #ffd84a !important;
+      text-shadow: 0 2px 3px rgba(0, 0, 0, .35) !important
+    }
+
+    .twL {
+      color: rgba(255, 255, 255, .85) !important
+    }
+
+    /* ─── MODALS (Piggy / Coin / Tower Gate / Pause) ─── */
+    .piggyModalBox,
+    .coinModalBox,
+    .twGateIn,
+    .pauseBox {
+      background: linear-gradient(180deg, #6e4ce0 0%, #4d2ba8 100%) !important;
+      border: 3px solid rgba(255, 255, 255, .35) !important;
+      border-radius: 22px !important;
+      box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, .2),
+        inset 0 -4px 0 rgba(0, 0, 0, .25),
+        0 12px 32px rgba(0, 0, 0, .5) !important
+    }
+
+    .piggyModalTitle,
+    .twGTi {
+      color: #fff !important;
+      text-shadow: 0 2px 3px rgba(0, 0, 0, .35) !important
+    }
+
+    .piggyModalSub,
+    .twGCost {
+      color: rgba(255, 255, 255, .9) !important
+    }
+
+    .piggyBuyBtn {
+      background: linear-gradient(180deg, #ffd35e, #ff9818) !important;
+      color: #fff !important;
+      border: 2.5px solid #fff !important;
+      border-radius: 14px !important;
+      text-shadow: 0 1px 2px rgba(180, 70, 0, .4) !important;
+      font-weight: 900 !important;
+      box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, .4),
+        inset 0 -3px 0 rgba(160, 70, 0, .3),
+        0 4px 0 #b35200,
+        0 7px 14px rgba(0, 0, 0, .35) !important
+    }
+
+    .piggyCancelBtn {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .04)) !important;
+      border: 2px solid rgba(255, 255, 255, .3) !important;
+      color: rgba(255, 255, 255, .85) !important;
+      border-radius: 12px !important
+    }
+
+    /* ─── WIN/LOSE SCREENS ─── */
+    .stars .star {
+      filter: drop-shadow(0 3px 0 rgba(0, 0, 0, .3)) drop-shadow(0 0 10px rgba(255, 216, 74, .6))
+    }
+
+    .winStats {
+      background: linear-gradient(180deg, rgba(0, 0, 0, .25), rgba(0, 0, 0, .12)) !important;
+      border: 2px solid rgba(255, 255, 255, .15) !important;
+      border-radius: 14px !important;
+      color: #fff !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12) !important
+    }
+
+    .coinUp {
+      color: #ffd84a !important;
+      text-shadow: 0 3px 6px rgba(0, 0, 0, .4), 0 0 16px rgba(255, 216, 74, .5) !important
+    }
+
+    /* ─── BOOSTER PICKER (Tower) ─── */
+    .twBstSel .twB {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .04)) !important;
+      border: 2px solid rgba(255, 255, 255, .22) !important;
+      color: #fff !important;
+      border-radius: 12px !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .18),
+        inset 0 -2px 0 rgba(0, 0, 0, .2) !important
+    }
+
+    .twBstSel .twB.sel {
+      border-color: #ffd84a !important;
+      background: linear-gradient(180deg, rgba(255, 216, 74, .3), rgba(255, 154, 24, .15)) !important
+    }
+
+    /* ─── PAUSE OVERLAY ─── */
+    .pauseOv {
+      background:
+        radial-gradient(ellipse at top, rgba(255, 255, 255, .08), transparent 55%),
+        linear-gradient(180deg, rgba(102, 72, 216, .85), rgba(58, 31, 142, .9)) !important
+    }
+
+    /* Hero */
+    #scrStart .heroArea {
+      margin-bottom: 10px
+    }
+
+    #scrStart .heroEmoji {
+      font-size: 3.4rem;
+      filter: drop-shadow(0 4px 0 rgba(0, 0, 0, .25)) drop-shadow(0 0 22px rgba(255, 220, 100, .55))
+    }
+
+    #scrStart .heroTitle {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.9rem;
+      letter-spacing: .04em;
+      background: linear-gradient(180deg, #fff5b8 0%, #ffce4a 45%, #ff9a18 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 3px 0 rgba(0, 0, 0, .35)) drop-shadow(0 0 18px rgba(255, 180, 50, .35))
+    }
+
+    #scrStart .heroSub {
+      color: rgba(255, 255, 255, .82);
+      font-size: .66rem;
+      letter-spacing: .16em;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35)
+    }
+
+    #scrStart .heroSub::before,
+    #scrStart .heroSub::after {
+      background: linear-gradient(90deg, transparent, rgba(255, 220, 100, .6), transparent)
+    }
+
+    /* Pills — Piggy / Ads / Coin */
+    #scrStart .startPiggyBtn,
+    #scrStart .startAdsBtn,
+    #scrStart .startCoinBtn {
+      border-radius: 16px !important;
+      border-width: 2px !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .35),
+        inset 0 -3px 0 rgba(0, 0, 0, .18),
+        0 3px 10px rgba(0, 0, 0, .25) !important
+    }
+
+    #scrStart .startPiggyBtn {
+      background: linear-gradient(180deg, #ff7aa8 0%, #e8447a 100%) !important;
+      border-color: rgba(255, 255, 255, .55) !important
+    }
+
+    #scrStart .startPiggyBtn .spMainLabel,
+    #scrStart .startPiggyBtn .spMainAmt {
+      color: #fff !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35)
+    }
+
+    #scrStart .startPiggyBtn.pig-full {
+      background: linear-gradient(180deg, #ffd84a 0%, #ff9a18 100%) !important;
+      border-color: rgba(255, 255, 255, .65) !important
+    }
+
+    #scrStart .startAdsBtn {
+      background: linear-gradient(180deg, #a585ff 0%, #6e44d8 100%) !important;
+      border-color: rgba(255, 255, 255, .55) !important
+    }
+
+    #scrStart .startAdsBtn .adsLabel,
+    #scrStart .startAdsBtn .adsPrice {
+      color: #fff !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35)
+    }
+
+    #scrStart .startAdsBtn .adsIco {
+      background: linear-gradient(180deg, #fff5b8, #ffce4a) !important;
+      color: #6e44d8;
+      box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .15)
+    }
+
+    #scrStart .startCoinBtn {
+      background: linear-gradient(180deg, #ffd84a 0%, #ff9a18 100%) !important;
+      border-color: rgba(255, 255, 255, .55) !important;
+      color: #fff !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35)
+    }
+
+    /* Mode cards — vivid candy colors */
+    #scrStart .modeCard {
+      border-radius: 18px !important;
+      border-width: 2.5px !important;
+      padding: 14px 6px 12px !important;
+      color: #fff;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .3),
+        inset 0 -4px 0 rgba(0, 0, 0, .22),
+        0 4px 12px rgba(0, 0, 0, .28) !important
+    }
+
+    #scrStart #mcT {
+      background: linear-gradient(180deg, #ff9d4d 0%, #e84c30 100%) !important;
+      border-color: rgba(255, 255, 255, .5) !important
+    }
+
+    #scrStart #mcM {
+      background: linear-gradient(180deg, #43dec5 0%, #169c8d 100%) !important;
+      border-color: rgba(255, 255, 255, .5) !important
+    }
+
+    #scrStart #mcTw {
+      background: linear-gradient(180deg, #ff76b8 0%, #d62e7e 100%) !important;
+      border-color: rgba(255, 255, 255, .5) !important
+    }
+
+    #scrStart .modeCard.sel-time,
+    #scrStart .modeCard.sel-moves,
+    #scrStart .modeCard.sel-tower {
+      border-color: #fff !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .45),
+        inset 0 -4px 0 rgba(0, 0, 0, .22),
+        0 0 0 3px rgba(255, 255, 255, .25),
+        0 8px 20px rgba(0, 0, 0, .35) !important
+    }
+
+    #scrStart .modeCard .mcI {
+      font-size: 1.85rem;
+      filter: drop-shadow(0 3px 0 rgba(0, 0, 0, .25))
+    }
+
+    #scrStart .modeCard .mcN {
+      color: #fff !important;
+      font-size: .82rem;
+      font-weight: 900;
+      letter-spacing: .04em;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35)
+    }
+
+    #scrStart .modeCard .mcSub {
+      color: rgba(255, 255, 255, .85) !important;
+      font-weight: 800;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, .25)
+    }
+
+    /* Start button — huge 3D candy PLAY */
+    #scrStart .startMainBtn {
+      padding: 16px 70px !important;
+      font-size: 1.15rem !important;
+      letter-spacing: .12em !important;
+      border-radius: 22px !important;
+      background: linear-gradient(180deg, #ffd35e 0%, #ff9818 60%, #f47a08 100%) !important;
+      color: #fff !important;
+      border: 3px solid #fff !important;
+      text-shadow: 0 2px 3px rgba(180, 60, 0, .45) !important;
+      box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, .45),
+        inset 0 -5px 0 rgba(160, 60, 0, .35),
+        0 8px 0 #b35200,
+        0 14px 28px rgba(0, 0, 0, .4) !important;
+      transform: translateY(0);
+      transition: transform .08s ease, box-shadow .08s ease
+    }
+
+    #scrStart .startMainBtn:active {
+      transform: translateY(4px) !important;
+      box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, .45),
+        inset 0 -5px 0 rgba(160, 60, 0, .35),
+        0 4px 0 #b35200,
+        0 8px 14px rgba(0, 0, 0, .4) !important
+    }
+
+    /* Bottom row — colorful nav style */
+    #scrStart .startBottomRow {
+      gap: 10px;
+      margin-top: 14px;
+      padding: 10px;
+      background: rgba(0, 0, 0, .25);
+      border-radius: 18px;
+      border: 2px solid rgba(255, 255, 255, .12);
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, .25)
+    }
+
+    #scrStart .startBotBtn {
+      border-radius: 14px !important;
+      border: 2px solid rgba(255, 255, 255, .25) !important;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .04)) !important;
+      color: #fff !important;
+      font-weight: 800 !important;
+      font-size: .76rem !important;
+      padding: 12px 6px !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .25),
+        inset 0 -2px 0 rgba(0, 0, 0, .25) !important
+    }
+
+    #scrStart .startBotBtn:active {
+      transform: translateY(1px) scale(.97) !important;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .22), rgba(255, 255, 255, .08)) !important
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       TEXT CONTRAST BUMPS — make every label readable on purple
+       ════════════════════════════════════════════════════════════ */
+    .scrSu,
+    .heroSub,
+    .themeSub,
+    .iapDesc,
+    .iapCoinDesc,
+    .iapBought,
+    .infoDesc,
+    .twL,
+    .scrHudName,
+    .gr2Lv,
+    .gr2Nm,
+    .gr2Match,
+    .gbLbl,
+    .twResetBarLabel,
+    .twResetBarTime {
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .55), 0 0 1px rgba(0, 0, 0, .35) !important
+    }
+
+    .heroSub,
+    .themeSub,
+    .iapDesc,
+    .iapCoinDesc,
+    .iapBought,
+    .infoDesc,
+    .twL {
+      color: rgba(255, 255, 255, .94) !important
+    }
+
+    .scrHudCoin,
+    .scrHudCoin span {
+      color: #fff !important;
+      text-shadow: 0 2px 3px rgba(140, 60, 0, .55) !important
+    }
+
+    #scrStart .mcSub,
+    .scr .mcSub {
+      color: rgba(255, 255, 255, .92) !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .45) !important
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       IN-GAME UI — body, top bar, game bar, booster bar
+       Keep the gameplay grid intact, only restyle chrome
+       ════════════════════════════════════════════════════════════ */
+
+    /* Game background — IDENTICAL gradient to .scr so transitioning between
+       gameplay and a menu screen doesn't show a colour jump. */
+    body {
+      background: linear-gradient(180deg, #6648d8 0%, #3a1f8e 100%) !important
+    }
+
+    /* Top bar with Back, Pause, Mode, Coin */
+    .top {
+      background: linear-gradient(180deg, rgba(0, 0, 0, .25), rgba(0, 0, 0, .1)) !important;
+      border-bottom: 2px solid rgba(255, 255, 255, .12) !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, .25);
+      padding: 10px 14px 8px !important
+    }
+
+    .top .backBtn,
+    #btnBack {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .18), rgba(255, 255, 255, .06)) !important;
+      border: 2px solid rgba(255, 255, 255, .28) !important;
+      color: #fff !important;
+      border-radius: 11px !important;
+      font-weight: 800 !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .4);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .22),
+        inset 0 -2px 0 rgba(0, 0, 0, .22) !important;
+      height: 34px !important
+    }
+
+    /* Slimmer pause — small chip, no 3D protrusion */
+    .topBtn.tb-pause {
+      width: 32px !important;
+      height: 32px !important;
+      font-size: .75rem !important;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .22), rgba(255, 255, 255, .08)) !important;
+      color: #fff !important;
+      border: 1.5px solid rgba(255, 255, 255, .35) !important;
+      border-radius: 10px !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .4) !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .25),
+        inset 0 -1px 0 rgba(0, 0, 0, .2) !important
+    }
+
+    .topBtn.tb-pause:active {
+      transform: scale(.92) !important
+    }
+
+    .lvMode {
+      border-radius: 11px !important;
+      padding: 5px 12px !important;
+      border: 2px solid rgba(255, 255, 255, .35) !important;
+      color: #fff !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .4);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .22),
+        inset 0 -2px 0 rgba(0, 0, 0, .22) !important
+    }
+
+    .lvMode.m-time {
+      background: linear-gradient(180deg, #5ee084, #2ea84a) !important
+    }
+
+    .lvMode.m-moves {
+      background: linear-gradient(180deg, #4ab8ff, #1e7ce0) !important
+    }
+
+    .lvMode.m-tower {
+      background: linear-gradient(180deg, #ff9d4d, #e84c30) !important
+    }
+
+    .coinD {
+      background: linear-gradient(180deg, #ffd84a, #ff9a18) !important;
+      border: 2px solid #fff !important;
+      color: #fff !important;
+      border-radius: 11px !important;
+      padding: 4px 11px !important;
+      font-weight: 900 !important;
+      text-shadow: 0 1px 2px rgba(180, 70, 0, .45);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .35),
+        inset 0 -2px 0 rgba(160, 70, 0, .25),
+        0 2px 5px rgba(0, 0, 0, .25) !important
+    }
+
+    /* Row 2: Level + Match info */
+    .gameRow2 {
+      background: linear-gradient(180deg, rgba(0, 0, 0, .2), rgba(0, 0, 0, .08)) !important;
+      border-bottom: 1.5px solid rgba(255, 255, 255, .1) !important
+    }
+
+    .gr2Lv {
+      color: #fff !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .45)
+    }
+
+    .gr2Nm {
+      color: rgba(255, 255, 255, .82) !important
+    }
+
+    .gr2Match {
+      color: #43dec5 !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .5)
+    }
+
+    /* Row 3: Resource bar */
+    .gameBar {
+      background: linear-gradient(180deg, rgba(0, 0, 0, .22), rgba(0, 0, 0, .08)) !important;
+      border-bottom: 2px solid rgba(255, 255, 255, .1) !important;
+      padding: 8px 14px 9px !important
+    }
+
+    .gbIcn {
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .45))
+    }
+
+    .gbLbl {
+      color: #fff !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+      font-weight: 900 !important
+    }
+
+    .gbBar {
+      background: rgba(0, 0, 0, .35) !important;
+      border: 1.5px solid rgba(255, 255, 255, .14) !important;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, .35) !important;
+      height: 10px !important
+    }
+
+    .resF.time {
+      background: linear-gradient(90deg, #5ee084, #2ea84a) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3)
+    }
+
+    .resF.moves {
+      background: linear-gradient(90deg, #4ab8ff, #2196F3) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3)
+    }
+
+    .resF.w {
+      background: linear-gradient(90deg, #ffd84a, #ff9a18) !important
+    }
+
+    .resF.d {
+      background: linear-gradient(90deg, #ff7aa8, #e84c30) !important
+    }
+
+    /* Booster bar */
+    .bBar {
+      background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .25)) !important;
+      padding: 7px 6px 13px !important
+    }
+
+    .bBtn {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, .04)) !important;
+      border: 2px solid rgba(255, 255, 255, .25) !important;
+      border-radius: 12px !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .22),
+        inset 0 -3px 0 rgba(0, 0, 0, .25),
+        0 3px 8px rgba(0, 0, 0, .25) !important
+    }
+
+    .bBtn .bi {
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .4))
+    }
+
+    .bBtn .bc {
+      background: linear-gradient(180deg, #ffd84a, #ff9a18) !important;
+      color: #fff !important;
+      text-shadow: 0 1px 1px rgba(180, 70, 0, .5);
+      border: 1.5px solid #fff !important;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, .3) !important
+    }
+
+    .bBtn .bm {
+      color: #43dec5 !important;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, .5);
+      opacity: 1 !important
+    }
+
+    .bBtn.act {
+      border-color: #ffd84a !important;
+      background: linear-gradient(180deg, rgba(255, 216, 74, .3), rgba(255, 154, 24, .12)) !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .3),
+        0 0 0 2px rgba(255, 216, 74, .45),
+        0 4px 12px rgba(255, 154, 24, .35) !important
+    }
+
+    .bBtn.rdy {
+      border-color: #5ee084 !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .25),
+        inset 0 -3px 0 rgba(0, 0, 0, .25),
+        0 0 8px rgba(94, 224, 132, .4) !important
+    }
+
+    /* Mana cells */
+    .manaCell {
+      background: rgba(0, 0, 0, .3) !important;
+      border: 1.5px solid rgba(255, 255, 255, .12) !important;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .3) !important
+    }
+
+    .manaCell.on {
+      background: linear-gradient(180deg, #4ab8ff, #1e7ce0) !important;
+      border-color: rgba(255, 255, 255, .5) !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .35),
+        0 0 8px rgba(74, 184, 255, .55) !important
+    }
+
+    .manaIcn {
+      color: #fff !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+      font-weight: 900 !important
+    }
+
+    /* ×2 multiplier badge */
+    .muD {
+      background: linear-gradient(180deg, #ff7aa8, #e84c30) !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      text-shadow: 0 1px 2px rgba(120, 30, 30, .5) !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .3),
+        0 4px 12px rgba(0, 0, 0, .35) !important
+    }
+
+    /* Tower floor badge */
+    .twFloorBadge {
+      background: linear-gradient(180deg, #ff9d4d, #e84c30) !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      text-shadow: 0 1px 2px rgba(120, 50, 30, .5) !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .3),
+        0 4px 12px rgba(0, 0, 0, .35) !important
+    }
+
+    /* Shuffle notification */
+    .shuffleN {
+      background: linear-gradient(180deg, #a585ff, #6e44d8) !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      text-shadow: 0 1px 2px rgba(40, 20, 80, .5) !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .3),
+        0 4px 14px rgba(0, 0, 0, .35) !important
+    }
+
+    /* Booster hint label */
+    .bHint {
+      background: linear-gradient(180deg, rgba(0, 0, 0, .55), rgba(0, 0, 0, .35)) !important;
+      border: 2px solid #ffd84a !important;
+      color: #fff !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .55) !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .15),
+        0 4px 10px rgba(0, 0, 0, .35) !important
+    }
+
+    /* Pause box (inside pauseOv) */
+    .pauseBox {
+      color: #fff !important;
+      text-shadow: 0 2px 3px rgba(0, 0, 0, .45)
+    }
+
+    .pauseBox > div {
+      color: #fff !important
+    }
+
+    .pauseBox #pauseHint {
+      color: rgba(255, 255, 255, .85) !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .35)
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       TEXT-STROKE SHADOW for white text on LIGHT (yellow/orange) backgrounds.
+       Builds a dark 1px outline around each glyph so text never
+       blends into a bright gradient stop.
+       ════════════════════════════════════════════════════════════ */
+    .btn.b1,
+    .btn.bCoin,
+    .btn.bAd,
+    .btn.b3,
+    .topBtn.tb-pause,
+    .scrHudCoin,
+    .scrHudCoin span,
+    .coinD,
+    .iapPrice,
+    .iapCoinBtn,
+    .piggyBuyBtn,
+    .iapPremBtn,
+    .lvCard.cur,
+    .shopTab.act,
+    .infoTab.act,
+    .lvModeTab.act,
+    .lvMode,
+    #scrStart .startCoinBtn,
+    #scrStart .startCoinBtn div,
+    #scrStart .startMainBtn,
+    #scrStart .startPiggyBtn.pig-full .spMainLabel,
+    #scrStart .startPiggyBtn.pig-full .spMainAmt,
+    .modeCard .mcN,
+    .modeCard .mcSub {
+      text-shadow:
+        -1px -1px 0 rgba(60, 25, 0, .55),
+        1px -1px 0 rgba(60, 25, 0, .55),
+        -1px 1px 0 rgba(60, 25, 0, .55),
+        1px 1px 0 rgba(60, 25, 0, .55),
+        0 2px 3px rgba(0, 0, 0, .35) !important
+    }
+
+    /* Premium buy button has dark text on white — different stroke */
+    .iapPremBtn {
+      text-shadow: none !important
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       IN-GAME UI — paint isolation + smoothness
+       ════════════════════════════════════════════════════════════ */
+
+    /* Promote the dynamic HUD rows to their own GPU layer so they
+       don't repaint the whole #app when content changes (timer, coins, etc.) */
+    .top,
+    .gameRow2,
+    .gameBar,
+    .bBar {
+      contain: layout paint;
+      will-change: transform
+    }
+
+    /* Resource bar fill changes width every 100ms — isolate it */
+    .resF {
+      will-change: width
+    }
+
+    /* Mana cells flicker on/off — isolate */
+    .manaCell {
+      contain: layout paint
+    }
+
+    /* Game grid container — isolate from HUD rows */
+    .gA {
+      contain: layout paint
+    }
+
+    /* Coin counter bumps — composite only */
+    .coin-bump {
+      will-change: transform
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       IAP UI IS VISIBLE — clicking any purchase item triggers a
+       "Coming soon" toast via the disabled handlers. Feature parity
+       with future Google Play Billing release.
+       (Earlier `display: none` rules removed.)
+       ════════════════════════════════════════════════════════════ */
+
+    /* ════════════════════════════════════════════════════════════
+       COMPACT IN-GAME HEADER — hide redundant row, info shown smartly
+       Row 1 (.top): Back · Pause · Mode · Coin            ← kept
+       Row 2 (.gameRow2): Lv1 / Warm Up / Match 2 ✦✦      ← HIDDEN, redundant
+       Row 3 (.gameBar): timer/moves progress bar          ← kept
+       Row 4 (.bBar): boosters                             ← kept
+       ════════════════════════════════════════════════════════════ */
+    .gameRow2 {
+      display: none !important
+    }
+
+    /* Tighten top bar — was paired with gameRow2, give it more breathing room */
+    .top {
+      padding: 12px 14px 10px !important
+    }
+
+    /* GameBar gains a bit more top padding now that gameRow2 is gone */
+    .gameBar {
+      padding: 10px 14px 10px !important
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       GLOBAL TEXT CONTRAST — every visible label gets a readable shadow
+       Avoid leaking onto icons/SVGs by targeting only text-bearing classes.
+       ════════════════════════════════════════════════════════════ */
+
+    /* Universal soft shadow under every text container in screens/HUD —
+       cheap composite, works on any background colour. */
+    .scr,
+    .scr .scrIn,
+    .scr .scrHud,
+    #app .top,
+    #app .gameBar,
+    #app .bBar,
+    .pauseBox,
+    .piggyModalBox,
+    .coinModalBox,
+    .twGateIn {
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility
+    }
+
+    /* Any leftover dim text — bump to readable opacity */
+    .scr .infoTxt,
+    .scr .infoTxt b,
+    .scr .infoDesc,
+    .scr .twResetBarLabel,
+    .scr .twResetBarTime,
+    .scr .twL,
+    .scr .roL,
+    .scr .iapDesc,
+    .scr .iapCoinDesc,
+    .scr .iapBought,
+    .scr .themeSub,
+    .scr .scrSu,
+    .scr .shopBought,
+    .scr .iapPremBenefits,
+    .scr .iapPremBenefits div,
+    .scr .lvDots,
+    .scr .winStats,
+    .scr .winStats *,
+    .scr .roStat,
+    .scr .roStat *,
+    .scr .mainBtns,
+    .scr .mainBtns *,
+    .scr .footBtns,
+    .scr .footBtns *,
+    .pauseBox div {
+      color: #fff !important;
+      text-shadow:
+        -1px -1px 0 rgba(0, 0, 0, .5),
+        1px -1px 0 rgba(0, 0, 0, .5),
+        -1px 1px 0 rgba(0, 0, 0, .5),
+        1px 1px 0 rgba(0, 0, 0, .5),
+        0 2px 3px rgba(0, 0, 0, .35) !important
+    }
+
+    /* Keep contextual colour highlights (gold numbers, cyan accents, etc.) */
+    .scr [style*="color:var(--gold)"],
+    .scr [style*="color: var(--gold)"],
+    .scr .infoTitle {
+      color: #ffd84a !important
+    }
+
+    .scr [style*="color:var(--cyan)"],
+    .scr [style*="color: var(--cyan)"],
+    .scr .cy {
+      color: #43dec5 !important
+    }
+
+    .scr [style*="color:var(--pink)"],
+    .scr [style*="color: var(--pink)"] {
+      color: #ff7aa8 !important
+    }
+
+    .scr [style*="color:var(--green)"],
+    .scr [style*="color: var(--green)"] {
+      color: #5ee084 !important
+    }
+
+    .scr [style*="color:var(--red)"],
+    .scr [style*="color: var(--red)"] {
+      color: #ff6464 !important
+    }
+
+    /* In-game HUD labels — same readable treatment */
+    #app .gr2Lv,
+    #app .gr2Nm,
+    #app .gr2Match,
+    #app .gbLbl,
+    #app .gbMatch,
+    #app .scrHudName,
+    #app .manaIcn,
+    #app .shuffleN,
+    #app .bHint,
+    #app .twFloorBadge,
+    #app .muD {
+      text-shadow:
+        -1px -1px 0 rgba(0, 0, 0, .55),
+        1px -1px 0 rgba(0, 0, 0, .55),
+        -1px 1px 0 rgba(0, 0, 0, .55),
+        1px 1px 0 rgba(0, 0, 0, .55),
+        0 2px 3px rgba(0, 0, 0, .4) !important
+    }
+
+    /* Tile icons get a subtle drop shadow so emoji read on any background */
+    .tile .face {
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .4)
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       SETTINGS SCREEN — toggle cards & volume slider, candy style
+       ════════════════════════════════════════════════════════════ */
+    #scrSettings .scrIn {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 18px 14px 24px
+    }
+
+    .setCard {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .04));
+      border: 2.5px solid rgba(255, 255, 255, .22);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: transform .1s ease;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .2),
+        inset 0 -3px 0 rgba(0, 0, 0, .2),
+        0 4px 12px rgba(0, 0, 0, .28)
+    }
+
+    .setCard:active {
+      transform: translateY(1px) scale(.99)
+    }
+
+    .setCardSlider {
+      align-items: flex-start;
+      cursor: default
+    }
+
+    .setCardSlider:active {
+      transform: none
+    }
+
+    .setIcn {
+      font-size: 1.8rem;
+      line-height: 1;
+      flex-shrink: 0;
+      filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .35))
+    }
+
+    .setInfo {
+      flex: 1;
+      min-width: 0;
+      text-align: left
+    }
+
+    .setName {
+      font-size: .9rem;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .4);
+      letter-spacing: .02em;
+      line-height: 1.2
+    }
+
+    .setDesc {
+      font-size: .58rem;
+      color: rgba(255, 255, 255, .8);
+      text-shadow: 0 1px 1px rgba(0, 0, 0, .35);
+      margin-top: 3px;
+      font-weight: 600
+    }
+
+    /* iOS-style toggle switch */
+    .setSwitch {
+      position: relative;
+      width: 52px;
+      height: 30px;
+      background: linear-gradient(180deg, #4a3580, #2a1a55);
+      border: 2px solid rgba(255, 255, 255, .25);
+      border-radius: 16px;
+      flex-shrink: 0;
+      transition: background .2s ease, border-color .2s ease;
+      box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, .35),
+        inset 0 -1px 0 rgba(255, 255, 255, .08)
+    }
+
+    .setSwitch .setSwKnob {
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(180deg, #fff, #e0e0e8);
+      border-radius: 50%;
+      transition: left .2s cubic-bezier(.4, 0, .2, 1);
+      box-shadow:
+        inset 0 -2px 0 rgba(0, 0, 0, .15),
+        0 2px 4px rgba(0, 0, 0, .35)
+    }
+
+    .setSwitch.on {
+      background: linear-gradient(180deg, #5ee084, #2ea84a);
+      border-color: rgba(255, 255, 255, .5)
+    }
+
+    .setSwitch.on .setSwKnob {
+      left: 23px;
+      background: linear-gradient(180deg, #fff, #f0fff4)
+    }
+
+    /* Volume slider */
+    .setVolSlider {
+      width: 100%;
+      height: 26px;
+      margin-top: 8px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      cursor: pointer
+    }
+
+    .setVolSlider::-webkit-slider-runnable-track {
+      height: 10px;
+      background: linear-gradient(90deg, #ffd84a, #ff9a18);
+      border: 1.5px solid rgba(255, 255, 255, .35);
+      border-radius: 8px;
+      box-shadow: inset 0 2px 3px rgba(0, 0, 0, .35)
+    }
+
+    .setVolSlider::-moz-range-track {
+      height: 10px;
+      background: linear-gradient(90deg, #ffd84a, #ff9a18);
+      border: 1.5px solid rgba(255, 255, 255, .35);
+      border-radius: 8px;
+      box-shadow: inset 0 2px 3px rgba(0, 0, 0, .35)
+    }
+
+    .setVolSlider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      margin-top: -9px;
+      background: linear-gradient(180deg, #fff, #e0e0e8);
+      border: 2px solid #ff9a18;
+      border-radius: 50%;
+      box-shadow:
+        inset 0 -2px 0 rgba(160, 70, 0, .25),
+        0 3px 6px rgba(0, 0, 0, .35);
+      cursor: pointer
+    }
+
+    .setVolSlider::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(180deg, #fff, #e0e0e8);
+      border: 2px solid #ff9a18;
+      border-radius: 50%;
+      box-shadow:
+        inset 0 -2px 0 rgba(160, 70, 0, .25),
+        0 3px 6px rgba(0, 0, 0, .35);
+      cursor: pointer
+    }
+
+    .setVolLabel {
+      flex-shrink: 0;
+      font-size: 1rem;
+      font-weight: 900;
+      color: #ffd84a;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .4);
+      min-width: 48px;
+      text-align: right;
+      align-self: flex-start;
+      padding-top: 4px
+    }
+
+    /* Make start screen bottom row accommodate 4 buttons */
+    #scrStart .startBottomRow {
+      flex-wrap: nowrap
+    }
+
+    #scrStart .startBotBtn {
+      padding: 11px 4px !important;
+      font-size: .68rem !important;
+      letter-spacing: .01em !important
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       IN-GAME — BOOSTER + MANA CONSOLIDATED CLUSTER
+       Goal: less clutter, mana sits as a thin strip directly above
+       the booster row, no redundant "MANA" label, visually unified.
+       ════════════════════════════════════════════════════════════ */
+
+    /* Mana bar slimmed and tucked above boosters as a hint strip */
+    .manaBar {
+      gap: 4px !important;
+      padding: 4px 14px 2px !important;
+      justify-content: center !important
+    }
+
+    /* Hide the "⚡ MANA" text label — cells alone communicate state */
+    .manaIcn {
+      display: none !important
+    }
+
+    /* Compact mana cells: small pills, brighter when ON */
+    .manaCell {
+      width: 22px !important;
+      height: 5px !important;
+      border-radius: 3px !important;
+      background: rgba(0, 0, 0, .35) !important;
+      border: 1px solid rgba(255, 255, 255, .12) !important;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .3) !important;
+      transition: background .25s, box-shadow .25s
+    }
+
+    .manaCell.on {
+      background: linear-gradient(180deg, #4ab8ff, #1e7ce0) !important;
+      border-color: rgba(255, 255, 255, .5) !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .4),
+        0 0 6px rgba(74, 184, 255, .55) !important
+    }
+
+    /* Booster bar: tighter row, less vertical noise */
+    .bBar {
+      padding: 4px 6px 12px !important;
+      gap: 6px !important
+    }
+
+    /* Each booster button — keep compact, badge prominent */
+    .bBtn {
+      width: 50px !important;
+      height: 52px !important;
+      padding: 4px 2px !important
+    }
+
+    .bBtn .bi {
+      font-size: 1.35rem !important
+    }
+
+    /* Mana cost badge — small chip bottom-right, more legible */
+    .bBtn .bm {
+      bottom: 2px !important;
+      right: 3px !important;
+      font-size: .48rem !important;
+      padding: 1px 4px !important;
+      background: rgba(0, 0, 0, .55) !important;
+      border-radius: 5px !important;
+      line-height: 1.2 !important;
+      color: #4ab8ff !important;
+      font-weight: 800 !important
+    }
+
+    /* Count badge top-right */
+    .bBtn .bc {
+      top: -3px !important;
+      right: -3px !important;
+      min-width: 16px !important;
+      height: 16px !important;
+      font-size: .55rem !important;
+      border-radius: 8px !important
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       TILE — CANDY BACK FACE
+       Tile back (.tBk) gets a vivid candy gradient that matches the
+       global purple-tone game theme. Front face (.tF) keeps its emoji.
+       ════════════════════════════════════════════════════════════ */
+    .tile .tBk {
+      background: linear-gradient(160deg, #8b5cf6 0%, #6d28d9 55%, #4c1d95 100%) !important;
+      border: 2.5px solid rgba(255, 255, 255, .25) !important;
+      box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, .25),
+        inset 0 -3px 0 rgba(0, 0, 0, .25) !important
+    }
+
+    .tile .tBk::after {
+      color: rgba(255, 255, 255, .45) !important;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .35))
+    }
+
+    .tile .tF {
+      background: linear-gradient(160deg, #1f1b3a 0%, #2a214f 100%) !important;
+      border: 2.5px solid rgba(255, 255, 255, .22) !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .12),
+        inset 0 -2px 0 rgba(0, 0, 0, .2) !important
+    }
+
+    /* Picked state: warmer cyan glow keeps depth without expensive paint */
+    .tile.picked .tF {
+      border-color: #43dec5 !important;
+      background: linear-gradient(160deg, #1a3a3a 0%, #1f5050 100%) !important
+    }
+
+    /* Matched state: green confirmation */
+    .tile.matched .tF {
+      border-color: #5ee084 !important;
+      background: linear-gradient(160deg, #1a3a25 0%, #225538 100%) !important
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       HUD TITLE — remove icon decoration, text only
+       ════════════════════════════════════════════════════════════ */
+    .scrHudIcn {
+      display: none !important
+    }
+
+    .scrHudTitle {
+      gap: 0 !important
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       GAMEPLAY BACKGROUND — decorate without re-introducing the
+       cross-screen transition flash. We add static radials to <body>;
+       active screens are still fully opaque so they cover decoration.
+       ════════════════════════════════════════════════════════════ */
+    body {
+      background:
+        radial-gradient(circle at 18% 12%, rgba(255, 255, 255, .07), transparent 35%),
+        radial-gradient(circle at 82% 88%, rgba(255, 100, 200, .14), transparent 45%),
+        radial-gradient(circle at 50% 60%, rgba(80, 200, 255, .08), transparent 50%),
+        linear-gradient(180deg, #6648d8 0%, #3a1f8e 100%) !important
+    }
+
+    /* Game area as a contained "playing field" so the tiles read clearly
+       against the decorated body. */
+    .gA {
+      margin: 6px 8px !important;
+      border-radius: 18px;
+      background: rgba(0, 0, 0, .18);
+      border: 2px solid rgba(255, 255, 255, .08);
+      box-shadow:
+        inset 0 4px 14px rgba(0, 0, 0, .3),
+        inset 0 -2px 6px rgba(255, 255, 255, .05)
+    }
+
+    /* Subtle decorative twinkle dots above the game grid using ::before/::after
+       on #app. Pure CSS, painted once, no animation cost. */
+    #app::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle 1px at 12% 22%, rgba(255, 255, 255, .35), transparent 100%),
+        radial-gradient(circle 1px at 88% 18%, rgba(255, 255, 255, .25), transparent 100%),
+        radial-gradient(circle 1px at 32% 78%, rgba(255, 255, 255, .3), transparent 100%),
+        radial-gradient(circle 1.5px at 72% 82%, rgba(255, 255, 255, .25), transparent 100%),
+        radial-gradient(circle 1px at 56% 8%, rgba(255, 255, 255, .2), transparent 100%);
+      background-repeat: no-repeat;
+      z-index: 0
+    }
   </style>
 </head>
 
@@ -4442,11 +6224,12 @@
             style="background:linear-gradient(135deg,var(--green),#2ecc71)">▶ Start</button>
         </div>
 
-        <!-- Bottom row: Levels | Hint | Theme -->
+        <!-- Bottom row: Levels | Hint | Theme | Settings -->
         <div class="startBottomRow">
           <button class="startBotBtn" onclick="G.showLvls()">📋 Levels</button>
           <button class="startBotBtn" onclick="G.showHint()">💡 Hint</button>
           <button class="startBotBtn" onclick="G.showTheme()">🎨 Theme</button>
+          <button class="startBotBtn" onclick="G.showSettings()">⚙️ Settings</button>
         </div>
 
       </div>
@@ -4562,6 +6345,64 @@
         <!-- Reset button -->
         <button class="themeResetBtn" onclick="G.applyTheme('')">↺ Reset</button>
 
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="scr" id="scrSettings">
+      <div class="scrHud">
+        <div class="scrHudTitle">
+          <span class="scrHudIcn">⚙️</span>
+          <span class="scrHudName">Settings</span>
+        </div>
+        <div class="scrHudBar">
+          <button class="scrHudBack backBtn" onclick="G.hideScr();G.retScr()">◀ Back</button>
+          <div class="scrHudCoin" onclick="G.showShop()">🪙 <span id="dCnSettings">0</span></div>
+        </div>
+      </div>
+      <div class="scrIn">
+        <!-- Sound effects -->
+        <div class="setCard" onclick="G.toggleSetting('sfx')">
+          <div class="setIcn">🔊</div>
+          <div class="setInfo">
+            <div class="setName">Sound Effects</div>
+            <div class="setDesc">Click · Match · Win</div>
+          </div>
+          <div class="setSwitch" id="setSfxToggle"><div class="setSwKnob"></div></div>
+        </div>
+
+        <!-- Background music -->
+        <div class="setCard" onclick="G.toggleSetting('bgm')">
+          <div class="setIcn">🎵</div>
+          <div class="setInfo">
+            <div class="setName">Background Music</div>
+            <div class="setDesc">Loops while playing</div>
+          </div>
+          <div class="setSwitch" id="setBgmToggle"><div class="setSwKnob"></div></div>
+        </div>
+
+        <!-- Vibration -->
+        <div class="setCard" onclick="G.toggleSetting('vib')">
+          <div class="setIcn">📳</div>
+          <div class="setInfo">
+            <div class="setName">Vibration</div>
+            <div class="setDesc">Haptic feedback on tap</div>
+          </div>
+          <div class="setSwitch" id="setVibToggle"><div class="setSwKnob"></div></div>
+        </div>
+
+        <!-- Volume slider -->
+        <div class="setCard setCardSlider">
+          <div class="setIcn">🔉</div>
+          <div class="setInfo">
+            <div class="setName">Volume</div>
+            <div class="setDesc">Applies to SFX & BGM</div>
+            <input type="range" class="setVolSlider" id="setVolSlider"
+                   min="0" max="100" step="5" value="70"
+                   oninput="G.setVolume(this.value)">
+          </div>
+          <div class="setVolLabel" id="setVolLabel">70%</div>
+        </div>
       </div>
     </div>
 
@@ -5174,7 +7015,13 @@
     const SHOP = { random: { nm: '🎲 Random', ds: 'Reveal 4 random tiles, pin 1 (2 turns)', bp: 200 }, col: { nm: '↕️ Column', ds: 'Reveal full column, pin 1 (2 turns)', bp: 300 }, row: { nm: '↔️ Row', ds: 'Reveal full row, pin 1 (2 turns)', bp: 300 }, cross: { nm: '✚ Cross', ds: 'Reveal cross shape, pin 1 (2 turns)', bp: 500 }, ring: { nm: '⭐ Burst', ds: 'Reveal 8 surrounding tiles, pin 1 (2 turns)', bp: 700 }, reveal: { nm: '👁️ Perm-Pin', ds: 'Permanently pin 2 tiles', bp: 1000 } };
     const CPL = 5, SAVE_KEY = 'mq_final';
     function $(id) { return document.getElementById(id) }
-    function vib(ms) { try { navigator.vibrate && navigator.vibrate(ms) } catch (e) { } }
+    function vib(ms) {
+      try {
+        // Respect user's vibration toggle. G might not exist yet during early init.
+        if (typeof G !== 'undefined' && G && G.vibOn === false) return;
+        navigator.vibrate && navigator.vibrate(ms);
+      } catch (e) { }
+    }
 
     const G = {
       cur: 0, unlk: 0, sMap: {}, unlkM: { time: 0, moves: 0 }, sMapM: { time: {}, moves: {} }, tiles: [], flip: [], mtc: 0, totG: 0,
@@ -5192,6 +7039,9 @@
       pinOrder: [], // track pin order for max 8 limit
       piggy: 0, piggyBought: false,
 
+      // Audio / haptics settings (persisted)
+      sfxOn: true, bgmOn: true, vibOn: true, volume: 0.7,
+
       // ═══ INIT / SAVE / LOAD ═══
       init() {
         try {
@@ -5201,6 +7051,11 @@
             if (s.um) { this.unlkM = s.um; } else { this.unlkM = { time: s.u || 0, moves: s.u || 0 }; }
             if (s.sm) { this.sMapM = s.sm; } else { this.sMapM = { time: { ...(s.s || {}) }, moves: { ...(s.s || {}) } }; }
             if (s.b) this.bst = { ...this.bst, ...s.b }; this.coin = s.c || 0; if (s.bo) this.bought = { ...this.bought, ...s.bo }; if (s.m) this.mode = s.m; if (s.ar) this.adsRemoved = true; if (s.ld) this.lastDaily = s.ld; if (s.is) this.iapStats = s.is; if (typeof s.pg === 'number') this.piggy = s.pg; if (s.pgb) this.piggyBought = true;
+            // Audio/haptics: only override if the saved field is present
+            if (typeof s.sfx === 'boolean') this.sfxOn = s.sfx;
+            if (typeof s.bgm === 'boolean') this.bgmOn = s.bgm;
+            if (typeof s.vb === 'boolean') this.vibOn = s.vb;
+            if (typeof s.vol === 'number' && s.vol >= 0 && s.vol <= 1) this.volume = s.vol;
             this.unlk = this.unlkM[this.mode]; this.sMap = this.sMapM[this.mode];
           }
         } catch (e) { }
@@ -5211,7 +7066,11 @@
         this.checkDaily(); this.twLoad(); this.updTwCard(); this.updModeCards();
         this.uPiggy();
       },
-      save() { if (!this.tw.active) { this.unlkM[this.mode] = this.unlk; this.sMapM[this.mode] = this.sMap; } localStorage.setItem(SAVE_KEY, JSON.stringify({ um: this.unlkM, sm: this.sMapM, b: this.tw.active ? this._twRealBst || this.bst : this.bst, c: this.coin, bo: this.bought, m: this.tw.active ? this._twOrigMode || this.mode : this.mode, ar: this.adsRemoved || false, ld: this.lastDaily || '', is: this.iapStats, pg: this.piggy, pgb: this.piggyBought || false })); },
+      // Debounced — schedules a write 400ms later. Call saveFlush() to force-write (page hide/close).
+      save() { if (this._saveTimer) clearTimeout(this._saveTimer); this._saveTimer = setTimeout(() => this._saveNow(), 400); },
+      _saveNow() { this._saveTimer = null; if (!this.tw.active) { this.unlkM[this.mode] = this.unlk; this.sMapM[this.mode] = this.sMap; } localStorage.setItem(SAVE_KEY, JSON.stringify({ um: this.unlkM, sm: this.sMapM, b: this.tw.active ? this._twRealBst || this.bst : this.bst, c: this.coin, bo: this.bought, m: this.tw.active ? this._twOrigMode || this.mode : this.mode, ar: this.adsRemoved || false, ld: this.lastDaily || '', is: this.iapStats, pg: this.piggy, pgb: this.piggyBought || false, sfx: this.sfxOn, bgm: this.bgmOn, vb: this.vibOn, vol: this.volume })); },
+      saveFlush() { if (this._saveTimer) { clearTimeout(this._saveTimer); this._saveNow(); } },
+      _saveTimer: null,
       lastDaily: '',
       checkDaily() {
         if (!this.adsRemoved) return;
@@ -5233,7 +7092,7 @@
         $('dCn').textContent = this.coin;
         const h = $('dCnHome'); if (h) h.textContent = this.coin.toLocaleString();
         const fmt = this.coin.toLocaleString();
-        ['dCnShop', 'dCnTower', 'dCnLvls', 'dCnHint', 'dCnTheme'].forEach(id => { const el = $(id); if (el) el.textContent = fmt; });
+        ['dCnShop', 'dCnTower', 'dCnLvls', 'dCnHint', 'dCnTheme', 'dCnSettings'].forEach(id => { const el = $(id); if (el) el.textContent = fmt; });
         this.uPiggy();
       },
 
@@ -5475,7 +7334,7 @@
         const R = Math.max(1.5, 2.5 - phase * 0.1);
         return Math.ceil(minMoves * R);
       },
-      stopGame() { this.playing = false; clearInterval(this.tmr); this.tmr = null; if (this.bHT) { clearTimeout(this.bHT); this.bHT = null; } this.hideBR(); if (this.updateBgm) this.updateBgm(); },
+      stopGame() { this.playing = false; clearInterval(this.tmr); this.tmr = null; if (this.bHT) { clearTimeout(this.bHT); this.bHT = null; } this.hideBR(); if (this.updateBgm) this.updateBgm(); if (this.updateBanner) this.updateBanner(); },
 
       // ═══ REWARDS ═══
       calcRw(stars) {
@@ -5508,7 +7367,7 @@
 
       // ═══ SHOP ═══
       getPrice(t) { const b = this.bought[t] || 0, eff = b % 50, base = SHOP[t].bp; return Math.min(base + eff * 20, Math.floor(base * 2.5)); },
-      shopTabIdx: 0,
+      shopTabIdx: 0, // Default Coins tab — IAP items show "Coming soon" toast on tap
       shopTab(i) {
         this.shopTabIdx = i;
         for (let t = 0; t < 2; t++) { $('shopP' + t).classList.toggle('hid', t !== i); $('stab' + t).classList.toggle('act', t === i); }
@@ -5516,7 +7375,9 @@
       showShop(fromPurchase) {
         if (!fromPurchase) {
           const activeScr = document.querySelector('.scr.active');
-          this.prevScr = activeScr ? activeScr.id : null;
+          const id = activeScr ? activeScr.id : null;
+          // Don't record shop as its own prev — otherwise Back loops back into shop
+          if (id !== 'scrShop') this.prevScr = id;
         }
         this.hideScr();
         const g = $('sG'); g.innerHTML = ''; const sCnEl = $('dCnShop'); if (sCnEl) sCnEl.textContent = this.coin.toLocaleString();
@@ -5526,7 +7387,7 @@
           const d = document.createElement('div'); d.className = 'shopItem' + (can ? '' : ' cant'); d.dataset.k = k;
           d.innerHTML = `<div class="shopOwn">${this.bst[k]}</div><div class="shopIcon">${BM[k].ic}</div><div class="shopName">${s.nm.replace(/^[^\s]+\s/, '')}</div><div class="shopPrice">🪙 ${p}</div><div class="shopBought">${bought}/50</div>`;
           d.dataset.tip = `<div class="ttL">${BM[k].ic} ${s.nm.replace(/^[^\s]+\s/, '')}</div><div class="ttDesc">${s.ds}</div><div class="ttR"><span class="k">📦 Owned</span><span class="v">${this.bst[k]}</span></div><div class="ttR"><span class="k">🛒 Purchased</span><span class="v">${bought}/50 (reset)</span></div>`;
-          d.onmouseenter = () => this.showTip(d); d.onmouseleave = () => this.hideTip(); d.ontouchstart = (e) => { e.preventDefault(); this.showTip(d); }; d.ontouchend = () => setTimeout(() => this.hideTip(), 1500);
+          d.onmouseenter = () => this.showTip(d); d.onmouseleave = () => this.hideTip(); d.ontouchstart = () => this.showTip(d); d.ontouchend = () => setTimeout(() => this.hideTip(), 1500);
           d.onclick = () => {
             const price = this.getPrice(k);
             if (this.coin >= price) {
@@ -5727,7 +7588,7 @@
         const tpm = { 2: 1.5, 3: 2.2, 4: 3.5 }[L.n] || 1.5;
         const rawTime = L.ml > 0 ? L.ml * tpm : minMoves * 2.0 * tpm;
         this.tM = Math.ceil(Math.max(30, rawTime) / 10) * 10; this.tL = this.tM;
-        this.actB = null; this.bRv = []; this.tbm = {}; this.permRevealed = new Set(); this.tempPins = new Map(); this.mana = MANA_MAX; this.pinOrder = []; this.playing = true;
+        this.actB = null; this.bRv = []; this.tbm = {}; this.permRevealed = new Set(); this.tempPins = new Map(); this.mana = MANA_MAX; this.pinOrder = []; this.playing = true; if (this.updateBanner) this.updateBanner();
         if (this.updateBgm) this.updateBgm();
         this.mvMax = this.calcMM(); this.mvLeft = this.mvMax;
         this._emCat = L.e || '';
@@ -6076,9 +7937,10 @@
       togB(t) {
         if (this.lk || !this.playing) return; if (this.bst[t] <= 0) return;
         if (this.mana < MANA_COST[t]) return;
-        if (this.actB === t) { this.actB = null; document.querySelectorAll('.bBtn').forEach(b => b.classList.remove('act')); this.hH(); return; }
-        if (t === 'reveal') { this.doManualReveal(); return; }
+        if (this.actB === t) { vib(10); this.actB = null; document.querySelectorAll('.bBtn').forEach(b => b.classList.remove('act')); this.hH(); return; }
+        if (t === 'reveal') { vib(35); this.doManualReveal(); return; }
         document.querySelectorAll('.bBtn').forEach(b => b.classList.remove('act'));
+        vib(15); // light haptic feedback when selecting a booster
         this.actB = t; document.querySelector(`.bBtn[data-b="${t}"]`).classList.add('act'); this.sH(t);
       },
       sH(t) { const h = { random: 'Tap tile → pin 1 random tile (2 turns)', col: 'Tap tile → pin 1 column tile (2 turns)', row: 'Tap tile → pin 1 row tile (2 turns)', cross: 'Tap tile → pin 2 cross tiles (2 turns)', ring: 'Tap tile → pin 2 surrounding tiles (2 turns)' }; $('bH').textContent = '👆 ' + h[t]; $('bH').classList.remove('hid'); },
@@ -6120,6 +7982,7 @@
       actManB(type, idx) {
         const tg = this.getTargets(type, idx);
         if (!tg.length) { this.actB = null; document.querySelectorAll('.bBtn').forEach(b => b.classList.remove('act')); this.hH(); return; }
+        vib(35); // confirm haptic when booster is actually applied
         this.bst[type]--; this.useMana(type); this.actB = null; document.querySelectorAll('.bBtn').forEach(b => b.classList.remove('act'));
         this.hH(); this.uBUI(); this.save(); this.lk = true;
         this.shuf(tg);
@@ -6213,7 +8076,14 @@
         const allSame = this.flip.every(f => f.value === this.flip[0].value);
         if (allSame) {
           // ═══ MATCH ═══
-          vib(40);
+          // Tiered combo haptic — stronger feedback as the combo chain grows.
+          // After this match, combo level becomes `this.cmb + 1`.
+          const _newCmb = this.cmb + 1;
+          if (_newCmb <= 1) vib(35);
+          else if (_newCmb === 2) vib(60);
+          else if (_newCmb === 3) vib([45, 25, 45]);
+          else if (_newCmb === 4) vib([60, 30, 60, 30, 60]);
+          else vib([80, 40, 80, 40, 80, 40, 90]);
           if (this.playSfx) this.playSfx('match');
           this.cmb++; if (this.cmb > this.mxC) this.mxC = this.cmb; $('dCo').textContent = this.cmb;
           this.failStreak = 0;
@@ -6339,9 +8209,14 @@
           console.error("Error in onWin calculations:", e);
         }
 
-        setTimeout(async () => {
+        // Fire-and-forget interstitial — do NOT await (would block win UI).
+        // AdMob shows as full-screen native overlay on top of WebView, so it
+        // covers the win UI we're about to render. When user dismisses, win UI
+        // is revealed underneath. No need to delay rendering for it.
+        try { this.tryShowInterstitial(); } catch (e) { }
+
+        setTimeout(() => {
           try {
-            await this.tryShowInterstitial();
             $('ws1').classList.remove('hid'); $('ws2').classList.add('hid'); $('ws2').classList.remove('fadeIn');
             // Animated stars with pop-in per star
             const starHtml = Array.from({ length: 3 }, (_, i) => {
@@ -6392,12 +8267,12 @@
                 console.error("Error in ws2 rendering:", e);
                 $('ws2').classList.remove('hid'); $('wNx').style.display = '';
               }
-            }, 1500);
+            }, 700);
           } catch (e) {
             console.error("Error showing win screen:", e);
             $('scrWin').classList.add('active'); $('ws2').classList.remove('hid'); $('wNx').style.display = '';
           }
-        }, 500);
+        }, 180);
       },
 
       // ═══ LOSE ═══
@@ -6438,21 +8313,69 @@
         coinBtn.classList.remove('claimed', 'cant'); coinBtn.disabled = false;
         if (this.coin < this._contCoinPrice) coinBtn.classList.add('cant');
         vib([50, 30, 50]);
-        setTimeout(async () => {
-          await this.tryShowInterstitial();
+        // Fire-and-forget interstitial — same reasoning as onWin: don't block UI.
+        try { this.tryShowInterstitial(); } catch (e) { }
+        setTimeout(() => {
           $('scrLose').classList.add('active');
-        }, 400);
+        }, 150);
       },
 
       // ═══ NAVIGATION ═══
       nxtLv() { this.cur++; this.hideScr(); this.build(); },
       restart() { this.hideScr(); this.build(); },
-      adsContinue() {
+      // Centralized toast helper (uses #cPop element)
+      _showToast(msg, dur) {
+        const el = $('cPop');
+        if (!el) return;
+        el.textContent = msg;
+        el.className = 'cPop show';
+        clearTimeout(this._toastTimer);
+        this._toastTimer = setTimeout(() => { el.className = 'cPop'; }, dur || 2000);
+      },
+
+      // Banner ad visibility — show on menus, hide during gameplay
+      // and when the user has purchased remove-ads.
+      updateBanner() {
+        const b = this._banner;
+        if (!b) { console.log('[BANNER] updateBanner: no banner instance'); return; }
+        try {
+          if (this.adsRemoved) {
+            console.log('[BANNER] hide (adsRemoved=true)');
+            b.hide().then(() => console.log('[BANNER] hide ok')).catch(err => console.log('[BANNER] hide err', err));
+            return;
+          }
+          if (this.playing && !this.paused) {
+            console.log('[BANNER] hide (gameplay active)');
+            b.hide().then(() => console.log('[BANNER] hide ok')).catch(err => console.log('[BANNER] hide err', err));
+          } else {
+            console.log('[BANNER] show');
+            b.show().then(() => console.log('[BANNER] show ok')).catch(err => console.log('[BANNER] show err', err));
+          }
+        } catch (e) { console.log('[BANNER] updateBanner threw', e); }
+      },
+
+      async adsContinue() {
         if (this._continued) return;
-        this._continued = true;
-        $('lContAds').classList.add('claimed'); $('lContAds').disabled = true;
-        $('lContCoin').classList.add('claimed'); $('lContCoin').disabled = true;
-        this._doContinue();
+        // Rewarded ad required to grant continue. If not available → toast.
+        if (typeof rewarded === 'undefined' || !rewarded) {
+          this._showToast('🎬 Quảng cáo chưa sẵn sàng, thử lại sau');
+          return;
+        }
+        this._rewardedPurpose = 'continue';
+        // Disable buttons during ad attempt (un-disabled on dismiss-without-reward)
+        $('lContAds').disabled = true; $('lContCoin').disabled = true;
+        try {
+          await rewarded.show();
+          localStorage.setItem('lastRewardAdTime', Date.now().toString());
+          // The actual continue is granted by the 'reward' event handler when
+          // user finishes watching. If they skip early, dismiss handler resets.
+        } catch (err) {
+          console.log('Rewarded show failed', err);
+          this._rewardedPurpose = null;
+          $('lContAds').disabled = false; $('lContCoin').disabled = false;
+          this._showToast('🎬 Quảng cáo chưa sẵn sàng, thử lại sau');
+          try { await rewarded.load(); } catch (e) { }
+        }
       },
       coinContinue() {
         if (this._continued) return;
@@ -6466,6 +8389,7 @@
       _doContinue() {
         setTimeout(() => {
           this.hideScr(); this.lk = false; this.playing = true;
+          if (this.updateBanner) this.updateBanner();
           if (this.mode === 'moves') {
             this.mvLeft += this._contBonus; this.uMvBar(); this.updateResLabel();
           } else {
@@ -6494,16 +8418,20 @@
         }, 1000);
       },
       async claimX2(src) {
-        if (src === 'win' && this._pendingRw > 0) {
-
-          try {
-            await rewarded.show();
-            localStorage.setItem('lastRewardAdTime', Date.now().toString());
-          } catch (err) {
-            console.log('Ad not ready', err);
-            await rewarded.load();
-          }
-
+        if (src !== 'win' || this._pendingRw <= 0) return;
+        if (typeof rewarded === 'undefined' || !rewarded) {
+          this._showToast('🎬 Quảng cáo chưa sẵn sàng, thử lại sau');
+          return;
+        }
+        this._rewardedPurpose = 'x2';
+        try {
+          await rewarded.show();
+          localStorage.setItem('lastRewardAdTime', Date.now().toString());
+        } catch (err) {
+          console.log('Ad not ready', err);
+          this._rewardedPurpose = null;
+          this._showToast('🎬 Quảng cáo chưa sẵn sàng, thử lại sau');
+          try { await rewarded.load(); } catch (e) { }
         }
       },
       claimReward() {
@@ -6544,15 +8472,28 @@
 
         if (typeof interstitial !== 'undefined' && interstitial) {
           return new Promise((resolve) => {
-            onInterstitialDismiss = () => resolve(true);
+            let settled = false;
+            const finish = (v) => {
+              if (settled) return;
+              settled = true;
+              onInterstitialDismiss = null;
+              clearTimeout(safetyTimer);
+              resolve(v);
+            };
+
+            // Safety net: if the dismiss event never fires (device went to sleep
+            // mid-ad, WebView lifecycle dropped the event, ad SDK froze, etc.),
+            // force-resolve after 20s so onWin / onLose never blocks forever.
+            const safetyTimer = setTimeout(() => finish(false), 20000);
+
+            onInterstitialDismiss = () => finish(true);
 
             interstitial.show().then(() => {
               localStorage.setItem('lastInterstitialTime', Date.now().toString());
             }).catch((err) => {
               console.log('Interstitial show failed', err);
-              onInterstitialDismiss = null;
               interstitial.load().catch(() => { });
-              resolve(false);
+              finish(false);
             });
           });
         }
@@ -7380,24 +9321,34 @@
         this.showTower();
       },
       playSfx(type) {
-        if (!this.soundOn) return;
+        if (!this.sfxOn) return;
         let p;
         if (type === 'click') p = 'assets/click.mp3';
         else if (type === 'match') p = 'assets/matched.mp3';
         else if (type === 'complete') p = 'assets/completed.mp3';
         if (p) {
-          const a = new Audio(p);
-          a.play().catch(e => console.log('SFX play error:', e));
+          try {
+            const a = new Audio(p);
+            a.volume = Math.max(0, Math.min(1, this.volume));
+            a.play().catch(e => console.log('SFX play error:', e));
+          } catch (e) { /* fail silently if audio unavailable */ }
         }
       },
       updateBgm() {
         if (!this._bgmTimer) {
-          this._bgmTimer = new Audio('assets/BGM1.mp3');
-          this._bgmTimer.loop = true;
-          this._bgmMoves = new Audio('assets/BGM2.mp3');
-          this._bgmMoves.loop = true;
+          try {
+            this._bgmTimer = new Audio('assets/BGM1.mp3');
+            this._bgmTimer.loop = true;
+            this._bgmMoves = new Audio('assets/BGM2.mp3');
+            this._bgmMoves.loop = true;
+          } catch (e) { return; }
         }
-        if (!this.soundOn || !this.playing || this.paused) {
+        // Apply current volume to both BGM tracks every update
+        const v = Math.max(0, Math.min(1, this.volume));
+        this._bgmTimer.volume = v;
+        this._bgmMoves.volume = v;
+
+        if (!this.bgmOn || !this.playing || this.paused) {
           this._bgmTimer.pause();
           this._bgmMoves.pause();
           return;
@@ -7410,11 +9361,44 @@
           this._bgmMoves.play().catch(e => console.log('BGM play error:', e));
         }
       },
-      toggleSound() {
-        this.soundOn = !this.soundOn;
-        const btn = $('btnSound');
-        if (btn) { btn.textContent = this.soundOn ? '🔊' : '🔇'; btn.classList.toggle('off', !this.soundOn); }
-        this.updateBgm();
+
+      // ═══ SETTINGS ═══
+      showSettings() {
+        const activeScr = document.querySelector('.scr.active');
+        if (activeScr && activeScr.id !== 'scrSettings') this.prevScr = activeScr.id;
+        this.hideScr();
+        this._refreshSettingsUI();
+        $('scrSettings').classList.add('active');
+      },
+      _refreshSettingsUI() {
+        const sfx = $('setSfxToggle');
+        const bgm = $('setBgmToggle');
+        const vbr = $('setVibToggle');
+        const vol = $('setVolSlider');
+        const volLbl = $('setVolLabel');
+        if (sfx) sfx.classList.toggle('on', this.sfxOn);
+        if (bgm) bgm.classList.toggle('on', this.bgmOn);
+        if (vbr) vbr.classList.toggle('on', this.vibOn);
+        if (vol) vol.value = Math.round(this.volume * 100);
+        if (volLbl) volLbl.textContent = Math.round(this.volume * 100) + '%';
+      },
+      toggleSetting(key) {
+        if (key === 'sfx') { this.sfxOn = !this.sfxOn; if (this.sfxOn) this.playSfx('click'); }
+        else if (key === 'bgm') { this.bgmOn = !this.bgmOn; this.updateBgm(); }
+        else if (key === 'vib') { this.vibOn = !this.vibOn; if (this.vibOn) { try { navigator.vibrate && navigator.vibrate(40); } catch (e) {} } }
+        this._refreshSettingsUI();
+        this.save();
+      },
+      setVolume(v) {
+        const n = parseInt(v, 10);
+        if (isNaN(n)) return;
+        this.volume = Math.max(0, Math.min(1, n / 100));
+        const volLbl = $('setVolLabel');
+        if (volLbl) volLbl.textContent = Math.round(this.volume * 100) + '%';
+        // Live-apply to currently playing BGM
+        if (this._bgmTimer) this._bgmTimer.volume = this.volume;
+        if (this._bgmMoves) this._bgmMoves.volume = this.volume;
+        this.save();
       },
       backToMenu() {
         if (this.tw.active) {
@@ -7435,35 +9419,118 @@
 
     G.init();
 
+    // Pause CSS animations + flush pending save when the app is backgrounded
+    document.addEventListener('visibilitychange', () => {
+      document.body.classList.toggle('app-hidden', document.hidden);
+      if (document.hidden) G.saveFlush();
+    });
+    window.addEventListener('pagehide', () => G.saveFlush());
+    document.addEventListener('pause', () => G.saveFlush()); // Cordova lifecycle
+
     let rewarded;
     let interstitial;
+    let banner;
     let onInterstitialDismiss = null;
 
-    document.addEventListener('deviceready', async () => {
-      const admobRef = (window).admob;
-      await admobRef.start();
-      admobRef.configure({
-        testDeviceIds: ['33BE2250B43518CCDA7DE426D04EE231'],
-      });
-      rewarded = new admobRef.RewardedInterstitialAd({
-        adUnitId: 'ca-app-pub-5952026628404823/3525542576',
-      });
+    // Global error handler — surfaces JS errors that would otherwise be
+    // silently swallowed by async handlers. Helps debug crash-on-launch issues.
+    window.addEventListener('error', (e) => {
+      console.log('Unhandled error:', e.message, e.filename, e.lineno);
+    });
+    window.addEventListener('unhandledrejection', (e) => {
+      console.log('Unhandled rejection:', e.reason);
+    });
 
-      interstitial = new admobRef.InterstitialAd({
-        adUnitId: 'ca-app-pub-5952026628404823/7430340019',
-      });
+    // Granular ad flags to isolate crashes.
+    //   ENABLE_ADS     — admob.start() + interstitial + rewarded
+    //   ENABLE_BANNER  — banner ad on top of the above
+    const ENABLE_ADS = true;
+    const ENABLE_BANNER = false;
+
+    // Google's official test ad unit IDs — safe for emulator/dev, won't ban
+    // your AdMob account. REPLACE BEFORE PRODUCTION RELEASE.
+    //   https://developers.google.com/admob/android/test-ads
+    const AD_UNIT_REWARDED     = 'ca-app-pub-3940256099942544/5354046379'; // Rewarded Interstitial
+    const AD_UNIT_INTERSTITIAL = 'ca-app-pub-3940256099942544/1033173712';
+    const AD_UNIT_BANNER       = 'ca-app-pub-3940256099942544/6300978111';
+
+    document.addEventListener('deviceready', async () => {
+      console.log('deviceready fired, ENABLE_ADS=', ENABLE_ADS);
+      if (!ENABLE_ADS) return;
+      try {
+        const admobRef = (window).admob;
+        if (!admobRef) {
+          console.log('admob plugin not available — running without ads');
+          return;
+        }
+        await admobRef.start();
+        admobRef.configure({
+          testDeviceIds: ['33BE2250B43518CCDA7DE426D04EE231'],
+        });
+        rewarded = new admobRef.RewardedInterstitialAd({
+          adUnitId: AD_UNIT_REWARDED,
+        });
+
+        interstitial = new admobRef.InterstitialAd({
+          adUnitId: AD_UNIT_INTERSTITIAL,
+        });
+
+      // Banner ad — gated by ENABLE_BANNER. Disabled by default since alpha
+      // admob-plus may crash native on construction.
+      if (ENABLE_BANNER) {
+        setTimeout(() => {
+          try {
+            console.log('[BANNER] admobRef.BannerAd type:', typeof admobRef.BannerAd);
+            if (typeof admobRef.BannerAd !== 'function') {
+              console.log('[BANNER] BannerAd not available — skipping');
+              return;
+            }
+            banner = new admobRef.BannerAd({
+              adUnitId: AD_UNIT_BANNER,
+              position: 'bottom',
+            });
+            console.log('[BANNER] Created OK. Has show/hide?', typeof banner.show, typeof banner.hide);
+            G._banner = banner;
+            if (G.updateBanner) G.updateBanner();
+          } catch (e) { console.log('[BANNER] Init failed', e && e.message, e); }
+        }, 600);
+      } else {
+        console.log('[BANNER] ENABLE_BANNER=false — skipped');
+      }
 
       rewarded.on('load', () => {
         console.log('Rewarded loaded');
       });
 
       rewarded.on('reward', () => {
-        console.log('User earned reward');
-        G.claimReward();
+        console.log('User earned reward, purpose=', G._rewardedPurpose);
+        // Route reward callback by purpose set when ad was triggered.
+        if (G._rewardedPurpose === 'continue') {
+          G._continued = true;
+          const lcA = G.$ ? G.$('lContAds') : document.getElementById('lContAds');
+          const lcC = G.$ ? G.$('lContCoin') : document.getElementById('lContCoin');
+          if (lcA) lcA.classList.add('claimed');
+          if (lcC) lcC.classList.add('claimed');
+          G._doContinue();
+        } else {
+          // Default / 'x2' purpose → bonus coin on win
+          G.claimReward();
+        }
+        G._rewardedPurpose = null;
       });
 
       rewarded.on('dismiss', async () => {
-        await rewarded.load();
+        // If user dismissed without earning reward, restore button state so
+        // they can still use the coin-continue option.
+        if (G._rewardedPurpose === 'continue' && !G._continued) {
+          const lcA = document.getElementById('lContAds');
+          const lcC = document.getElementById('lContCoin');
+          if (lcA) lcA.disabled = false;
+          if (lcC) lcC.disabled = false;
+          G._showToast('Quảng cáo đã đóng, không nhận thưởng');
+        }
+        G._rewardedPurpose = null;
+        try { await rewarded.load(); } catch (e) { }
       });
 
       interstitial.on('dismiss', async () => {
@@ -7474,9 +9541,11 @@
         await interstitial.load();
       });
 
-      await rewarded.load();
-      await interstitial.load();
-
+        await rewarded.load();
+        await interstitial.load();
+      } catch (e) {
+        console.log('Ad init failed (game continues without ads):', e);
+      }
     }, false);
   </script>
   <script src="cordova.js"></script>
