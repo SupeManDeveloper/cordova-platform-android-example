@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.gamecotich.flipdominion" version="1.1.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.gamecotich.flipdominion" version="1.1.1"
+    xmlns="http://www.w3.org/ns/widgets"
+    xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>FLIP DOMINION</name>
     <description>Game Flip Dominion</description>
     <author email="gamecotich.com@gmail.com" href="https://gamecotich.com">
@@ -19,10 +21,6 @@
         <preference name="Fullscreen" value="true" />
         <preference name="StatusBarOverlaysWebView" value="false" />
 
-        <!-- Android 12+ native Splash Screen — no plugin required.
-             Reuses the existing xxxhdpi launcher icon; background colour
-             matches the in-game purple theme so the transition into the
-             game UI is seamless. -->
         <preference name="AndroidWindowSplashScreenBackground" value="#6648d8" />
         <preference name="AndroidWindowSplashScreenAnimatedIcon" value="resources/android/icon/drawable-xxxhdpi-icon.png" />
 

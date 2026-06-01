@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "admob-plus-cordova": "^2.0.0-alpha.19",
-    "cordova-android": "^14.0.1",
+    "cordova-android": "^15.0.0",
     "cordova-ios": "^8.0.0",
     "cordova-plugin-device": "^3.0.0",
     "cordova-plugin-local-notification": "^1.2.1",
