@@ -3,13 +3,19 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Flip Dominion</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Quicksand:wght@500;600;700;800&display=swap"
     rel="stylesheet">
   <style>
     :root {
+      /* Device safe-area insets (notch / status bar / gesture bar).
+         Fallback to 0px on devices/browsers without env() support. */
+      --sat: env(safe-area-inset-top, 0px);
+      --sab: env(safe-area-inset-bottom, 0px);
+      --sal: env(safe-area-inset-left, 0px);
+      --sar: env(safe-area-inset-right, 0px);
       --bg: #080c18;
       --card: #151d35;
       --gold: #ffcc33;
@@ -387,7 +393,7 @@
       display: flex;
       align-items: center;
       gap: 7px;
-      padding: 8px 14px 4px;
+      padding: calc(8px + var(--sat)) 14px 4px;
       flex-shrink: 0;
       z-index: 2;
       position: relative
@@ -2057,14 +2063,15 @@
       max-height: none;
       width: 100%;
       max-width: 480px;
-      align-self: center
+      align-self: center;
+      padding-bottom: calc(14px + var(--sab))
     }
 
     /* ═══ SCREEN HUD BAR — top of each tab ═══ */
     .scrHud {
       display: flex;
       flex-direction: column;
-      padding: 10px 12px 7px;
+      padding: calc(10px + var(--sat)) 12px 7px;
       background: var(--s3);
       border-bottom: 1px solid var(--hud-border);
       flex-shrink: 0;
@@ -2163,6 +2170,13 @@
       max-height: 95vh;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch
+    }
+
+    /* Home/menu content: keep the game title and bottom controls clear of the
+       device notch and gesture bar now that the view is edge-to-edge. */
+    #scrStart .scrIn {
+      padding-top: calc(14px + var(--sat));
+      padding-bottom: calc(14px + var(--sab))
     }
 
     .scrTi {
@@ -2521,14 +2535,21 @@
     .shopPrice {
       display: inline-flex;
       align-items: center;
-      gap: 2px;
-      background: rgba(255, 204, 51, .15);
-      border: 1px solid rgba(255, 204, 51, .25);
-      padding: 3px 8px;
-      border-radius: 8px;
-      font-size: .68rem;
-      font-weight: 800;
-      color: var(--gold)
+      justify-content: center;
+      gap: 3px;
+      background: linear-gradient(135deg, var(--gold), #ff9a18);
+      border: none;
+      padding: 5px 14px;
+      border-radius: 9px;
+      font-size: .72rem;
+      font-weight: 900;
+      color: #2a1800;
+      box-shadow: 0 2px 8px rgba(255, 154, 24, .35);
+      margin-top: 3px
+    }
+
+    .shopItem:active .shopPrice {
+      filter: brightness(1.1)
     }
 
     .shopBought {
@@ -3925,6 +3946,60 @@
       display: block
     }
 
+    /* ═══ SHOP INFO BUTTON + PINNED POPOVER ═══ */
+    .iapItem,
+    .iapCoinCard {
+      position: relative
+    }
+
+    .infoBtn {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 19px;
+      height: 19px;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, .4);
+      border-radius: 50%;
+      background: rgba(0, 0, 0, .5);
+      color: #fff;
+      font-family: 'Cinzel Decorative', serif;
+      font-weight: 900;
+      font-size: .62rem;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 6;
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .infoBtn:active {
+      transform: scale(.86);
+      background: rgba(0, 0, 0, .7)
+    }
+
+    /* Backdrop captures outside-clicks to dismiss a pinned popover */
+    .tipBackdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 199;
+      background: transparent
+    }
+
+    .tipBackdrop.show {
+      display: block
+    }
+
+    /* When opened via the info button, the popover is interactive and sits
+       above the backdrop so taps on it don't dismiss it. */
+    .iapTip.pinned {
+      pointer-events: auto;
+      z-index: 201
+    }
+
     .iapTip .ttL {
       color: var(--gold);
       font-weight: 800;
@@ -5221,7 +5296,7 @@
       background: linear-gradient(180deg, rgba(0, 0, 0, .25), rgba(0, 0, 0, .1)) !important;
       border-bottom: 2px solid rgba(255, 255, 255, .12) !important;
       box-shadow: 0 4px 14px rgba(0, 0, 0, .25);
-      padding: 10px 14px 8px !important
+      padding: calc(10px + var(--sat)) 14px 8px !important
     }
 
     .top .backBtn,
@@ -5924,7 +5999,7 @@
 
     /* Booster bar: tighter row, less vertical noise */
     .bBar {
-      padding: 4px 6px 12px !important;
+      padding: 4px 6px calc(12px + var(--sab)) !important;
       gap: 6px !important
     }
 
@@ -7376,10 +7451,12 @@
       getPrice(t) { const b = this.bought[t] || 0, eff = b % 50, base = SHOP[t].bp; return Math.min(base + eff * 20, Math.floor(base * 2.5)); },
       shopTabIdx: 0, // Default Coins tab — IAP items show "Coming soon" toast on tap
       shopTab(i) {
+        this.closeTip();
         this.shopTabIdx = i;
         for (let t = 0; t < 2; t++) { $('shopP' + t).classList.toggle('hid', t !== i); $('stab' + t).classList.toggle('act', t === i); }
       },
       showShop(fromPurchase) {
+        this.closeTip();
         if (!fromPurchase) {
           const activeScr = document.querySelector('.scr.active');
           const id = activeScr ? activeScr.id : null;
@@ -7405,6 +7482,7 @@
               );
             }
           };
+          this._attachInfo(d);
           g.appendChild(d);
         });
         // Tab 0: Coin packs
@@ -7434,6 +7512,7 @@
             );
             */
           };
+          this._attachInfo(d);
           ig.appendChild(d);
         });
         // Tab 1: Combo packs (Booster)
@@ -7464,6 +7543,7 @@
             );
             */
           };
+          this._attachInfo(d);
           bpc.appendChild(d);
         });
         // Tab 1: Premium
@@ -7515,6 +7595,7 @@
             );
             */
           };
+          this._attachInfo(d);
           bps.appendChild(d);
         });
         // Restore tab
@@ -7558,7 +7639,51 @@
         if (y < 4) y = r.bottom + 6;
         tip.style.left = x + 'px'; tip.style.top = y + 'px';
       },
-      hideTip() { $('shopTip').classList.remove('show'); },
+      hideTip() {
+        const t = $('shopTip');
+        // Don't auto-hide a popover the user pinned open via the info button.
+        if (t.classList.contains('pinned')) return;
+        t.classList.remove('show');
+      },
+      // Attach an "i" info button to a shop card. Tapping it pins the popover
+      // open (with a click-outside backdrop) instead of the transient peek.
+      _attachInfo(card) {
+        const b = document.createElement('button');
+        b.className = 'infoBtn';
+        b.type = 'button';
+        b.textContent = 'i';
+        b.setAttribute('aria-label', 'Item info');
+        // Stop the tap from bubbling to the card (which would trigger a buy).
+        b.onclick = (e) => { e.stopPropagation(); e.preventDefault(); this.pinTip(card); };
+        b.ontouchstart = (e) => { e.stopPropagation(); };
+        b.ontouchend = (e) => { e.stopPropagation(); };
+        card.appendChild(b);
+      },
+      pinTip(card) {
+        const tip = $('shopTip');
+        // showTip reads card.dataset.tip for content + positions it.
+        tip.classList.remove('pinned');
+        this.showTip(card);
+        if (!tip.classList.contains('show')) return; // no tip content
+        tip.classList.add('pinned');
+        let bd = $('tipBackdrop');
+        if (!bd) {
+          bd = document.createElement('div');
+          bd.id = 'tipBackdrop';
+          bd.className = 'tipBackdrop';
+          bd.onclick = () => this.closeTip();
+          // Append into the SAME stacking context as #shopTip (its parent),
+          // not document.body — otherwise the .scr (z-index 101) that wraps the
+          // tip would sit below a body-level backdrop and the tip would be
+          // un-clickable. Here backdrop(199) < tip(201) within that context.
+          tip.parentNode.appendChild(bd);
+        }
+        bd.classList.add('show');
+      },
+      closeTip() {
+        const bd = $('tipBackdrop'); if (bd) bd.classList.remove('show');
+        const tip = $('shopTip'); tip.classList.remove('pinned', 'show');
+      },
 
       // ═══ COMBO DISPLAY ═══
       getMul() { return Math.min(this.cmb, 5); },
@@ -7587,7 +7712,7 @@
         // totG = total matches needed = gr × (ts/n)
         const matchesPerEmoji = Math.floor(ts / L.n);
         this.totG = L.gr * matchesPerEmoji; this.tiles = vals; this.flip = []; this.mtc = 0;
-        this.sc = 0; this.mv = 0; this.cmb = 0; this.mxC = 0; this.failStreak = 0; this._popQ = []; this._popBusy = false; this.lk = false;
+        this.sc = 0; this.mv = 0; this.cmb = 0; this.mxC = 0; this.failStreak = 0; this._popQ = []; this._popBusy = false; this.lk = false; this.ended = false; this.winLock = false;
         // Timer formula: Timer = ml × tpm, where tpm = seconds per move by match type
         const totalMatches = L.gr * Math.floor(ts / L.n);
         const tileNum = cols * rows;
@@ -8094,6 +8219,14 @@
         const allSame = this.flip.every(f => f.value === this.flip[0].value);
         if (allSame) {
           // ═══ MATCH ═══
+          // If this match clears the board, lock the win in NOW so the per-tick
+          // timer (time mode) or the last-move check can't flip it to a loss
+          // during the 300ms match animation that follows. The actual onWin()
+          // still fires after the animation completes (below).
+          if (this.mtc + 1 >= this.totG) {
+            this.winLock = true;
+            if (this.tmr) { clearInterval(this.tmr); this.tmr = null; }
+          }
           // Tiered combo haptic — stronger feedback as the combo chain grows.
           // After this match, combo level becomes `this.cmb + 1`.
           const _newCmb = this.cmb + 1;
@@ -8199,6 +8332,10 @@
 
       // ═══ WIN ═══
       onWin() {
+        // Guard against double-resolution (e.g. a timer tick firing onLose in
+        // the same frame the winning match resolves). First call wins.
+        if (this.ended) return;
+        this.ended = true;
         if (this.playSfx) this.playSfx('complete');
         if (this.tw.active) { this.twOnWin(); return; }
         this.stopGame();
@@ -8295,8 +8432,15 @@
 
       // ═══ LOSE ═══
       onLose() {
+        // Already resolved this level (win or a prior lose) — ignore.
+        if (this.ended) return;
+        // Win takes priority: if the board is already fully cleared (or a
+        // board-clearing match is mid-animation), this must resolve as a win,
+        // not a loss — even if time/moves hit zero at the exact same moment.
+        if (this.winLock || this.mtc >= this.totG) { this.onWin(); return; }
         // Tower mode: no continue, immediate end
-        if (this.tw.active) { this.lk = true; this.stopGame(); this.twOnLose(); return; }
+        if (this.tw.active) { this.ended = true; this.lk = true; this.stopGame(); this.twOnLose(); return; }
+        this.ended = true;
         this.lk = true; this.stopGame();
         let lc = this.calcLR();
         this._pendingLR = lc;
@@ -8380,6 +8524,7 @@
           return;
         }
         this._rewardedPurpose = 'continue';
+        this._rewardEarned = false;
         // Disable buttons during ad attempt (un-disabled on dismiss-without-reward)
         $('lContAds').disabled = true; $('lContCoin').disabled = true;
         try {
@@ -8406,6 +8551,10 @@
       },
       _doContinue() {
         setTimeout(() => {
+          // Reopen the level: it was marked resolved (ended) by the loss that
+          // triggered this continue. Clear those flags so the player can win
+          // (or lose) the level again after the bonus time/moves are granted.
+          this.ended = false; this.winLock = false;
           this.hideScr(); this.lk = false; this.playing = true;
           if (this.updateBanner) this.updateBanner();
           if (this.mode === 'moves') {
@@ -8442,6 +8591,7 @@
           return;
         }
         this._rewardedPurpose = 'x2';
+        this._rewardEarned = false;
         try {
           await rewarded.show();
           localStorage.setItem('lastRewardAdTime', Date.now().toString());
@@ -8568,7 +8718,7 @@
           g.appendChild(b);
         }
       },
-      hideScr() { document.querySelectorAll('.scr').forEach(s => s.classList.remove('active')); },
+      hideScr() { this.closeTip(); document.querySelectorAll('.scr').forEach(s => s.classList.remove('active')); },
 
       // ═══ TOWER MODE ═══
       // Tower state
@@ -9522,32 +9672,47 @@
 
       rewarded.on('reward', () => {
         console.log('User earned reward, purpose=', G._rewardedPurpose);
-        // Route reward callback by purpose set when ad was triggered.
+        // IMPORTANT: the 'reward' event fires while the ad is STILL on screen.
+        // We must NOT resume the game / grant the reward here — otherwise the
+        // game (and its countdown) runs underneath a still-visible ad.
+        // Just record that the reward was earned; the actual grant happens in
+        // the 'dismiss' handler once the ad overlay is truly closed.
+        G._rewardEarned = true;
         if (G._rewardedPurpose === 'continue') {
-          G._continued = true;
+          // Mark the continue buttons claimed (visual only) so they read
+          // correctly the instant the ad closes.
           const lcA = G.$ ? G.$('lContAds') : document.getElementById('lContAds');
           const lcC = G.$ ? G.$('lContCoin') : document.getElementById('lContCoin');
           if (lcA) lcA.classList.add('claimed');
           if (lcC) lcC.classList.add('claimed');
-          G._doContinue();
-        } else {
-          // Default / 'x2' purpose → bonus coin on win
-          G.claimReward();
         }
-        G._rewardedPurpose = null;
       });
 
       rewarded.on('dismiss', async () => {
-        // If user dismissed without earning reward, restore button state so
-        // they can still use the coin-continue option.
-        if (G._rewardedPurpose === 'continue' && !G._continued) {
-          const lcA = document.getElementById('lContAds');
-          const lcC = document.getElementById('lContCoin');
-          if (lcA) lcA.disabled = false;
-          if (lcC) lcC.disabled = false;
-          G._showToast('Quảng cáo đã đóng, không nhận thưởng');
-        }
+        // Ad overlay is now actually closed — safe to act.
+        const purpose = G._rewardedPurpose;
+        const earned = G._rewardEarned;
         G._rewardedPurpose = null;
+        G._rewardEarned = false;
+        if (earned) {
+          // Reward was granted by AdMob and the ad is dismissed → perform the
+          // deferred action now (resume game / grant ×2 coins).
+          if (purpose === 'continue') {
+            if (!G._continued) { G._continued = true; G._doContinue(); }
+          } else {
+            G.claimReward();
+          }
+        } else {
+          // Dismissed without earning the reward → restore button state so the
+          // player can still use the coin-continue option.
+          if (purpose === 'continue' && !G._continued) {
+            const lcA = document.getElementById('lContAds');
+            const lcC = document.getElementById('lContCoin');
+            if (lcA) lcA.disabled = false;
+            if (lcC) lcC.disabled = false;
+            G._showToast('Quảng cáo đã đóng, không nhận thưởng');
+          }
+        }
         try { await rewarded.load(); } catch (e) { }
       });
 
