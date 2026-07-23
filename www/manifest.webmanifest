@@ -1,0 +1,20 @@
+{
+  "name": "Lật Hình Cổ Tích",
+  "short_name": "Lật Hình",
+  "description": "Game lật thẻ ghép cặp phong cách cổ tích dân gian Việt Nam. 50 màn chơi, xếp hạng sao.",
+  "lang": "vi",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#150b06",
+  "theme_color": "#150b06",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
