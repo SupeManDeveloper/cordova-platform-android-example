@@ -15,7 +15,13 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Lật Hình Cổ Tích">
   <meta property="og:description" content="Game lật thẻ ghép cặp phong cách cổ tích dân gian Việt Nam. 50 màn chơi, xếp hạng sao.">
-  <!-- <meta property="og:image" content="https://YOUR_DOMAIN/og-image.png"> -->
+  <!-- Ảnh chia sẻ. Path tương đối; đổi thành URL tuyệt đối (https://DOMAIN/assets/logo.png)
+       sau khi deploy để Facebook/Zalo hiển thị preview chuẩn. -->
+  <meta property="og:image" content="assets/logo.png">
+  <meta property="og:image:width" content="1424">
+  <meta property="og:image:height" content="752">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="assets/logo.png">
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23521810'/><text x='50' y='74' font-size='68' text-anchor='middle' fill='%23f0c24b'>✺</text></svg>">
   <link rel="apple-touch-icon" href="icon.svg">
@@ -6304,13 +6310,15 @@
       --tile-bk-star: rgba(240, 194, 75, .72);
     }
 
-    /* Shared warm lacquer background — body + every screen (full cohesion) */
+    /* Shared background — đầm sen hoàng hôn (CSS, không ảnh) */
     body,
     .scr {
       background:
-        radial-gradient(ellipse at 50% -8%, rgba(214, 59, 47, .20), transparent 55%),
-        radial-gradient(ellipse at 50% 108%, rgba(240, 194, 75, .12), transparent 55%),
-        linear-gradient(180deg, #26120a 0%, #150b06 100%) !important;
+        radial-gradient(ellipse 70% 45% at 50% 8%, rgba(255, 168, 66, .30), transparent 60%),
+        radial-gradient(ellipse 40% 30% at 16% 84%, rgba(255, 120, 158, .16), transparent 60%),
+        radial-gradient(ellipse 40% 30% at 84% 88%, rgba(255, 120, 158, .14), transparent 60%),
+        radial-gradient(ellipse 90% 40% at 50% 58%, rgba(240, 194, 75, .10), transparent 65%),
+        linear-gradient(180deg, #45210e 0%, #2c1408 46%, #160b06 100%) !important;
     }
 
     /* ── Buttons: 3 clear roles ───────────────────────────────────────── */
@@ -6477,32 +6485,32 @@
       border-color: rgba(240, 194, 75, .22) !important;
     }
 
-    /* ── Tile faces: warm folk (was indigo/cyan/green) ── */
+    /* ── Tile faces: cream card with gold rim (như thẻ lộ trong mẫu) ── */
     .tile .tF {
-      background: linear-gradient(160deg, #3a2116 0%, #291710 100%) !important;
-      border: 2.5px solid rgba(240, 194, 75, .28) !important;
+      background: linear-gradient(160deg, #fdf4dd 0%, #f3e3b6 100%) !important;
+      border: 2.5px solid rgba(196, 146, 48, .55) !important;
       box-shadow:
-        inset 0 1px 0 rgba(255, 220, 150, .10),
-        inset 0 -2px 0 rgba(0, 0, 0, .25) !important;
+        inset 0 1px 0 rgba(255, 255, 255, .7),
+        inset 0 -2px 0 rgba(176, 132, 60, .3) !important;
     }
 
     .tile.flipped .tF {
-      box-shadow: 0 0 14px rgba(240, 194, 75, .45) !important;
-      border-color: rgba(240, 194, 75, .55) !important;
+      box-shadow: 0 0 14px rgba(240, 194, 75, .5), inset 0 1px 0 rgba(255, 255, 255, .7) !important;
+      border-color: rgba(224, 168, 58, .8) !important;
     }
 
-    /* Đang chọn — quầng vàng kim */
+    /* Đang chọn — quầng vàng kim đậm */
     .tile.picked .tF {
-      border-color: #f0c24b !important;
-      background: linear-gradient(160deg, #4a2c14 0%, #5a3616 100%) !important;
-      box-shadow: 0 0 16px rgba(240, 194, 75, .6), inset 0 0 12px rgba(240, 194, 75, .18) !important;
+      border-color: #e0a83a !important;
+      background: linear-gradient(160deg, #fff3d0 0%, #f6e2a6 100%) !important;
+      box-shadow: 0 0 18px rgba(240, 194, 75, .75), inset 0 0 10px rgba(240, 194, 75, .3) !important;
     }
 
-    /* Đã ghép — đỏ son */
+    /* Đã ghép — kem ngả vàng, viền đỏ son nhạt */
     .tile.matched .tF {
-      border-color: #e0553f !important;
-      background: linear-gradient(160deg, #4a1f14 0%, #37150d 100%) !important;
-      box-shadow: 0 0 12px rgba(214, 59, 47, .45) !important;
+      border-color: #d98a5a !important;
+      background: linear-gradient(160deg, #f6e8c4 0%, #efd9a2 100%) !important;
+      box-shadow: 0 0 10px rgba(214, 59, 47, .3) !important;
     }
 
     /* ── Pause overlay: warm theme (was purple) ── */
@@ -6522,37 +6530,51 @@
       padding: 20px 26px !important;
     }
 
-    /* ── Card BACK (face-down): sơn mài đỏ, khung + sao vàng kim ── */
+    /* ── Card BACK: mề đay vàng trên nền sơn mài đỏ (như mẫu) ── */
     .tile .tBk {
       background:
-        radial-gradient(circle at 50% 42%, rgba(240, 194, 75, .16), transparent 62%),
-        linear-gradient(158deg, #7a241a 0%, #521810 52%, #351009 100%) !important;
-      border: 2px solid rgba(240, 194, 75, .55) !important;
+        radial-gradient(circle at 50% 50%, transparent 61%, rgba(240, 194, 75, .55) 63% 65.5%, transparent 67%),
+        radial-gradient(circle at 50% 44%, #8f2e1e 0%, #6a1f14 55%, #45130c 100%) !important;
+      border: 2px solid rgba(240, 194, 75, .6) !important;
       box-shadow:
-        inset 0 1px 0 rgba(255, 220, 150, .22),
-        inset 0 -3px 0 rgba(0, 0, 0, .32),
-        0 2px 6px rgba(0, 0, 0, .3) !important;
+        inset 0 1px 0 rgba(255, 220, 150, .25),
+        inset 0 -3px 0 rgba(0, 0, 0, .34),
+        0 2px 6px rgba(0, 0, 0, .32) !important;
+      overflow: hidden;
     }
 
-    /* Ornate inner frame + gold dot lattice */
+    /* Gold sunburst ring (Đông Sơn drum rays), slowly shimmering */
     .tile .tBk::before {
-      inset: 4px !important;
-      border: 1px solid rgba(240, 194, 75, .5) !important;
-      border-radius: 6px !important;
-      background-image: radial-gradient(circle, rgba(240, 194, 75, .13) 1px, transparent 1px) !important;
-      box-shadow: inset 0 0 0 3px rgba(240, 194, 75, .06) !important;
+      content: '' !important;
+      position: absolute !important;
+      inset: 0 !important;
+      border: none !important;
+      border-radius: 8px !important;
+      background:
+        repeating-conic-gradient(from 0deg at 50% 50%,
+          rgba(255, 214, 107, .72) 0deg 5deg, transparent 5deg 15deg) !important;
+      -webkit-mask: radial-gradient(circle at 50% 50%, transparent 29%, #000 31% 57%, transparent 60%) !important;
+      mask: radial-gradient(circle at 50% 50%, transparent 29%, #000 31% 57%, transparent 60%) !important;
+      box-shadow: none !important;
     }
 
-    /* Glowing gold sun (Đông Sơn drum motif) centerpiece + gentle twinkle */
+    /* Central gold boss + gentle twinkle */
     .tile .tBk::after {
-      content: '✺' !important;
-      color: #ffd76b !important;
-      filter: none !important;
-      text-shadow:
-        0 0 9px rgba(240, 194, 75, .75),
-        0 0 3px rgba(255, 220, 130, .9),
-        0 1px 2px rgba(60, 20, 8, .6) !important;
-      animation: tbkTwinkle 2.6s ease-in-out infinite;
+      content: '' !important;
+      position: absolute !important;
+      top: 50% !important;
+      left: 50% !important;
+      width: 26% !important;
+      height: 26% !important;
+      transform: translate(-50%, -50%) !important;
+      border-radius: 50% !important;
+      background: radial-gradient(circle at 50% 38%, #ffe89e 0%, #e6ad3e 55%, #a9791c 100%) !important;
+      box-shadow:
+        0 0 7px rgba(240, 194, 75, .6),
+        inset 0 1px 1px rgba(255, 240, 200, .6),
+        inset 0 -1px 2px rgba(120, 60, 10, .5) !important;
+      text-shadow: none !important;
+      animation: tbkTwinkle 2.8s ease-in-out infinite;
     }
 
     /* Stagger so tiles shimmer organically, not in unison */
@@ -6565,15 +6587,12 @@
     }
 
     @keyframes tbkTwinkle {
-      0%, 100% {
-        opacity: .74;
-        transform: scale(1);
-      }
+      0%, 100% { opacity: .82; }
+      50% { opacity: 1; }
+    }
 
-      50% {
-        opacity: 1;
-        transform: scale(1.13);
-      }
+    @keyframes tbkSpin {
+      to { transform: rotate(360deg); }
     }
   </style>
 </head>
@@ -6841,7 +6860,8 @@
   </div>
 
   <script>
-    const EM = { animals: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔', '🐧', '🐦', '🦅', '🦆', '🦉', '🐴', '🦄', '🐝'], food: ['🍎', '🍐', '🍊', '🍋', '🍌', '🍉', '🍇', '🍓', '🫐', '🍒', '🍑', '🥝', '🍍', '🥭', '🍕', '🍔', '🌮', '🍣', '🍩', '🧁', '🍪', '🍫', '🎂', '🍰'], nature: ['🌸', '🌺', '🌻', '🌹', '🌷', '💐', '🍀', '🌿', '🌵', '🎋', '🍁', '🍂', '🌊', '🔥', '⭐', '🌙', '☀️', '🌈', '❄️', '💎', '🪨', '🌋', '🦋', '🐚'], objects: ['⚽', '🏀', '🎸', '🎮', '🎯', '🎨', '🔮', '💡', '🔑', '🧲', '⏰', '📷', '♟️', '🏆', '🎪', '🚀', '✈️', '🛸', '⛵', '🎭', '🎩', '👑', '💍', '🗡️'], faces: ['😀', '😎', '🤩', '😍', '🥳', '😜', '🤪', '😇', '🥸', '🤠', '👻', '💀', '👽', '🤖', '😈', '🦸', '🧙', '🧛', '🧜', '🧝', '🧞', '🧟', '🎅', '🤴'] };
+    // Folk / fairy-tale themed symbol sets (visually distinct within each group).
+    const EM = { animals: ['🐉', '🐢', '🐇', '🦋', '🕊️', '🐟', '🦚', '🦜', '🐍', '🐅', '🐘', '🐎', '🦌', '🐑', '🐒', '🐓', '🐝', '🐞', '🦢', '🐌'], food: ['🍵', '🥮', '🥟', '🍡', '🍥', '🍙', '🍜', '🧧', '🍑', '🍊', '🍇', '🌰', '🥠', '🍠', '🫖', '🍯', '🍨', '🍧', '🍢', '🍚'], nature: ['🪷', '🌸', '🌷', '🍁', '🌿', '🎋', '🌙', '⭐', '☀️', '🔥', '💧', '🌊', '🌈', '❄️', '💎', '🪨', '🌋', '⛩️', '🗻', '🍃'], objects: ['🏮', '🪭', '🎏', '🎐', '🀄', '🪄', '🔮', '👑', '💍', '🏆', '🥁', '🪈', '🎎', '🪅', '🧨', '🕯️', '🪔', '📜', '🎀', '🪙'], faces: ['👺', '👹', '🎭', '🧚', '🧙', '🧜', '🧞', '🧝', '🤴', '👸', '🥷', '👘', '🎅', '😺', '👻', '💀', '🤖', '👽', '🦊', '🐼'] };
     // ═══ 250 SCRIPTED LEVELS ═══
     // Phase 1 (1-25): Start — Match 2 tutorial & basics
     // Phase 2 (26-50): Pressure — Match 2 pressure, bigger grids

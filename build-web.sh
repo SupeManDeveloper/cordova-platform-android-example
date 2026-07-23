@@ -30,6 +30,9 @@ for a in click.mp3 matched.mp3 completed.mp3 BGM1.mp3 BGM2.mp3; do
   cp "$SRC/assets/$a" "$OUT/assets/$a"
 done
 
+# Share/thumbnail artwork (og:image). Include if present.
+[ -f "$SRC/assets/logo.png" ] && cp "$SRC/assets/logo.png" "$OUT/assets/logo.png"
+
 echo "✔ Done. Contents:"
 du -ah "$OUT" | sort -k2
 echo
