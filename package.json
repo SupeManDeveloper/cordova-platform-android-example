@@ -1,7 +1,7 @@
 {
   "name": "one.eternalgalaxy.chibi_wallet",
   "displayName": "Chibi Wallet",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,7 @@
     }
   },
   "devDependencies": {
-    "cordova-android": "^14.0.1",
+    "cordova-android": "^15.0.0",
     "cordova-plugin-device": "^3.0.0",
     "cordova-plugin-local-notification": "^1.2.1",
     "cordova-res": "^0.15.4"
