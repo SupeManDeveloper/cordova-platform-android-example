@@ -1,0 +1,46 @@
+{
+  "name": "chibi-currency",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "nx dev chibi-currency",
+    "build": "nx build chibi-currency",
+    "build:cordova": "nx build:cordova chibi-currency",
+    "build:itch": "nx build:itch chibi-currency",
+    "lint": "nx lint chibi-currency",
+    "preview": "nx preview chibi-currency",
+    "release": "standard-version"
+  },
+  "dependencies": {
+    "@games/core": "workspace:*",
+    "@games/i18n": "workspace:*",
+    "@games/ui": "workspace:*",
+    "@tailwindcss/vite": "^4.1.18",
+    "lucide-react": "^0.561.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-intl": "^8.0.6",
+    "react-router-dom": "^7.11.0",
+    "react-toastify": "^11.0.5",
+    "recharts": "^3.6.0",
+    "vite-plugin-html": "^3.2.2",
+    "zustand": "^5.0.9"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "autoprefixer": "^10.4.23",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "postcss": "^8.5.6",
+    "standard-version": "^9.5.0",
+    "tailwindcss": "^4.1.18",
+    "typescript-eslint": "^8.46.4",
+    "vite": "^7.2.4"
+  }
+}
