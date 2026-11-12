@@ -1,7 +1,7 @@
 {
   "name": "chibi-currency",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.8.0",
   "type": "module",
   "scripts": {
     "dev": "nx dev chibi-currency",
@@ -10,6 +10,7 @@
     "build:itch": "nx build:itch chibi-currency",
     "lint": "nx lint chibi-currency",
     "preview": "nx preview chibi-currency",
+    "test": "nx test chibi-currency",
     "release": "standard-version"
   },
   "dependencies": {
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@testing-library/react": "^16.3.0",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
@@ -37,10 +39,12 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "jsdom": "^25.0.1",
     "postcss": "^8.5.6",
     "standard-version": "^9.5.0",
     "tailwindcss": "^4.1.18",
     "typescript-eslint": "^8.46.4",
-    "vite": "^7.2.4"
+    "vite": "^7.2.4",
+    "vitest": "^3.2.4"
   }
 }
