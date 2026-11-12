@@ -12,6 +12,7 @@
     <allow-intent href="https://*/*" />
     <access origin="https://*" />
     <allow-navigation href="https://*/*" />
+    <hook type="after_prepare" src="hooks/after_prepare/010-copy-build-extras.js" />
     <platform name="android">
         <preference default="23.2.0" name="PLAY_SERVICES_VERSION" />
         <preference name="AndroidXEnabled" value="true" />
