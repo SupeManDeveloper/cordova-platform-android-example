@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.gamecotich.flappy_sontinh_thuytinh" version="1.1.2" android-versionCode="10102"
+<widget id="com.gamecotich.flappy_sontinh_thuytinh" version="1.1.3" android-versionCode="10103"
     xmlns="http://www.w3.org/ns/widgets"
-    xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    xmlns:cdv="http://cordova.apache.org/ns/1.0"
+    xmlns:tools="http://schemas.android.com/tools">
     <name>Flappy Sơn Tinh Thủy Tinh</name>
     <description>Game Flappy Sơn Tinh Thủy Tinh</description>
     <author email="gamecotich.com@gmail.com" href="https://gamecotich.com">
@@ -12,6 +13,8 @@
     <allow-intent href="https://*/*" />
     <access origin="https://*" />
     <allow-navigation href="https://*/*" />
+    <hook type="after_prepare" src="hooks/after_prepare/010-copy-build-extras.js" />
+    <hook type="after_prepare" src="hooks/after_prepare/020-fix-manifest-version.js" />
     <platform name="android">
         <preference default="23.2.0" name="PLAY_SERVICES_VERSION" />
         <preference name="AndroidXEnabled" value="true" />
@@ -44,5 +47,20 @@
         <splash density="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png" />
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
+        <!-- xmlns:tools (dùng cho tools:replace bên dưới) cần khai báo sẵn
+             trên <manifest> gốc. -->
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest">
+            <manifest xmlns:tools="http://schemas.android.com/tools" />
+        </edit-config>
+        <!-- AdMob AdActivity (interstitial/rewarded) được SDK khai báo sẵn
+             android:theme="@android:style/Theme.Translucent" (không
+             NoTitleBar/Fullscreen) -> để hở status bar phía trên lúc hiện
+             quảng cáo thay vì che hết màn hình. Ép đổi sang
+             Theme.Translucent.NoTitleBar.Fullscreen cho riêng Activity này. -->
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge"
+            target="/manifest/application/activity[@android:name='com.google.android.gms.ads.AdActivity']"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+            <activity android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" tools:replace="android:theme" />
+        </edit-config>
     </platform>
 </widget>
