@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="one.eternalgalaxy.chibi_wallet" version="1.2.1" android-versionCode="10201"
     xmlns="http://www.w3.org/ns/widgets"
-    xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    xmlns:cdv="http://cordova.apache.org/ns/1.0"
+    xmlns:tools="http://schemas.android.com/tools">
     <name>Chibi Wallet</name>
     <description>Quản lý chi tiêu dễ dàng với heo đất chibi dễ thương. Theo dõi thu chi, tiết kiệm thông minh và hình thành thói quen tài chính tích cực mỗi ngày.</description>
     <author email="superman.developer.app@gmail.com" href="https://eternalgalaxy.one">
@@ -49,5 +50,22 @@
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
         <preference name="AndroidWindowSplashScreenAnimatedIcon" value="resources/android/icon/drawable-xxxhdpi-icon.png" />
         <preference name="AndroidWindowSplashScreenBackground" value="#FCE7F3" />
+        <!-- tools:replace (dùng ở edit-config AdActivity bên dưới) cần namespace
+             "tools" khai báo sẵn trên thẻ <manifest> gốc. -->
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest">
+            <manifest xmlns:tools="http://schemas.android.com/tools" />
+        </edit-config>
+        <!-- AdMob AdActivity (interstitial/rewarded) được SDK khai báo sẵn
+             android:theme="@android:style/Theme.Translucent" (không
+             NoTitleBar/Fullscreen) -> để hở status bar phía trên lúc hiện
+             quảng cáo thay vì che hết màn hình. Ép đổi sang
+             Theme.Translucent.NoTitleBar.Fullscreen cho riêng Activity này
+             (không ảnh hưởng MainActivity/WebView); cần tools:replace vì
+             theme đã có sẵn từ manifest của SDK play-services-ads. -->
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge"
+            target="/manifest/application/activity[@android:name='com.google.android.gms.ads.AdActivity']"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+            <activity android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" tools:replace="android:theme" />
+        </edit-config>
     </platform>
 </widget>
