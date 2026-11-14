@@ -68,5 +68,18 @@
             xmlns:android="http://schemas.android.com/apk/res/android">
             <activity android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" tools:replace="android:theme" />
         </edit-config>
+        <!-- Theme Fullscreen ở trên là đủ cho Android <15. Từ Android 15/16
+             (targetSdkVersion 36), OS ép edge-to-edge cho MỌI activity theo
+             targetSdkVersion, không cho opt-out qua theme nữa -> GMA SDK (ít
+             nhất tới bản đang cài) chưa tự ẩn system bar đúng cho AdActivity
+             trong trường hợp này, quảng cáo full screen bị hở status bar phía
+             trên. AdActivity thuộc Play Services, không sửa code trực tiếp
+             được -> đăng ký Application riêng, ép activity đó qua immersive
+             mode ngay lúc resume (android-src/FullscreenAdsApplication.java). -->
+        <resource-file src="android-src/FullscreenAdsApplication.java" target="app/src/main/java/one/eternalgalaxy/chibi_wallet/FullscreenAdsApplication.java" />
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+            <application android:name="one.eternalgalaxy.chibi_wallet.FullscreenAdsApplication" />
+        </edit-config>
     </platform>
 </widget>
