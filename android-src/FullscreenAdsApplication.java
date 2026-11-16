@@ -2,6 +2,8 @@ package one.eternalgalaxy.chibi_wallet;
 
 import android.app.Activity;
 import android.app.Application;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import androidx.core.view.WindowCompat;
@@ -17,13 +19,13 @@ import androidx.core.view.WindowInsetsControllerCompat;
  * là activity của Google Play Services, không sửa được code trực tiếp -> ép
  * activity đó qua immersive mode bằng ActivityLifecycleCallbacks.
  *
- * Chỉ gọi hide() ở onResume (sau khi layout đầu tiên của SDK đã chạy) không
- * đủ: nội dung ad bên trong vẫn giữ padding bằng đúng chiều cao system bar vì
- * nó đọc WindowInsets tại thời điểm layout đầu, trước khi bị ẩn -> để lại
- * khoảng hở trống dù status bar đã ẩn. Gọi thêm ở onActivityCreated (trước
- * layout đầu) để WindowInsets đã là 0 ngay từ lúc SDK tự layout, và set thêm
- * OnApplyWindowInsetsListener trên decorView để chặn mọi dispatch insets
- * xuống view con của ad về sau.
+ * Nguyên nhân thật sự của khoảng hở: AdActivity dùng theme
+ * Theme.Translucent (để crossfade mượt lúc mở ad) -> window của nó xuyên
+ * thấu, chỗ nào view nội dung ad không vẽ phủ tới (phần tương ứng status
+ * bar vừa ẩn) thì lộ thẳng Activity bên dưới (WebView của app) ra, không
+ * phải chỉ là padding/insets. Ẩn system bar sớm (onActivityCreated) vẫn cần
+ * nhưng không đủ -> ép thêm window background thành màu đặc (đen) để không
+ * có gì xuyên thấu được nữa, bất kể theme/insets xử lý ra sao.
  */
 public class FullscreenAdsApplication extends Application {
 
@@ -36,6 +38,7 @@ public class FullscreenAdsApplication extends Application {
 
         View decorView = activity.getWindow().getDecorView();
         WindowCompat.setDecorFitsSystemWindows(activity.getWindow(), false);
+        activity.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
 
         WindowInsetsControllerCompat controller =
                 new WindowInsetsControllerCompat(activity.getWindow(), decorView);
