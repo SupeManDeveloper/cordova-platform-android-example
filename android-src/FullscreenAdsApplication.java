@@ -15,11 +15,37 @@ import androidx.core.view.WindowInsetsControllerCompat;
  * đang dùng) chưa tự ẩn system bar đúng cách cho AdActivity trong trường hợp
  * này nên quảng cáo full screen bị hở phần status bar phía trên. AdActivity
  * là activity của Google Play Services, không sửa được code trực tiếp -> ép
- * activity đó qua immersive mode ngay khi resume bằng ActivityLifecycleCallbacks.
+ * activity đó qua immersive mode bằng ActivityLifecycleCallbacks.
+ *
+ * Chỉ gọi hide() ở onResume (sau khi layout đầu tiên của SDK đã chạy) không
+ * đủ: nội dung ad bên trong vẫn giữ padding bằng đúng chiều cao system bar vì
+ * nó đọc WindowInsets tại thời điểm layout đầu, trước khi bị ẩn -> để lại
+ * khoảng hở trống dù status bar đã ẩn. Gọi thêm ở onActivityCreated (trước
+ * layout đầu) để WindowInsets đã là 0 ngay từ lúc SDK tự layout, và set thêm
+ * OnApplyWindowInsetsListener trên decorView để chặn mọi dispatch insets
+ * xuống view con của ad về sau.
  */
 public class FullscreenAdsApplication extends Application {
 
     private static final String AD_ACTIVITY_CLASS_NAME = "com.google.android.gms.ads.AdActivity";
+
+    private static void forceImmersive(Activity activity) {
+        if (!AD_ACTIVITY_CLASS_NAME.equals(activity.getClass().getName())) {
+            return;
+        }
+
+        View decorView = activity.getWindow().getDecorView();
+        WindowCompat.setDecorFitsSystemWindows(activity.getWindow(), false);
+
+        WindowInsetsControllerCompat controller =
+                new WindowInsetsControllerCompat(activity.getWindow(), decorView);
+        controller.setSystemBarsBehavior(
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+        controller.hide(WindowInsetsCompat.Type.systemBars());
+
+        decorView.setOnApplyWindowInsetsListener((view, insets) -> WindowInsetsCompat.CONSUMED.toWindowInsets());
+        decorView.requestApplyInsets();
+    }
 
     @Override
     public void onCreate() {
@@ -28,26 +54,17 @@ public class FullscreenAdsApplication extends Application {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityResumed(Activity activity) {
-                if (!AD_ACTIVITY_CLASS_NAME.equals(activity.getClass().getName())) {
-                    return;
-                }
-
-                View decorView = activity.getWindow().getDecorView();
-                WindowCompat.setDecorFitsSystemWindows(activity.getWindow(), false);
-
-                WindowInsetsControllerCompat controller =
-                        new WindowInsetsControllerCompat(activity.getWindow(), decorView);
-                controller.setSystemBarsBehavior(
-                        WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
-                controller.hide(WindowInsetsCompat.Type.systemBars());
+                forceImmersive(activity);
             }
 
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                forceImmersive(activity);
             }
 
             @Override
             public void onActivityStarted(Activity activity) {
+                forceImmersive(activity);
             }
 
             @Override
